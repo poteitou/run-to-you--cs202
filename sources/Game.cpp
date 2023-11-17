@@ -18,8 +18,9 @@ Game::Game()
 	mWindow.setPosition(sf::Vector2i(desktop.width/2 - mWindow.getSize().x / 2, desktop.height / 2 - mWindow.getSize().y / 2 - 100));
 
 	mTextures.load(Textures::PinkBackground, "resources/textures/PinkBackground.png");
-	mTextures.load(Textures::Button, "resources/textures/Button.png");
 	mTextures.load(Textures::PinkMouse, "resources/textures/PinkMouse.png");
+	mTextures.load(Textures::Ground, "resources/textures/Ground.png");
+	mTextures.load(Textures::Button, "resources/textures/Button.png");
 	mSoundBuffers.load(Sounds::Button, "resources/sounds/Button.wav");
 	mFonts.load(Fonts::Main, "resources/fonts/PixellettersFull.ttf");
 
@@ -146,7 +147,7 @@ void Game::registerStates()
 	mStateStack.registerState<IntroState>(States::Intro);
     mStateStack.registerState<MenuState>(States::Menu);
     // mStateStack.registerState<SettingsState>(States::Setting);
-    // mStateStack.registerState<PlayingState>(States::Playing);
+    mStateStack.registerState<PlayingState>(States::Playing);
     // mStateStack.registerState<PauseState>(States::Paused);
     // mStateStack.registerState<GameOverState>(States::GameOver);
     // mStateStack.registerState<EndLevelState>(States::EndLevel);

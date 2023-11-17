@@ -1,7 +1,6 @@
 #include <MINE/MenuState.hpp>
 #include <iostream>
 
-// Menu State include button play and back, when click play, game start, when click back, game go back to intro state
 MenuState::MenuState(StateStack &stack, Context context)
     : State(stack, context), mBackgroundSprite(), mButtons()
 {
@@ -37,8 +36,7 @@ bool MenuState::update(sf::Time dt)
     if (mButtons[0]->isPressed())
     {
         requestStackPop();
-        requestStackPush(States::Intro);
-        // requestStackPush(States::Playing);
+        requestStackPush(States::Playing);
     }
     else if (mButtons[1]->isPressed())
     {
