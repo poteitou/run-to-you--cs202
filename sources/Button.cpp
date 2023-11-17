@@ -14,7 +14,7 @@ Button::Button(State::Context context)
     mSprite.setTextureRect(sf::IntRect(0, height * 2, width, height));
     centerOrigin(mSprite);
 
-    mAnimation.setFrameSize(sf::Vector2i(400, 100));
+    mAnimation.setFrameSize(sf::Vector2i(width, height));
 	mAnimation.setNumFrames(2);
 	mAnimation.setDuration(sf::seconds(0.6f));
 	mAnimation.centerOrigin();
