@@ -12,18 +12,23 @@ Game::Game()
 , mStatisticsUpdateTime()
 , mStatisticsNumFrames(0)
 {
+	mWindow.setMouseCursorVisible(false);
 	mWindow.setKeyRepeatEnabled(false);
 	auto desktop = sf::VideoMode::getDesktopMode();
 	mWindow.setPosition(sf::Vector2i(desktop.width/2 - mWindow.getSize().x / 2, desktop.height / 2 - mWindow.getSize().y / 2 - 100));
 
 	mTextures.load(Textures::PinkBackground, "resources/textures/PinkBackground.png");
 	mTextures.load(Textures::Button, "resources/textures/Button.png");
+	mTextures.load(Textures::PinkMouse, "resources/textures/PinkMouse.png");
 	mSoundBuffers.load(Sounds::Button, "resources/sounds/Button.wav");
 	mFonts.load(Fonts::Main, "resources/fonts/PixellettersFull.ttf");
 
 	mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mStatisticsText.setPosition(50.f, 10.f);
 	mStatisticsText.setCharacterSize(50);
+
+	mMouseSprite.setTexture(mTextures.get(Textures::PinkMouse));
+	mMouseSprite.setScale(0.2f, 0.2f);
 
 	registerStates();
 	mStateStack.pushState(States::Intro);
@@ -117,6 +122,7 @@ void Game::render()
 
 	mWindow.setView(mWindow.getDefaultView());
 	mWindow.draw(mStatisticsText);
+	mWindow.draw(mMouseSprite);
 
 	mWindow.display();
 }
@@ -132,6 +138,7 @@ void Game::updateStatistics(sf::Time dt)
 		mStatisticsUpdateTime -= sf::seconds(1.0f);
 		mStatisticsNumFrames = 0;
 	}
+	mMouseSprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(mWindow)));
 }
 
 void Game::registerStates()

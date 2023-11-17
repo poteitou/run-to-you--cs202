@@ -48,6 +48,7 @@ private:
     std::size_t mStatisticsNumFrames;
     sf::Time mStatisticsUpdateTime;
     sf::Text mStatisticsText;
+    sf::Sprite mMouseSprite;
 };
 
 #endif // MINE_GAME_HPP
