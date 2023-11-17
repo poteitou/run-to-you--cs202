@@ -4,7 +4,7 @@ TARGET          := ./bin/main.exe
 CPP_FILES 		:= $(wildcard $(SRC_DIR)/*.cpp)
 O_FILES         := $(CPP_FILES:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 INC_DIR  		:= -Iinclude -DSFML_STATIC
-LIB_DIR     	:= -Llib -lsfml-graphics-s -lsfml-window-s -lsfml-audio-s -lsfml-system-s -lopengl32 -lfreetype -lwinmm -lgdi32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg -mwindows -lsfml-main -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -DSFML_STATIC
+LIB_DIR     	:= -Llib -lsfml-graphics-s -lsfml-window-s -lsfml-audio-s -lsfml-system-s -lopengl32 -lfreetype -lwinmm -lgdi32 -lopenal32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg -mwindows -lsfml-main -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -DSFML_STATIC
 
 .PHONY: all run clean up
 all: $(TARGET) run
