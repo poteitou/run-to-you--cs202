@@ -4,11 +4,16 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Time.hpp>
 
+#include <cmath>
+
 class Animation : public sf::Drawable, public sf::Transformable
 {
 public:
 	Animation();
 	explicit Animation(const sf::Texture &texture);
+
+	void centerOrigin();
+	void setPosition(float x, float y);
 
 	void setTexture(const sf::Texture &texture);
 	const sf::Texture *getTexture() const;
@@ -46,4 +51,4 @@ private:
 	bool mRepeat;
 };
 
-#endif ANIMATION_HPP
+#endif // ANIMATION_HPP

@@ -1,14 +1,22 @@
 #include <MINE/Button.hpp>
 
 Button::Button(State::Context context)
-    : mSprite(context.mTextures->get(Textures::Button))
+    : mAnimation(context.mTextures->get(Textures::Button))
+    , mSprite(context.mTextures->get(Textures::Button))
     // , mSound(context.mSounds->get(Sounds::Button))
     , mText("", context.mFonts->get(Fonts::Main), 70)
     , mIsPressed(false), mIsHovered(false)
 {
     // top, left, width, height
-    mSprite.setTextureRect(sf::IntRect(0, 0, 400, 100));
+    width = context.mTextures->get(Textures::Button).getSize().x;
+    height = context.mTextures->get(Textures::Button).getSize().y / 3;
+    mSprite.setTextureRect(sf::IntRect(0, height * 2, width, height));
     centerOrigin(mSprite);
+
+    mAnimation.setFrameSize(sf::Vector2i(400, 100));
+	mAnimation.setNumFrames(2);
+	mAnimation.setDuration(sf::seconds(0.6f));
+	mAnimation.centerOrigin();
 }
 
 void Button::centerOrigin(sf::Sprite &sprite)
@@ -37,6 +45,7 @@ void Button::setText(const std::string &text, unsigned int size = 70)
 
 void Button::setPosition(float x, float y)
 {
+    mAnimation.setPosition(x, y);
     mSprite.setPosition(x, y);
     mText.setPosition(x, y);
 }
@@ -58,35 +67,47 @@ void Button::handleEvent(User user)
     if (bounds.contains(static_cast<sf::Vector2f>(user.mousePosition)))
     {
         mIsHovered = true;
-        changeTexture(Selected);
         if (user.isMousePressed)
-        {
             mIsPressed = true;
-            changeTexture(Pressed);
-        }
     }
     else
     {
-        mIsPressed = false;
         mIsHovered = false;
-        changeTexture(Normal);
     }
+}
+
+void Button::update(sf::Time dt)
+{
+    if (mIsPressed)
+        mAnimation.update(dt);
+    else if (mIsHovered)
+        changeTexture(Selected);
+    else 
+        changeTexture(Normal);
 }
 
 bool Button::isPressed() const
 {
-    return mIsPressed;
+    return mAnimation.isFinished();   
 }
 
 void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
-    target.draw(mSprite, states);
-    target.draw(mText, states);
+    if (mIsPressed)
+    {
+        target.draw(mAnimation, states);
+        target.draw(mText, states);
+    }
+    else
+    {
+        target.draw(mSprite, states);
+        target.draw(mText, states);
+    }
 }
 
 void Button::changeTexture(Type type)
 {
-    sf::IntRect textureRect(0, 100 * type, 400, 100);
+    sf::IntRect textureRect(0, height * type, width, height);
     mSprite.setTextureRect(textureRect);
 }

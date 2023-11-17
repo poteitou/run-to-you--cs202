@@ -2,15 +2,16 @@
 #define BUTTON_HPP
 
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/Text.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Audio/Sound.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Audio/Sound.hpp>
 
 #include <MINE/ResourceHolder.hpp>
 #include <MINE/Identifier.hpp>
+#include <MINE/Animation.hpp>
 #include <MINE/State.hpp>
 
 #include <string>
@@ -32,9 +33,9 @@ public:
 
     enum Type
     {
-        Normal,
-        Selected,
         Pressed,
+        Selected,
+        Normal,
         ButtonCount
     };
 
@@ -51,6 +52,7 @@ public:
     void setTexture(Type type, const sf::Texture &texture, const sf::IntRect &textureRect);
 
     void handleEvent(User user);
+    void update(sf::Time dt);
     bool isPressed() const;
 
 private:
@@ -58,9 +60,14 @@ private:
     void changeTexture(Type type);
 
 private:
+    Animation mAnimation;
     sf::Sprite mSprite;
-    // sf::Sound mSound;
+    sf::Sound mSound;
     sf::Text mText;
+
+    int width;
+    int height;
+
     bool mIsHovered;
     bool mIsPressed;
 };

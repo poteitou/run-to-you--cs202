@@ -14,11 +14,11 @@ MenuState::MenuState(StateStack &stack, Context context)
 
     mButtons[0] = std::make_shared<Button>(context);
     mButtons[0]->setText("Play", 70);
-    mButtons[0]->setPosition(0.5f * windowSize.x - 0.5f * mButtons[0]->getLocalBounds().width, 0.5f * windowSize.y - 0.5f * mButtons[0]->getLocalBounds().height);
+    mButtons[0]->setPosition(0.5f * windowSize.x, 0.5f * windowSize.y);
 
     mButtons[1] = std::make_shared<Button>(context);
     mButtons[1]->setText("Back", 70);
-    mButtons[1]->setPosition(0.5f * windowSize.x - 0.5f * mButtons[1]->getLocalBounds().width, 0.75f * windowSize.y - 0.5f * mButtons[1]->getLocalBounds().height);
+    mButtons[1]->setPosition(0.5f * windowSize.x, 0.75f * windowSize.y);
 }
 
 bool MenuState::handleEvent(User user)
@@ -31,6 +31,9 @@ bool MenuState::handleEvent(User user)
 
 bool MenuState::update(sf::Time dt)
 {
+    for (auto &button : mButtons)
+        button->update(dt);
+
     if (mButtons[0]->isPressed())
     {
         requestStackPop();

@@ -25,6 +25,17 @@ Animation::Animation(const sf::Texture& texture)
 {
 }
 
+void Animation::centerOrigin()
+{
+	sf::FloatRect bounds = getLocalBounds();
+	mSprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
+}
+
+void Animation::setPosition(float x, float y)
+{
+	mSprite.setPosition(x, y);
+}
+
 void Animation::setTexture(const sf::Texture& texture)
 {
 	mSprite.setTexture(texture);
