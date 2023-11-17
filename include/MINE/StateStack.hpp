@@ -1,8 +1,7 @@
-#ifndef STATESTACK_HPP
-#define STATESTACK_HPP
+#ifndef MINE_STATESTACK_HPP
+#define MINE_STATESTACK_HPP
 
-#include <SFML/System/NonCopyable.hpp>
-#include <SFML/System/Time.hpp>
+#include <SFML/System.hpp>
 
 #include <MINE/User.hpp>
 #include <MINE/State.hpp>
@@ -75,4 +74,4 @@ void StateStack::registerState(States::ID stateID)
 	};
 }
 
-#endif // STATESTACK_HPP
+#endif // MINE_STATESTACK_HPP

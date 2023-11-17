@@ -1,13 +1,4 @@
 #include <Mine/Game.hpp>
-// #include <Mine/Utility.hpp>
-// #include <Mine/State.hpp>
-#include <Mine/IntroState.hpp>
-#include <Mine/MenuState.hpp>
-// #include <Mine/PlayingState.hpp>
-// #include <Mine/PauseState.hpp>
-// #include <Mine/SettingsState.hpp>
-// #include <Mine/GameOverState.hpp>
-
 
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 
@@ -15,7 +6,8 @@ Game::Game()
 : mWindow(sf::VideoMode(1600, 900), "RUN TO YOU", sf::Style::Titlebar | sf::Style::Close)
 , mTextures()
 , mFonts()
-, mStateStack(State::Context(mWindow, mTextures, mFonts))
+, mSoundBuffers()
+, mStateStack(State::Context(mWindow, mTextures, mFonts, mSoundBuffers))
 , mStatisticsText()
 , mStatisticsUpdateTime()
 , mStatisticsNumFrames(0)
@@ -24,9 +16,10 @@ Game::Game()
 	auto desktop = sf::VideoMode::getDesktopMode();
 	mWindow.setPosition(sf::Vector2i(desktop.width/2 - mWindow.getSize().x / 2, desktop.height / 2 - mWindow.getSize().y / 2 - 100));
 
-	mFonts.load(Fonts::Main, "resources/fonts/PixellettersFull.ttf");
 	mTextures.load(Textures::PinkBackground, "resources/textures/PinkBackground.png");
 	mTextures.load(Textures::Button, "resources/textures/Button.png");
+	mSoundBuffers.load(Sounds::Button, "resources/sounds/Button.wav");
+	mFonts.load(Fonts::Main, "resources/fonts/PixellettersFull.ttf");
 
 	mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mStatisticsText.setPosition(50.f, 10.f);

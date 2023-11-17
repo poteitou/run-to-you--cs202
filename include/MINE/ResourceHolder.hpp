@@ -1,5 +1,5 @@
-#ifndef RESOURCEHOLDER_HPP
-#define RESOURCEHOLDER_HPP
+#ifndef MINE_RESOURCEHOLDER_HPP
+#define MINE_RESOURCEHOLDER_HPP
 
 #include <map>
 #include <string>
@@ -27,4 +27,4 @@ private:
 };
 
 #include "MINE/ResourceHolder.inl"
-#endif // RESOURCEHOLDER_HPP
+#endif // MINE_RESOURCEHOLDER_HPP

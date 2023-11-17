@@ -1,7 +1,7 @@
-#ifndef USER_HPP
-#define USER_HPP
+#ifndef MINE_USER_HPP
+#define MINE_USER_HPP
 
-#include <SFML/System/Vector2.hpp>
+#include <SFML/System.hpp>
 
 struct User
 {
@@ -16,4 +16,4 @@ struct User
     char keyPress;
 };
 
-#endif // USER_HPP
+#endif // MINE_USER_HPP

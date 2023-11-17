@@ -1,13 +1,8 @@
-#ifndef BUTTON_HPP
-#define BUTTON_HPP
+#ifndef MINE_BUTTON_HPP
+#define MINE_BUTTON_HPP
 
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/Transformable.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Text.hpp>
-#include <SFML/Audio/Sound.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include <MINE/ResourceHolder.hpp>
 #include <MINE/Identifier.hpp>
@@ -62,7 +57,7 @@ private:
 private:
     Animation mAnimation;
     sf::Sprite mSprite;
-    sf::Sound mSound;
+    sf::Sound mPressedSound;
     sf::Text mText;
 
     int width;
@@ -70,6 +65,7 @@ private:
 
     bool mIsHovered;
     bool mIsPressed;
+    bool mPlayedPressedSound;
 };
 
-#endif // BUTTON_HPP
+#endif // MINE_BUTTON_HPP

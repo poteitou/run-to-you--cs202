@@ -1,8 +1,7 @@
-#ifndef MENUSTATE_HPP
-#define MENUSTATE_HPP
+#ifndef MINE_MENUSTATE_HPP
+#define MINE_MENUSTATE_HPP
 
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics.hpp>
 
 #include <MINE/State.hpp>
 #include <MINE/Button.hpp>
@@ -23,4 +22,4 @@ private:
     std::array<Button::Ptr, 2> mButtons;
 };
 
-#endif // MENUSTATE_HPP
+#endif // MINE_MENUSTATE_HPP

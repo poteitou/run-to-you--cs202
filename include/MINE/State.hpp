@@ -1,11 +1,12 @@
-#ifndef STATE_HPP
-#define STATE_HPP
+#ifndef MINE_STATE_HPP
+#define MINE_STATE_HPP
 
-#include <SFML/System/Time.hpp>
-#include <SFML/Window/Event.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
-#include <MINE/User.hpp>
 #include <MINE/Identifier.hpp>
+#include <MINE/User.hpp>
 
 #include <memory>
 
@@ -24,9 +25,10 @@ public:
 
 	struct Context
 	{
-		Context(sf::RenderWindow &window, TextureHolder &textures, FontHolder &fonts);
+		Context(sf::RenderWindow &window, TextureHolder &textures, FontHolder &fonts, SoundBufferHolder &soundbuffers);
 
 		sf::RenderWindow *mWindow;
+		SoundBufferHolder *mSoundBuffers;
 		TextureHolder *mTextures;
 		FontHolder *mFonts;
 	};
@@ -51,4 +53,4 @@ private:
 	Context mContext;
 };
 
-#endif // STATE_HPP
+#endif // MINE_STATE_HPP

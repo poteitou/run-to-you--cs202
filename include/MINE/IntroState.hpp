@@ -1,13 +1,10 @@
-#ifndef INTROSTATE_HPP
-#define INTROSTATE_HPP
+#ifndef MINE_INTROSTATE_HPP
+#define MINE_INTROSTATE_HPP
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics.hpp>
 
 #include <MINE/State.hpp>
 // #include <MINE/Button.hpp>
-// #include <MINE/Label.hpp>
 
 class IntroState : public State
 {
@@ -25,4 +22,4 @@ private:
     sf::Time mTextEffectTime;
 };
 
-#endif // INTROSTATE_HPP
+#endif // MINE_INTROSTATE_HPP

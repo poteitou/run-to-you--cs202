@@ -2,11 +2,12 @@
 
 Button::Button(State::Context context)
     : mAnimation(context.mTextures->get(Textures::Button))
+    , mPressedSound(context.mSoundBuffers->get(Sounds::Button))
     , mSprite(context.mTextures->get(Textures::Button))
-    // , mSound(context.mSounds->get(Sounds::Button))
     , mText("", context.mFonts->get(Fonts::Main), 70)
-    , mIsPressed(false), mIsHovered(false)
+    , mIsPressed(false), mIsHovered(false), mPlayedPressedSound(false)
 {
+    mPressedSound.setVolume(100);
     // top, left, width, height
     width = context.mTextures->get(Textures::Button).getSize().x;
     height = context.mTextures->get(Textures::Button).getSize().y / 3;
@@ -79,7 +80,14 @@ void Button::handleEvent(User user)
 void Button::update(sf::Time dt)
 {
     if (mIsPressed)
+    {
         mAnimation.update(dt);
+        if (!mPlayedPressedSound)
+        {
+            mPressedSound.play();
+            mPlayedPressedSound = true;
+        }
+    }   
     else if (mIsHovered)
         changeTexture(Selected);
     else 

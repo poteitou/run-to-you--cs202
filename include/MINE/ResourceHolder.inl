@@ -1,3 +1,6 @@
+#ifndef MINE_RESOURCEHOLDER_INL
+#define MINE_RESOURCEHOLDER_INL
+
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& filename)
 {
@@ -43,3 +46,5 @@ void ResourceHolder<Resource, Identifier>::insertResource(Identifier id, std::un
 	auto inserted = mResourceMap.insert(std::make_pair(id, std::move(resource)));
 	assert(inserted.second);
 }
+
+#endif // MINE_RESOURCEHOLDER_INL

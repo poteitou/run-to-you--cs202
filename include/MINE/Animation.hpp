@@ -1,5 +1,5 @@
-#ifndef ANIMATION_HPP
-#define ANIMATION_HPP
+#ifndef MINE_ANIMATION_HPP
+#define MINE_ANIMATION_HPP
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Time.hpp>
@@ -51,4 +51,4 @@ private:
 	bool mRepeat;
 };
 
-#endif // ANIMATION_HPP
+#endif // MINE_ANIMATION_HPP

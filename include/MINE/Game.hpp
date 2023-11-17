@@ -1,15 +1,22 @@
-#ifndef GAME_HPP
-#define GAME_HPP
+#ifndef MINE_GAME_HPP
+#define MINE_GAME_HPP
 
-#include <SFML/Window/Window.hpp>
-#include <SFML/Window/Event.hpp>
-#include <SFML/System/Time.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Text.hpp>  
-#include <MINE/User.hpp>
+#include <SFML/Graphics.hpp> 
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
+
 #include <MINE/ResourceHolder.hpp>
 #include <MINE/Identifier.hpp>
 #include <MINE/StateStack.hpp>
+#include <MINE/User.hpp>
+// #include <Mine/State.hpp>
+#include <Mine/IntroState.hpp>
+#include <Mine/MenuState.hpp>
+// #include <Mine/PlayingState.hpp>
+// #include <Mine/PauseState.hpp>
+// #include <Mine/SettingsState.hpp>
+// #include <Mine/GameOverState.hpp>
 
 #include <string.h>
 
@@ -31,15 +38,16 @@ private:
     static const sf::Time TimePerFrame;
 
     sf::RenderWindow mWindow;
+    SoundBufferHolder mSoundBuffers;
     TextureHolder mTextures;
     FontHolder mFonts;
     User mUser;
 
     StateStack mStateStack;
 
-    sf::Text mStatisticsText;
-    sf::Time mStatisticsUpdateTime;
     std::size_t mStatisticsNumFrames;
+    sf::Time mStatisticsUpdateTime;
+    sf::Text mStatisticsText;
 };
 
-#endif // GAME_HPP
+#endif // MINE_GAME_HPP

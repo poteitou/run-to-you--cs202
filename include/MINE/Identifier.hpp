@@ -1,5 +1,5 @@
-#ifndef IDENTIFIER_HPP
-#define IDENTIFIER_HPP
+#ifndef MINE_IDENTIFIER_HPP
+#define MINE_IDENTIFIER_HPP
 
 #include <MINE/ResourceHolder.hpp>
 
@@ -27,7 +27,7 @@ namespace Fonts
 
 namespace Sounds
 {
-    enum ID {Main};
+    enum ID {Main, Button};
 }
 
 template <typename Resource, typename Identifier>
@@ -37,4 +37,4 @@ typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
 typedef ResourceHolder<sf::SoundBuffer, Sounds::ID> SoundBufferHolder;
 
-#endif // IDENTIFIER_HPP
+#endif // MINE_IDENTIFIER_HPP
