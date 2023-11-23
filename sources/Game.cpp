@@ -19,9 +19,11 @@ Game::Game()
 
 	mTextures.load(Textures::PinkBackground, "resources/textures/PinkBackground.png");
 	mTextures.load(Textures::PinkMouse, "resources/textures/PinkMouse.png");
+	mTextures.load(Textures::BlueSkirt, "resources/textures/BlueSkirt.png");
 	mTextures.load(Textures::Ground, "resources/textures/Ground.png");
 	mTextures.load(Textures::Button, "resources/textures/Button.png");
 	mSoundBuffers.load(Sounds::Button, "resources/sounds/Button.wav");
+	mSoundBuffers.load(Sounds::Jump, "resources/sounds/Jump.wav");
 	mFonts.load(Fonts::Main, "resources/fonts/PixellettersFull.ttf");
 
 	mStatisticsText.setFont(mFonts.get(Fonts::Main));

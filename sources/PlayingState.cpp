@@ -1,8 +1,13 @@
-// playing state will have background scrolling slower than ground, and clouds scrolling slower than background
 #include <MINE/PlayingState.hpp>
 
 PlayingState::PlayingState(StateStack &stack, Context context)
-    : State(stack, context), mBackgroundSprite(), mGroundSprite(), mView(context.mWindow->getDefaultView()), mScrollSpeed(100.f), mViewBound(0.f, 0.f, 10000.f, mView.getSize().y)
+    : State(stack, context), 
+      mBackgroundSprite(), 
+      mGroundSprite(), 
+      mView(context.mWindow->getDefaultView()), 
+      mScrollSpeed(100.f), 
+      mViewBound(0.f, 0.f, 10000.f, mView.getSize().y),
+      mPlayer(context)
 {
     sf::Texture &backgroundTexture = context.mTextures->get(Textures::PinkBackground);
     sf::Texture &groundTexture = context.mTextures->get(Textures::Ground);
@@ -18,26 +23,35 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     mGroundSprite.setTextureRect(textureRect);
     mGroundSprite.setTexture(groundTexture);
     mGroundSprite.setPosition(0.f, 0.f);
+    jump = false;
 
-
-	// float viewHeight = mWorldView.getSize().y;
-	// sf::IntRect textureRect(mWorldBounds);
-	// textureRect.height += static_cast<int>(viewHeight);
-
-	// // Add the background sprite to the scene
-	// std::unique_ptr<SpriteNode> jungleSprite(new SpriteNode(jungleTexture, textureRect));
-	// jungleSprite->setPosition(mWorldBounds.left, mWorldBounds.top - viewHeight);
-	// mSceneLayers[Background]->attachChild(std::move(jungleSprite));
+    mGroundHeight = 900.f - 200.f;
+    mPlayer.setPosition(100.f, mGroundHeight);
+    mPlayer.setVelocity(100.f, 0.f);
 }
 
 bool PlayingState::handleEvent(User user)
 {
+    if (user.isSpacePressed)
+    {
+        jump = true;
+    }
+    if (user.isEnterPressed)
+    {
+        jump = false;
+    }
+    mPlayer.handleEvent(user);
     return true;
 }
 
 bool PlayingState::update(sf::Time dt)
 {
-    mView.move(mScrollSpeed * dt.asSeconds(), 0.f);	
+    if (!jump)
+    {
+        mView.move(mScrollSpeed * dt.asSeconds(), 0.f);	
+        mGroundSprite.move(-100.f * dt.asSeconds(), 0.f);
+    }
+    mPlayer.update(dt, mGroundHeight);
     return true;
 }
 
@@ -47,4 +61,5 @@ void PlayingState::render()
     mWindow.setView(mView);
     mWindow.draw(mBackgroundSprite);
     mWindow.draw(mGroundSprite);
+    mWindow.draw(mPlayer);
 }

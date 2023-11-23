@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <MINE/State.hpp>
+#include <MINE/Player.hpp>
 
 #include <vector>
 #include <string>
@@ -24,7 +25,10 @@ private:
     sf::Sprite mGroundSprite;
     sf::FloatRect mViewBound;
     sf::View mView;
+    Player mPlayer;
     float mScrollSpeed;
+    bool jump;
+    float mGroundHeight;
 };
 
 #endif // MINE_PLAYINGSTATE_HPP

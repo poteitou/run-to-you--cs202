@@ -14,6 +14,7 @@ public:
 
 	void centerOrigin();
 	void setPosition(float x, float y);
+	void setPosition(const sf::Vector2f &position);
 
 	void setTexture(const sf::Texture &texture);
 	const sf::Texture *getTexture() const;
@@ -35,8 +36,12 @@ public:
 
 	sf::FloatRect getLocalBounds() const;
 	sf::FloatRect getGlobalBounds() const;
+	sf::Vector2f getPosition() const;
 
+	void move(float x, float y);
+	void move(const sf::Vector2f &offset);
 	void update(sf::Time dt);
+	void setFrame(std::size_t frame);
 
 private:
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;

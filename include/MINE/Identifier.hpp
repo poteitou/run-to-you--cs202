@@ -27,7 +27,7 @@ namespace Fonts
 
 namespace Sounds
 {
-    enum ID {Main, Button};
+    enum ID {Main, Button, Jump};
 }
 
 template <typename Resource, typename Identifier>

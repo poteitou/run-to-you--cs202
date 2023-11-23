@@ -36,6 +36,11 @@ void Animation::setPosition(float x, float y)
 	mSprite.setPosition(x, y);
 }
 
+void Animation::setPosition(const sf::Vector2f& position)
+{
+	mSprite.setPosition(position);
+}
+
 void Animation::setTexture(const sf::Texture& texture)
 {
 	mSprite.setTexture(texture);
@@ -106,6 +111,21 @@ sf::FloatRect Animation::getGlobalBounds() const
 	return getTransform().transformRect(getLocalBounds());
 }
 
+sf::Vector2f Animation::getPosition() const
+{
+	return mSprite.getPosition();
+}
+
+void Animation::move(float x, float y)
+{
+	mSprite.move(x, y);
+}
+
+void Animation::move(const sf::Vector2f &offset)
+{
+	mSprite.move(offset);
+}
+
 void Animation::update(sf::Time dt)
 {
 	sf::Time timePerFrame = mDuration / static_cast<float>(mNumFrames);
@@ -146,6 +166,28 @@ void Animation::update(sf::Time dt)
 		}
 	}
 
+	mSprite.setTextureRect(textureRect);
+}
+
+// set Animation stop at given frame
+void Animation::setFrame(std::size_t frame)
+{
+	sf::Vector2i textureBounds(mSprite.getTexture()->getSize());
+	sf::IntRect textureRect = sf::IntRect(0, 0, mFrameSize.x, mFrameSize.y);
+	mCurrentFrame = 0;
+
+	while (mCurrentFrame < frame)
+	{
+		textureRect.left += textureRect.width;
+
+		if (textureRect.left + textureRect.width > textureBounds.x)
+		{
+			textureRect.left = 0;
+			textureRect.top += textureRect.height;
+		}
+
+		mCurrentFrame++;
+	}
 	mSprite.setTextureRect(textureRect);
 }
 

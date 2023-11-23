@@ -1,23 +1,23 @@
 #include <MINE/Button.hpp>
 
 Button::Button(State::Context context)
-    : mAnimation(context.mTextures->get(Textures::Button))
-    , mPressedSound(context.mSoundBuffers->get(Sounds::Button))
-    , mSprite(context.mTextures->get(Textures::Button))
-    , mText("", context.mFonts->get(Fonts::Main), 70)
-    , mIsPressed(false), mIsHovered(false), mPlayedPressedSound(false)
+    : mAnimation(context.mTextures->get(Textures::Button)),
+      mPressedSound(context.mSoundBuffers->get(Sounds::Button)),
+      mSprite(context.mTextures->get(Textures::Button)),
+      mText("", context.mFonts->get(Fonts::Main), 70),
+      mIsPressed(false), mIsHovered(false), mPlayedPressedSound(false)
 {
     mPressedSound.setVolume(100);
     // top, left, width, height
-    width = context.mTextures->get(Textures::Button).getSize().x;
-    height = context.mTextures->get(Textures::Button).getSize().y / 3;
-    mSprite.setTextureRect(sf::IntRect(0, height * 2, width, height));
+    mWidth = context.mTextures->get(Textures::Button).getSize().x;
+    mHeight = context.mTextures->get(Textures::Button).getSize().y / 3;
+    mSprite.setTextureRect(sf::IntRect(0, mHeight * 2, mWidth, mHeight));
     centerOrigin(mSprite);
 
-    mAnimation.setFrameSize(sf::Vector2i(width, height));
-	mAnimation.setNumFrames(2);
-	mAnimation.setDuration(sf::seconds(0.6f));
-	mAnimation.centerOrigin();
+    mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
+    mAnimation.setNumFrames(2);
+    mAnimation.setDuration(sf::seconds(0.6f));
+    mAnimation.centerOrigin();
 }
 
 void Button::centerOrigin(sf::Sprite &sprite)
@@ -51,17 +51,6 @@ void Button::setPosition(float x, float y)
     mText.setPosition(x, y);
 }
 
-void Button::setTexture(Type type, const sf::Texture &texture)
-{
-    mSprite.setTexture(texture);
-}
-
-void Button::setTexture(Type type, const sf::Texture &texture, const sf::IntRect &textureRect)
-{
-    mSprite.setTexture(texture);
-    mSprite.setTextureRect(textureRect);
-}
-
 void Button::handleEvent(User user)
 {
     sf::FloatRect bounds = mSprite.getGlobalBounds();
@@ -87,16 +76,16 @@ void Button::update(sf::Time dt)
             mPressedSound.play();
             mPlayedPressedSound = true;
         }
-    }   
+    }
     else if (mIsHovered)
         changeTexture(Selected);
-    else 
+    else
         changeTexture(Normal);
 }
 
 bool Button::isPressed() const
 {
-    return mAnimation.isFinished();   
+    return mAnimation.isFinished();
 }
 
 void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -116,6 +105,6 @@ void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Button::changeTexture(Type type)
 {
-    sf::IntRect textureRect(0, height * type, width, height);
+    sf::IntRect textureRect(0, mHeight * type, mWidth, mHeight);
     mSprite.setTextureRect(textureRect);
 }

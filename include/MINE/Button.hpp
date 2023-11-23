@@ -16,7 +16,6 @@
 
 namespace sf
 {
-    class Event;
     class RenderStates;
     class RenderTarget;
 }
@@ -43,8 +42,6 @@ public:
 
     void setText(const std::string &text, unsigned int size);
     void setPosition(float x, float y);
-    void setTexture(Type type, const sf::Texture &texture);
-    void setTexture(Type type, const sf::Texture &texture, const sf::IntRect &textureRect);
 
     void handleEvent(User user);
     void update(sf::Time dt);
@@ -60,8 +57,8 @@ private:
     sf::Sound mPressedSound;
     sf::Text mText;
 
-    int width;
-    int height;
+    int mWidth;
+    int mHeight;
 
     bool mIsHovered;
     bool mIsPressed;
