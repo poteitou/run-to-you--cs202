@@ -111,14 +111,15 @@ void Player::update(sf::Time dt, float groundHeight)
         mVelocity.y += mGravity; // add gravity
         mIsJumping = true;
     }
-    else if (mPosition.y < groundHeight) // below ground
+    else if (mPosition.y > groundHeight) // below ground
         mPosition.y = groundHeight;
 
     if (mPosition.y == groundHeight)
         mIsJumping = false;
 
     mAnimation.setPosition(mPosition);
-    mPosition.y += mVelocity.y * dt.asSeconds();
+    mPosition.y += mVelocity.y;
+    mPosition.x += mVelocity.x * dt.asSeconds();
 
     if (!mPlayedJumpSound)
     {
