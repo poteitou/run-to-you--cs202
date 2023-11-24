@@ -25,7 +25,7 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     mGroundSprite[1].setTextureRect(textureRect);
     mGroundSprite[1].setTexture(groundTexture);
     mGroundSprite[1].setPosition(1600.f, 0.f);
-    jump = false;
+    mIsPaused = false;
 
     mGroundHeight = 900.f - 200.f;
     mPlayer.setPosition(150.f, mGroundHeight);
@@ -34,22 +34,23 @@ PlayingState::PlayingState(StateStack &stack, Context context)
 
 bool PlayingState::handleEvent(User user)
 {
-    if (user.isSpacePressed)
+    if (user.isEscapePressed && !mIsPaused)
     {
-        jump = true;
+        mIsPaused = true;
     }
-    if (user.isEnterPressed)
+    if (user.isEnterPressed && mIsPaused)
     {
-        jump = false;
+        mIsPaused = false;
     }
-    mPlayer.handleEvent(user);
+    if (!mIsPaused)
+        mPlayer.handleEvent(user);
     return true;
 }
 
 bool PlayingState::update(sf::Time dt)
 {
-    // if (!jump)
-    // {
+    if (mIsPaused)
+        return true;
     for (int i = 0; i < 2; i++)
     {
         mBackgroundSprite[i].move(-mScrollSpeed / 3 * dt.asSeconds(), 0.f);

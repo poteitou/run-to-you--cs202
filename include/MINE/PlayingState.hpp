@@ -25,7 +25,7 @@ private:
     sf::Sprite mGroundSprite[2];
     Player mPlayer;
     float mScrollSpeed;
-    bool jump;
+    bool mIsPaused;
     float mGroundHeight;
 };
 
