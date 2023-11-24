@@ -21,8 +21,8 @@ public:
     virtual void render();
 
 private:
-    sf::Sprite mBackgroundSprite;
-    sf::Sprite mGroundSprite;
+    sf::Sprite mBackgroundSprite[2];
+    sf::Sprite mGroundSprite[2];
     sf::FloatRect mViewBound;
     sf::View mView;
     Player mPlayer;
