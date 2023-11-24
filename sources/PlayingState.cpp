@@ -2,9 +2,7 @@
 
 PlayingState::PlayingState(StateStack &stack, Context context)
     : State(stack, context),  
-      mView(context.mWindow->getDefaultView()), 
       mScrollSpeed(200.f), 
-      mViewBound(0.f, 0.f, 10000.f, mView.getSize().y),
       mPlayer(context)
 {
     sf::Texture &backgroundTexture = context.mTextures->get(Textures::PinkBackground);
@@ -30,8 +28,8 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     jump = false;
 
     mGroundHeight = 900.f - 200.f;
-    mPlayer.setPosition(100.f, mGroundHeight);
-    mPlayer.setVelocity(100.f, 0.f);
+    mPlayer.setPosition(150.f, mGroundHeight);
+    mPlayer.setVelocity(0.f, 0.f);
 }
 
 bool PlayingState::handleEvent(User user)
@@ -57,14 +55,10 @@ bool PlayingState::update(sf::Time dt)
         mBackgroundSprite[i].move(-mScrollSpeed / 3 * dt.asSeconds(), 0.f);
         mGroundSprite[i].move(-mScrollSpeed * dt.asSeconds(), 0.f);
         if (mGroundSprite[i].getPosition().x < -1600.f)
-        {
             mGroundSprite[i].setPosition(1600.f, 0.f);
-        }
-        
+        if (mBackgroundSprite[i].getPosition().x < -1600.f)
+            mBackgroundSprite[i].setPosition(1600.f, 0.f);
     }
-        // mView.move(mScrollSpeed * dt.asSeconds(), 0.f);	
-        // mGroundSprite.move(-100.f * dt.asSeconds(), 0.f);
-    // }
     mPlayer.update(dt, mGroundHeight);
     return true;
 }
@@ -72,7 +66,6 @@ bool PlayingState::update(sf::Time dt)
 void PlayingState::render()
 {
     sf::RenderWindow &mWindow = *getContext().mWindow;
-    mWindow.setView(mView);
     for (int i = 0; i < 2; i++)
     {
         mWindow.draw(mBackgroundSprite[i]);

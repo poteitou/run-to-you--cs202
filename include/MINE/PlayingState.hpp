@@ -23,8 +23,6 @@ public:
 private:
     sf::Sprite mBackgroundSprite[2];
     sf::Sprite mGroundSprite[2];
-    sf::FloatRect mViewBound;
-    sf::View mView;
     Player mPlayer;
     float mScrollSpeed;
     bool jump;
