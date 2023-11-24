@@ -44,6 +44,7 @@ private:
     User mUser;
 
     StateStack mStateStack;
+    bool mIsPaused;
 
     std::size_t mStatisticsNumFrames;
     sf::Time mStatisticsUpdateTime;

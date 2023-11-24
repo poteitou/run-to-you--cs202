@@ -11,6 +11,7 @@ Game::Game()
 , mStatisticsText()
 , mStatisticsUpdateTime()
 , mStatisticsNumFrames(0)
+, mIsPaused(false)
 {
 	mWindow.setMouseCursorVisible(false);
 	mWindow.setKeyRepeatEnabled(false);
@@ -51,14 +52,18 @@ void Game::run()
 			timeSinceLastUpdate -= TimePerFrame;
 
 			processInput();
-			update(TimePerFrame);
+			if (!mIsPaused)
+				update(TimePerFrame);
 
 			if (mStateStack.isEmpty())
 				mWindow.close();
 		}
 
-		updateStatistics(dt);
-		render();
+		if (!mIsPaused)
+		{
+			updateStatistics(dt);
+			render();
+		}
 	}
 }
 
@@ -67,11 +72,14 @@ void Game::processInput()
 	sf::Event event;
 	while (mWindow.pollEvent(event))
 	{	
+		mIsPaused = false;
 		switch (event.type)
         {
         case sf::Event::Closed:
             mWindow.close();
             break;
+        case sf::Event::LostFocus:
+            mIsPaused = true;
         case sf::Event::MouseButtonPressed:
             if (event.mouseButton.button == sf::Mouse::Left)
                 mUser.isMousePressed = true;
@@ -108,7 +116,9 @@ void Game::processInput()
         default:
             break;
         }
-		mStateStack.handleEvent(mUser);
+		
+		if (!mIsPaused)
+			mStateStack.handleEvent(mUser);
 	}
 }
 
