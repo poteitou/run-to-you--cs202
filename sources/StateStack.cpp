@@ -34,11 +34,12 @@ void StateStack::update(sf::Time dt)
 	applyPendingChanges();
 }
 
-void StateStack::render()
+void StateStack::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+	states.transform *= getTransform();
 	// Draw all active states from bottom to top
-	for (State::Ptr& state : mStack)
-		state->render();
+	for (auto &state : mStack)
+		target.draw(*state, states);
 }
 
 void StateStack::pushState(States::ID stateID)

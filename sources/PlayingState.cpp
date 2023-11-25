@@ -1,35 +1,40 @@
 #include <MINE/PlayingState.hpp>
 
 PlayingState::PlayingState(StateStack &stack, Context context)
-    : State(stack, context),  
+    : State(stack, context), 
+      mBackgroundSprite(),
+      mGroundSprite(),
+      mDistanceText("", context.mFonts->get(Fonts::Main), 50),
+      mPlayer(context),
+      mGroundHeight(900.f - 200.f),
       mScrollSpeed(200.f), 
-      mPlayer(context)
+      mDistance(0.f),
+      mIsPaused(false)
 {
     sf::Texture &backgroundTexture = context.mTextures->get(Textures::PinkBackground);
     sf::Texture &groundTexture = context.mTextures->get(Textures::Ground);
-    backgroundTexture.setRepeated(true);
-    groundTexture.setRepeated(true);
 
     sf::IntRect textureRect(0.f, 0.f, 1600.f, 900.f);
-
-    mBackgroundSprite[0].setTextureRect(textureRect);
-    mBackgroundSprite[0].setTexture(backgroundTexture);
+    
+    // prepare for background and ground continuous scrolling
+    for (int i = 0; i < 2; i++)
+    {
+        mBackgroundSprite[i].setTextureRect(textureRect);
+        mBackgroundSprite[i].setTexture(backgroundTexture);
+        mGroundSprite[i].setTextureRect(textureRect);
+        mGroundSprite[i].setTexture(groundTexture);
+    }
     mBackgroundSprite[0].setPosition(0.f, 0.f);
-    mBackgroundSprite[1].setTextureRect(textureRect);
-    mBackgroundSprite[1].setTexture(backgroundTexture);
     mBackgroundSprite[1].setPosition(1600.f, 0.f);
-
-    mGroundSprite[0].setTextureRect(textureRect);
-    mGroundSprite[0].setTexture(groundTexture);
     mGroundSprite[0].setPosition(0.f, 0.f);
-    mGroundSprite[1].setTextureRect(textureRect);
-    mGroundSprite[1].setTexture(groundTexture);
     mGroundSprite[1].setPosition(1600.f, 0.f);
-    mIsPaused = false;
 
-    mGroundHeight = 900.f - 200.f;
     mPlayer.setPosition(150.f, mGroundHeight);
     mPlayer.setVelocity(0.f, 0.f);
+
+    // prepare for distance text
+    mDistanceText.setPosition(50.f, 100.f);
+    mDistanceText.setColor(sf::Color::Black);
 }
 
 bool PlayingState::handleEvent(User user)
@@ -49,31 +54,44 @@ bool PlayingState::handleEvent(User user)
 
 bool PlayingState::update(sf::Time dt)
 {
-    if (mIsPaused)
-        return true;
-    for (int i = 0; i < 2; i++)
+    if (!mIsPaused)
     {
-        mBackgroundSprite[i].move(-mScrollSpeed / 3 * dt.asSeconds(), 0.f);
-        mGroundSprite[i].move(-mScrollSpeed * dt.asSeconds(), 0.f);
-        if (mGroundSprite[i].getPosition().x < -1600.f)
-            mGroundSprite[i].setPosition(1600.f, 0.f);
-        if (mBackgroundSprite[i].getPosition().x < -1600.f)
-            mBackgroundSprite[i].setPosition(1600.f, 0.f);
+        mDistance += mScrollSpeed * dt.asSeconds();
+        mDistanceText.setString(std::to_string((int)mDistance) + " m");
+        int distance = 0;
+        for (int i = 0; i < 2; i++)
+        {
+            mBackgroundSprite[i].move(-mScrollSpeed / 3 * dt.asSeconds(), 0.f);
+            mGroundSprite[i].move(-mScrollSpeed * dt.asSeconds(), 0.f);
+            if (mGroundSprite[i].getPosition().x < -1600.f)
+                mGroundSprite[i].setPosition(1600.f, 0.f);
+            if (mBackgroundSprite[i].getPosition().x < -1600.f)
+                mBackgroundSprite[i].setPosition(1600.f, 0.f);
+        }
+        mPlayer.update(dt, mGroundHeight);
     }
-    mPlayer.update(dt, mGroundHeight);
     return true;
 }
 
-void PlayingState::render()
+void PlayingState::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    sf::RenderWindow &mWindow = *getContext().mWindow;
+    /*
+    // this code will cause unexpected behavior
     for (int i = 0; i < 2; i++)
     {
         mWindow.draw(mBackgroundSprite[i]);
+        mWindow.draw(mGroundSprite[i]);
+    }
+    */
+
+    for (int i = 0; i < 2; i++)
+    {
+        target.draw(mBackgroundSprite[i], states);
     }
     for (int i = 0; i < 2; i++)
     {
-        mWindow.draw(mGroundSprite[i]);
+        target.draw(mGroundSprite[i], states);
     }
-    mWindow.draw(mPlayer);
-}
+    target.draw(mDistanceText, states);
+    target.draw(mPlayer, states);
+}   

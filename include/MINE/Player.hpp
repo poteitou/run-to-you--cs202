@@ -2,7 +2,10 @@
 #define MINE_PLAYER_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
+#include <MINE/ResourceHolder.hpp>
+#include <MINE/Identifier.hpp>
 #include <MINE/Animation.hpp>
 #include <MINE/State.hpp>
 
@@ -15,6 +18,8 @@ namespace sf
 class Player : public sf::Drawable, public sf::Transformable
 {
 public:
+    typedef std::shared_ptr<Player> Ptr;
+    
     enum Type
     {
         BlueSkirt,

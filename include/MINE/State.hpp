@@ -2,6 +2,7 @@
 #define MINE_STATE_HPP
 
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 
@@ -13,21 +14,22 @@
 namespace sf
 {
 	class RenderWindow;
+	class RenderStates;
+	class RenderTarget;
 }
 
 class StateStack;
 class User;
 
-class State
+class State : public sf::Drawable, public sf::Transformable
 {
 public:
 	typedef std::unique_ptr<State> Ptr;
 
 	struct Context
 	{
-		Context(sf::RenderWindow &window, TextureHolder &textures, FontHolder &fonts, SoundBufferHolder &soundbuffers);
+		Context(TextureHolder &textures, FontHolder &fonts, SoundBufferHolder &soundbuffers);
 
-		sf::RenderWindow *mWindow;
 		SoundBufferHolder *mSoundBuffers;
 		TextureHolder *mTextures;
 		FontHolder *mFonts;
@@ -39,7 +41,7 @@ public:
 
 	virtual bool handleEvent(User user) = 0;
 	virtual bool update(sf::Time dt) = 0;
-	virtual void render() = 0;
+	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;
 
 protected:
 	void requestStackPush(States::ID stateID);

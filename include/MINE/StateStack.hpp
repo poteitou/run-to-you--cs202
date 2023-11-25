@@ -2,6 +2,7 @@
 #define MINE_STATESTACK_HPP
 
 #include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
 
 #include <MINE/User.hpp>
 #include <MINE/State.hpp>
@@ -16,9 +17,11 @@ namespace sf
 {
 	class Event;
 	class RenderWindow;
+	class RenderStates;
+	class RenderTarget;
 }
 
-class StateStack : private sf::NonCopyable
+class StateStack : public sf::Drawable, public sf::Transformable
 {
 public:
 	enum Action
@@ -36,7 +39,7 @@ public:
 
 	void handleEvent(User user);
 	void update(sf::Time dt);
-	void render();
+	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 	void pushState(States::ID stateID);
 	void popState();

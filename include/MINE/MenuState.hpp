@@ -8,6 +8,12 @@
 
 #include <array>
 
+namespace sf
+{
+    class RenderStates;
+    class RenderTarget;
+}
+
 class MenuState : public State
 {
 public:
@@ -15,7 +21,7 @@ public:
 
     virtual bool handleEvent(User user);
     virtual bool update(sf::Time dt);
-    virtual void render();
+    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 private:
     sf::Sprite mBackgroundSprite;

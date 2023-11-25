@@ -5,19 +5,17 @@ MenuState::MenuState(StateStack &stack, Context context)
     : State(stack, context), mBackgroundSprite(), mButtons()
 {
     sf::Texture &texture = context.mTextures->get(Textures::PinkBackground);
-    sf::Font &font = context.mFonts->get(Fonts::Main);
-    sf::Vector2f windowSize(context.mWindow->getSize());
 
     mBackgroundSprite.setTexture(texture);
     mBackgroundSprite.setPosition(0.f, 0.f);
 
     mButtons[0] = std::make_shared<Button>(context);
     mButtons[0]->setText("Play", 70);
-    mButtons[0]->setPosition(0.5f * windowSize.x, 0.5f * windowSize.y);
+    mButtons[0]->setPosition(0.5f * 1600.f, 0.5f * 900.f);
 
     mButtons[1] = std::make_shared<Button>(context);
     mButtons[1]->setText("Back", 70);
-    mButtons[1]->setPosition(0.5f * windowSize.x, 0.75f * windowSize.y);
+    mButtons[1]->setPosition(0.5f * 1600.f, 0.75f * 900.f);
 }
 
 bool MenuState::handleEvent(User user)
@@ -46,11 +44,11 @@ bool MenuState::update(sf::Time dt)
     return true;
 }
 
-void MenuState::render()
+void MenuState::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    sf::RenderWindow &mWindow = *getContext().mWindow;
-    mWindow.draw(mBackgroundSprite);
+    states.transform *= getTransform();
+    target.draw(mBackgroundSprite, states);
 
     for (auto &button : mButtons)
-        mWindow.draw(*button);
+        target.draw(*button, states);
 }

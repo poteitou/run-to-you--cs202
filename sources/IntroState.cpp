@@ -12,7 +12,7 @@ IntroState::IntroState(StateStack &stack, Context context)
     mText.setString("Press enter to start");
     mText.setColor(sf::Color::White);
     mText.setCharacterSize(50);
-    mText.setPosition(0.5f * context.mWindow->getSize().x - 0.5f * mText.getLocalBounds().width, 0.75f * context.mWindow->getSize().y - 0.5f * mText.getLocalBounds().height);
+    mText.setPosition(0.5f * 1600.f - 0.5f * mText.getLocalBounds().width, 0.75f * 900.f - 0.5f * mText.getLocalBounds().height);
 }
 
 bool IntroState::handleEvent(User user)
@@ -39,11 +39,10 @@ bool IntroState::update(sf::Time dt)
     return true;
 }
 
-void IntroState::render()
+void IntroState::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    sf::RenderWindow &mWindow = *getContext().mWindow;
-    mWindow.draw(mBackgroundSprite);
+    target.draw(mBackgroundSprite, states);
 
     if (mShowText)
-        mWindow.draw(mText);
+        target.draw(mText, states);
 }

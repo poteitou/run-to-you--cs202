@@ -7,7 +7,7 @@ Game::Game()
 , mTextures()
 , mFonts()
 , mSoundBuffers()
-, mStateStack(State::Context(mWindow, mTextures, mFonts, mSoundBuffers))
+, mStateStack(State::Context(mTextures, mFonts, mSoundBuffers))
 , mStatisticsText()
 , mStatisticsUpdateTime()
 , mStatisticsNumFrames(0)
@@ -27,7 +27,7 @@ Game::Game()
 	mSoundBuffers.load(Sounds::Jump, "resources/sounds/Jump.wav");
 	mFonts.load(Fonts::Main, "resources/fonts/PixellettersFull.ttf");
 
-	mStatisticsText.setFont(mFonts.get(Fonts::Main));
+mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mStatisticsText.setPosition(50.f, 10.f);
 	mStatisticsText.setCharacterSize(50);
 
@@ -35,7 +35,7 @@ Game::Game()
 	mMouseSprite.setScale(0.2f, 0.2f);
 
 	registerStates();
-	mStateStack.pushState(States::Intro);
+	mStateStack.pushState(States::Menu);
 }
 
 void Game::run()
@@ -131,7 +131,7 @@ void Game::render()
 {
 	mWindow.clear();
 
-	mStateStack.render();
+	mWindow.draw(mStateStack);
 
 	mWindow.setView(mWindow.getDefaultView());
 	mWindow.draw(mStatisticsText);

@@ -1,8 +1,8 @@
 #include <Mine/State.hpp>
 #include <Mine/StateStack.hpp>
 
-State::Context::Context(sf::RenderWindow &window, TextureHolder &textures, FontHolder &fonts, SoundBufferHolder &soundbuffers)
-	: mWindow(&window), mTextures(&textures), mFonts(&fonts), mSoundBuffers(&soundbuffers)
+State::Context::Context(TextureHolder &textures, FontHolder &fonts, SoundBufferHolder &soundbuffers)
+	: mTextures(&textures), mFonts(&fonts), mSoundBuffers(&soundbuffers)
 {
 }
 

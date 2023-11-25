@@ -3,6 +3,7 @@
 
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 #include <MINE/State.hpp>
 #include <MINE/Player.hpp>
@@ -11,6 +12,13 @@
 #include <string>
 #include <iostream>
 
+
+namespace sf
+{
+    class RenderStates;
+    class RenderTarget;
+}
+
 class PlayingState : public State
 {
 public:
@@ -18,15 +26,17 @@ public:
 
     virtual bool handleEvent(User user);
     virtual bool update(sf::Time dt);
-    virtual void render();
+    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 private:
-    sf::Sprite mBackgroundSprite[2];
-    sf::Sprite mGroundSprite[2];
+    std::array<sf::Sprite, 2> mBackgroundSprite;
+    std::array<sf::Sprite, 2> mGroundSprite;
     Player mPlayer;
-    float mScrollSpeed;
-    bool mIsPaused;
+    sf::Text mDistanceText;
     float mGroundHeight;
+    float mScrollSpeed;
+    float mDistance;
+    bool mIsPaused;
 };
 
 #endif // MINE_PLAYINGSTATE_HPP

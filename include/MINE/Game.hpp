@@ -10,7 +10,6 @@
 #include <MINE/Identifier.hpp>
 #include <MINE/StateStack.hpp>
 #include <MINE/User.hpp>
-// #include <Mine/State.hpp>
 #include <Mine/IntroState.hpp>
 #include <Mine/MenuState.hpp>
 #include <Mine/PlayingState.hpp>
