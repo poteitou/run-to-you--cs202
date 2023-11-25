@@ -29,8 +29,8 @@ public:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 private:
-    std::array<sf::Sprite, 2> mBackgroundSprite;
-    std::array<sf::Sprite, 2> mGroundSprite;
+    std::array<sf::Sprite, 3> mBackgroundSprite;
+    std::array<sf::Sprite, 3> mGroundSprite;
     Player mPlayer;
     sf::Text mDistanceText;
     float mGroundHeight;
