@@ -9,6 +9,7 @@
 #include <MINE/ResourceHolder.hpp>
 #include <MINE/Identifier.hpp>
 #include <MINE/StateStack.hpp>
+#include <MINE/Collision.hpp>
 #include <MINE/User.hpp>
 #include <Mine/IntroState.hpp>
 #include <Mine/MenuState.hpp>

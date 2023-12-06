@@ -182,7 +182,9 @@ bool PlayingState::update(sf::Time dt)
 
         for (auto &obstacle : mObstacleQueue)
         {
-            if (mPlayer.getGlobalBounds().intersects(obstacle.second.getGlobalBounds()))
+            // using pixelPerfectTest for obstacle and mPlayer
+            if (Collision::pixelPerfectTest(mPlayer.getSprite(), obstacle.second.getSprite(), (sf::Uint8)0U))
+            // if (mPlayer.getGlobalBounds().intersects(obstacle.second.getGlobalBounds()))
             {
                 // switch (obstacle.first)
                 // {

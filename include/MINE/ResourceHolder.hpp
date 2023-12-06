@@ -1,6 +1,7 @@
 #ifndef MINE_RESOURCEHOLDER_HPP
 #define MINE_RESOURCEHOLDER_HPP
 
+#include <MINE/Collision.hpp>
 #include <map>
 #include <string>
 #include <memory>

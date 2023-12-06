@@ -62,6 +62,11 @@ sf::Vector2f Player::getVelocity() const
     return mVelocity;
 }
 
+const sf::Sprite &Player::getSprite() const
+{
+    return mAnimation.getSprite();
+}
+
 // bool Player::isCollide(const Object &object) const
 // {
 //     return getGlobalBounds().intersects(object.getGlobalBounds());

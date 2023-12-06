@@ -18,6 +18,7 @@ public:
 
 	void setTexture(const sf::Texture &texture);
 	const sf::Texture *getTexture() const;
+	const sf::Sprite &getSprite() const;
 
 	void setFrameSize(sf::Vector2i mFrameSize);
 	sf::Vector2i getFrameSize() const;

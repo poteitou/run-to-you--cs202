@@ -37,6 +37,7 @@ public:
     void accelerate(sf::Vector2f velocity);
     void accelerate(float vx, float vy);
     sf::Vector2f getVelocity() const;
+    const sf::Sprite& getSprite() const;
     
     // bool isCollide(const Object& object) const;
 

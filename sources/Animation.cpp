@@ -51,6 +51,11 @@ const sf::Texture* Animation::getTexture() const
 	return mSprite.getTexture();
 }
 
+const sf::Sprite& Animation::getSprite() const
+{
+	return mSprite;
+}
+
 void Animation::setFrameSize(sf::Vector2i frameSize)
 {
 	mFrameSize = frameSize;

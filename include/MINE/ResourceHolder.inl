@@ -5,7 +5,10 @@ template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string& filename)
 {
 	std::unique_ptr<Resource> resource(new Resource());
-	if (!resource->loadFromFile(filename))
+	// if Resource == sf::Texture, create bitmask
+	if (typeid(Resource) == typeid(sf::Texture) && !createTextureAndBitmask(resource, filename))
+		throw std::runtime_error("ResourceHolder::load - Failed to load " + filename);
+	if (typeid(Resource) != typeid(sf::Texture) && !resource->loadFromFile(filename))
 		throw std::runtime_error("ResourceHolder::load - Failed to load " + filename);
 
 	insertResource(id, std::move(resource));

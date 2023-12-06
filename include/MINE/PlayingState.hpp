@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
+#include <MINE/Collision.hpp>
 #include <MINE/Player.hpp>
 
 #include <queue>
