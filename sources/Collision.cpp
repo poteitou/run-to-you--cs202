@@ -60,6 +60,7 @@ namespace Collision
 
     bool singlePixelTest(const sf::Sprite &sprite, sf::Vector2f &mousePosition, sf::Uint8 alphaLimit)
     {
+        
         if (!sprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y))
             return false;
 
@@ -111,17 +112,39 @@ namespace Collision
         return false;
     }
 
-    bool createTextureAndBitmask(sf::Texture &loadInto, const std::string &filename)
+    bool createTextureAndBitmask(std::unique_ptr<sf::Texture> &loadInto, const std::string &filename)
     {
         auto img = sf::Image();
         if (!img.loadFromFile(filename))
             return false;
-        if (!loadInto.loadFromImage(img))
+        if (!loadInto->loadFromImage(img))
             return false;
 
-        bitmasks().create(loadInto, img);
+        bitmasks().create(*loadInto, img);
         return true;
     }
+
+    bool createTextureAndBitmask(std::unique_ptr<sf::Font> &loadInto, const std::string &filename)
+    {
+        return loadInto->loadFromFile(filename);
+    }
+
+    bool createTextureAndBitmask(std::unique_ptr<sf::SoundBuffer> &loadInto, const std::string &filename)
+    {
+        return loadInto->loadFromFile(filename);
+    }
+
+    // bool createTextureAndBitmask(sf::Texture &loadInto, const std::string &filename)
+    // {
+    //     auto img = sf::Image();
+    //     if (!img.loadFromFile(filename))
+    //         return false;
+    //     if (!loadInto.loadFromImage(img))
+    //         return false;
+
+    //     bitmasks().create(loadInto, img);
+    //     return true;
+    // }
 
     sf::Vector2f getSpriteCenter(const sf::Sprite &sprite)
     {

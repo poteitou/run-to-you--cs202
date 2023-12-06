@@ -61,13 +61,13 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     // default:
     //     break;
     // }
-    sf::Texture &tmpTexture = context.mTextures->get(Textures::BlueSkirt);
+    sf::Texture &tmpTexture = context.mTextures->get(Textures::Heart);
     tmpAnimation.setTexture(tmpTexture);
-    int width = tmpTexture.getSize().x / 4;
+    int width = tmpTexture.getSize().x / 1;
     int height = tmpTexture.getSize().y / 2;
 
     tmpAnimation.setFrameSize(sf::Vector2i(width, height));
-    tmpAnimation.setNumFrames(8);
+    tmpAnimation.setNumFrames(2);
     tmpAnimation.setDuration(sf::seconds(1.f));
     tmpAnimation.centerOrigin();
     tmpAnimation.setRepeating(true);
@@ -134,13 +134,13 @@ void PlayingState::createObstacle()
             // default:
             //     break;
             // }
-            sf::Texture &tmpTexture = getContext().mTextures->get(Textures::BlueSkirt);
+            sf::Texture &tmpTexture = getContext().mTextures->get(Textures::Heart);
             tmpAnimation.setTexture(tmpTexture);
-            int width = tmpTexture.getSize().x / 4;
+            int width = tmpTexture.getSize().x / 1;
             int height = tmpTexture.getSize().y / 2;
 
             tmpAnimation.setFrameSize(sf::Vector2i(width, height));
-            tmpAnimation.setNumFrames(8);
+            tmpAnimation.setNumFrames(2);
             tmpAnimation.setDuration(sf::seconds(1.f));
             tmpAnimation.centerOrigin();
             tmpAnimation.setRepeating(true);
@@ -178,41 +178,16 @@ bool PlayingState::update(sf::Time dt)
             obstacle.second.move(-mScrollSpeed * dt.asSeconds(), 0.f);
         }
         createObstacle();
-        mPlayer.update(dt, mGroundHeight);
 
         for (auto &obstacle : mObstacleQueue)
         {
-            // using pixelPerfectTest for obstacle and mPlayer
             if (Collision::pixelPerfectTest(mPlayer.getSprite(), obstacle.second.getSprite(), (sf::Uint8)0U))
-            // if (mPlayer.getGlobalBounds().intersects(obstacle.second.getGlobalBounds()))
             {
-                // switch (obstacle.first)
-                // {
-                // case 0:
-                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
-                //     break;
-                // case 1:
-                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
-                //     break;
-                // case 2:
-                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
-                //     break;
-                // case 3:
-                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
-                //     break;
-                // case 4:
-                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
-                //     break;
-                // case 5:
-                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
-                //     break;
-                // default:
-                //     break;
-                // }
                 mIsPaused = true;
                 break;
             }
         }
+        mPlayer.update(dt, mGroundHeight);
         for (int i = 0; i < 3; i++)
         {
             mBackgroundSprite[i].move(-mScrollSpeed / 4 * dt.asSeconds(), 0.f);

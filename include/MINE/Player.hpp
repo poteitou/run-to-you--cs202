@@ -39,8 +39,6 @@ public:
     sf::Vector2f getVelocity() const;
     const sf::Sprite& getSprite() const;
     
-    // bool isCollide(const Object& object) const;
-
     void setPosition(float x, float y);
     void changeTexture(sf::Texture &texture);
 

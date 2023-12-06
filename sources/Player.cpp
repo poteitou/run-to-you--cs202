@@ -67,11 +67,6 @@ const sf::Sprite &Player::getSprite() const
     return mAnimation.getSprite();
 }
 
-// bool Player::isCollide(const Object &object) const
-// {
-//     return getGlobalBounds().intersects(object.getGlobalBounds());
-// }
-
 void Player::setPosition(float x, float y)
 {
     mPosition.x = x;

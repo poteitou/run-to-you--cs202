@@ -28,7 +28,7 @@ public:
         Cat,
         Friend,
         Rock,
-        Coin,
+        Bird,
         Heart,
         TypeCount
     };

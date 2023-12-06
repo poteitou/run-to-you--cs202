@@ -2,6 +2,7 @@
 #define MINE_COLLISION_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 namespace Collision
 {
@@ -36,8 +37,10 @@ namespace Collision
     ///
     /// The function returns false if the file could not be opened for some reason
     //////
-    bool createTextureAndBitmask(sf::Texture &loadInto, const std::string &filename);
-
+    // bool createTextureAndBitmask(sf::Texture &loadInto, const std::string &filename);
+    bool createTextureAndBitmask(std::unique_ptr<sf::Texture> &loadInto, const std::string &filename);
+    bool createTextureAndBitmask(std::unique_ptr<sf::Font> &loadInto, const std::string &filename);
+    bool createTextureAndBitmask(std::unique_ptr<sf::SoundBuffer> &loadInto, const std::string &filename);
     //////
     /// Test for collision using circle collision detection
     /// Radius is averaged from the dimensions of the sprite so

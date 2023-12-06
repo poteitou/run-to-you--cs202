@@ -17,7 +17,7 @@ namespace States
 
 namespace Textures
 {
-    enum ID {PinkBackground, Ground, BlueSkirt, RainCoat, Milktea, Cat, Friend, Rock, Heart, Coin, Button, PinkMouse};
+    enum ID {PinkBackground, Ground, BlueSkirt, RainCoat, Milktea, Cat, Friend, Rock, Bird, Heart, Button, PinkMouse};
 }
 
 namespace Fonts
