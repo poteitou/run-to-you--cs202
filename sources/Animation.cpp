@@ -108,7 +108,7 @@ sf::FloatRect Animation::getLocalBounds() const
 
 sf::FloatRect Animation::getGlobalBounds() const
 {
-	return getTransform().transformRect(getLocalBounds());
+	return mSprite.getGlobalBounds();
 }
 
 sf::Vector2f Animation::getPosition() const

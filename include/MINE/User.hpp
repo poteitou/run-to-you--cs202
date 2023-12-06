@@ -13,6 +13,7 @@ struct User
     bool isEnterPressed;
     bool isSpacePressed;
     bool isEscapePressed;
+    bool isUpPressed;
     char keyPress;
 };
 

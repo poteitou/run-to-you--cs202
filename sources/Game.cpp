@@ -14,7 +14,7 @@ Game::Game()
 , mIsPaused(false)
 {
 	mWindow.setMouseCursorVisible(false);
-	mWindow.setKeyRepeatEnabled(false);
+	// mWindow.setKeyRepeatEnabled(false);
 	auto desktop = sf::VideoMode::getDesktopMode();
 	mWindow.setPosition(sf::Vector2i(desktop.width/2 - mWindow.getSize().x / 2, desktop.height / 2 - mWindow.getSize().y / 2 - 100));
 
@@ -35,7 +35,7 @@ mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mMouseSprite.setScale(0.2f, 0.2f);
 
 	registerStates();
-	mStateStack.pushState(States::Menu);
+	mStateStack.pushState(States::Intro);
 }
 
 void Game::run()
@@ -98,6 +98,8 @@ void Game::processInput()
 				mUser.isSpacePressed = true;
 			else if (event.key.code == sf::Keyboard::Escape)
 				mUser.isEscapePressed = true;
+			else if (event.key.code == sf::Keyboard::Up)
+				mUser.isUpPressed = true;
 			break;
         case sf::Event::TextEntered:
             if (event.text.unicode == 8) // Backspace

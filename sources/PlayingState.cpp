@@ -96,7 +96,7 @@ void PlayingState::createObstacle()
             switch (randPos)
             {
             case 0:
-                delta = mScrollSpeed * 0.7f;
+                delta = mScrollSpeed;
                 break;
             case 1:
                 delta = mScrollSpeed * 1.5f;
@@ -178,7 +178,39 @@ bool PlayingState::update(sf::Time dt)
             obstacle.second.move(-mScrollSpeed * dt.asSeconds(), 0.f);
         }
         createObstacle();
-        int distance = 0;
+        mPlayer.update(dt, mGroundHeight);
+
+        for (auto &obstacle : mObstacleQueue)
+        {
+            if (mPlayer.getGlobalBounds().intersects(obstacle.second.getGlobalBounds()))
+            {
+                // switch (obstacle.first)
+                // {
+                // case 0:
+                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
+                //     break;
+                // case 1:
+                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
+                //     break;
+                // case 2:
+                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
+                //     break;
+                // case 3:
+                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
+                //     break;
+                // case 4:
+                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
+                //     break;
+                // case 5:
+                //     mPlayer.setVelocity(0.f, -mScrollSpeed * 2.f);
+                //     break;
+                // default:
+                //     break;
+                // }
+                mIsPaused = true;
+                break;
+            }
+        }
         for (int i = 0; i < 3; i++)
         {
             mBackgroundSprite[i].move(-mScrollSpeed / 4 * dt.asSeconds(), 0.f);
@@ -191,7 +223,6 @@ bool PlayingState::update(sf::Time dt)
             if (mGroundSprite[i].getPosition().x < -1599.f)
                 mGroundSprite[i].setPosition(mGroundSprite[(i + 2) % 3].getPosition().x + 1599.f, 0.f); 
         }
-        mPlayer.update(dt, mGroundHeight);
         if ((int)(mDistance) / 100 % 100 == 0)
             mScrollSpeed += 20.f;
     }

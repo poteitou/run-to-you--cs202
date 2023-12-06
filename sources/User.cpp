@@ -7,6 +7,7 @@ User::User()
 , isEnterPressed(false)
 , isSpacePressed(false)
 , isEscapePressed(false)
+, isUpPressed(false)
 , keyPress('$')
 {
 }

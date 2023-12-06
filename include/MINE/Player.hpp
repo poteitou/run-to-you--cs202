@@ -64,7 +64,6 @@ private:
     bool mIsRunning;
     bool mIsJumping;
     bool mPlayedJumpSound;
-    bool mIsSpecial;
 };
 
 #endif // MINE_PLAYER_HPP

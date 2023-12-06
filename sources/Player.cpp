@@ -8,7 +8,6 @@ Player::Player(State::Context context)
       mIsRunning(true),
       mIsJumping(false),
       mPlayedJumpSound(false),
-      mIsSpecial(false),
       mGravity(1.f)
 {
     mJumpSound.setVolume(100);
@@ -33,11 +32,7 @@ void Player::centerOrigin(sf::Sprite &sprite)
 
 sf::FloatRect Player::getGlobalBounds()
 {
-    if (!mIsSpecial)
-    {
-        return mAnimation.getGlobalBounds();
-    }
-    return mSprite.getGlobalBounds();
+    return mAnimation.getGlobalBounds();
 }
 
 void Player::setVelocity(sf::Vector2f velocity)
@@ -88,7 +83,7 @@ void Player::changeTexture(sf::Texture &texture)
 
 void Player::handleEvent(User user)
 {
-    if (user.isSpacePressed)
+    if (user.isSpacePressed || user.isUpPressed)
     {
         if (!mIsJumping)
         {
