@@ -1,116 +1,102 @@
-// #include <MINE/Object.hpp>
+#include <MINE/Object.hpp>
 
-// Object::Object(State::Context context, Object::Type type)
-//     : mAnimation(context.mTextures->get(Textures::BlueSkirt)),
-//       mSprite(context.mTextures->get(Textures::BlueSkirt)),
-//       mCollideSound(context.mSoundBuffers->get(Sounds::Jump)),
-//       mVelocity(0.f, 0.f),
-//       mPlayedCollideSound(false),
-//       mIsCollide(false),
-//       mGravity(1.f)
-// {
-//     mCollideSound.setVolume(100);
-//     // top, left, width, height
-//     mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 4;
-//     mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 2;
-//     mSprite.setTextureRect(sf::IntRect(mWidth * 2, mHeight, mWidth, mHeight));
-//     centerOrigin(mSprite);
+Object::Object(State::Context context, Type type, float x, float y)
+    : mPlayedCollideSound(false),
+      mAnimation(),
+      mCollideSound(),
+    //   mAnimation(context.mTextures->get(Textures::Heart)),
+    //   mCollideSound(context.mSoundBuffers->get(Sounds::Jump)),
+      mIsCollide(false)
+{
+    // switch (type)
+    // {
+    // case Object::Type::Heart:
+        sf::Texture &tmpTexture = context.mTextures->get(Textures::Heart);
+        mAnimation.setTexture(tmpTexture);
+        // sf::SoundBuffer& tmpSoundBuffer = context.mSoundBuffers->get(Sounds::Jump);
+        // mCollideSound.setBuffer(tmpSoundBuffer);
+        // mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
+    //     break;
+    // }
+    // mCollideSound.setVolume(100);
+    // top, left, width, height
+    mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 1;
+    mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 2;
 
-//     mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
-//     mAnimation.setNumFrames(8);
-//     mAnimation.setDuration(sf::seconds(1.f));
-//     mAnimation.centerOrigin();
-//     mAnimation.setRepeating(true);
-// }
+    mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
+    mAnimation.setNumFrames(2);
+    mAnimation.setDuration(sf::seconds(1.f));
+    mAnimation.centerOrigin();
+    mAnimation.setRepeating(true);
 
-// void Object::centerOrigin(sf::Sprite &sprite)
-// {
-//     sf::FloatRect bounds = sprite.getLocalBounds();
-//     sprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
-// }
+    mType = type;
+    setPosition(x, y);
+}
 
-// sf::FloatRect Object::getGlobalBounds()
-// {
-//     if (!mIsCollide)
-//     {
-//         return mAnimation.getGlobalBounds();
-//     }
-//     return mSprite.getGlobalBounds();
-// }
+void Object::centerOrigin(sf::Sprite &sprite)
+{
+    sf::FloatRect bounds = sprite.getLocalBounds();
+    sprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
+}
 
-// // bool Object::isCollide(const Object &object) const
-// // {
-// //     return getGlobalBounds().intersects(object.getGlobalBounds());
-// // }
+sf::FloatRect Object::getGlobalBounds()
+{
+    return mAnimation.getGlobalBounds();
+}
 
-// void Object::setPosition(float x, float y)
-// {
-//     mPosition.x = x;
-//     mPosition.y = y;
-//     mAnimation.setPosition(x, y);
-//     mSprite.setPosition(x, y);
-// }
+Object::Type Object::getType()
+{
+    return mType;
+}
 
-// void Object::changeTexture(sf::Texture &texture)
-// {
-//     mAnimation.setTexture(texture);
-//     mSprite.setTexture(texture);
-// }
+void Object::setPosition(float x, float y)
+{
+    mAnimation.setPosition(x, y);
+}
 
-// void Object::handleEvent(User user)
-// {
-//     if (user.isSpacePressed)
-//     {
-//         if (!mIsJumping)
-//         {
-//             mVelocity.y = -25.f;
-//             mPlayedCollideSound = false;
-//             mIsJumping = true;
-//         }
-//     }
-//     else if (!mIsJumping)
-//     {
-//         mVelocity.y = 0.f;
-//     }
-// }
+sf::Vector2f Object::getPosition()
+{
+    return mAnimation.getPosition();
+}
 
-// void Object::update(sf::Time dt, float groundHeight)
-// {
-//     // jumping mechanic
-//     if (mPosition.y < groundHeight) // above ground
-//     {
-//         mVelocity.y += mGravity; // add gravity
-//         mIsJumping = true;
-//     }
-//     else if (mPosition.y > groundHeight) // below ground
-//         mPosition.y = groundHeight;
+bool Object::isOutOfScreen()
+{
+    return mAnimation.getPosition().x < -mWidth;
+}
 
-//     if (mPosition.y == groundHeight)
-//         mIsJumping = false;
+void Object::changeTexture(sf::Texture &texture)
+{
+    mAnimation.setTexture(texture);
+}
 
-//     mAnimation.setPosition(mPosition);
-//     mPosition.y += mVelocity.y;
-//     mPosition.x += mVelocity.x * dt.asSeconds();
+void Object::handleEvent(User user)
+{
+    
+}
 
-//     if (!mPlayedCollideSound)
-//     {
-//         mCollideSound.play();
-//         mPlayedCollideSound = true;
-//     }
-//     if (mIsJumping)
-//         mAnimation.setFrame(0);
-//     else 
-//         mAnimation.update(dt);
-// }
+void Object::update(sf::Time dt, float scrollSpeed, float groundHeight)
+{
+    mAnimation.move(-scrollSpeed * dt.asSeconds(), 0.f);
 
-// bool Object::isJumping() const
-// {
-//     return mIsJumping;
-// }
+    if (!mPlayedCollideSound)
+    {
+        mCollideSound.play();
+        mPlayedCollideSound = true;
+    }
+    if (mIsCollide)
+        mAnimation.setFrame(0);
+    else 
+        mAnimation.update(dt);
+}
 
-// void Object::draw(sf::RenderTarget &target, sf::RenderStates states) const
-// {
-//     states.transform *= getTransform();
-//     target.draw(mAnimation, states);
-// }
+bool Object::isCollide(const Player &player) 
+{
+    return Collision::pixelPerfectTest(player.getSprite(), mAnimation.getSprite(), (sf::Uint8)0U);
+}
+
+void Object::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    states.transform *= getTransform();
+    target.draw(mAnimation, states);
+}
 

@@ -6,6 +6,7 @@
 
 #include <MINE/Collision.hpp>
 #include <MINE/Player.hpp>
+#include <MINE/Object.hpp>
 
 #include <queue>
 #include <vector>
@@ -44,7 +45,8 @@ public:
 private:
     std::array<sf::Sprite, 3> mBackgroundSprite;
     std::array<sf::Sprite, 3> mGroundSprite;
-    std::deque<std::pair<int, Animation>> mObstacleQueue;
+    // std::deque<std::pair<int, Animation>> mObstacleQueue;
+    std::deque<Object> mObstacleQueue;
     Player mPlayer;
     sf::Text mDistanceText;
     float mGroundHeight;

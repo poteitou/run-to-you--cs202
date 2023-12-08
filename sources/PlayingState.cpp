@@ -35,56 +35,43 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     mPlayer.setVelocity(0.f, 0.f);
 
     // prepare for distance text
-    mDistanceText.setPosition(50.f, 100.f);
+    mDistanceText.setPosition(50.f, 80.f);
     mDistanceText.setColor(sf::Color::Black);
 
     // initialize obstacle queue, include some obstacles start from position 1800.f
-    Animation tmpAnimation;
+    // Animation tmpAnimation;
     srand(time(NULL));
     int obstacleType = rand() % (TypeCount - 2);
             
-    tmpAnimation.setPosition(1800.f, mGroundHeight);
-    // switch (obstacleType)
-    // {
-    // case 0:
-    //     tmpTexture = context.mTextures->get(Textures::Milktea);
-    //     break;
-    // case 1:
-    //     tmpTexture = context.mTextures->get(Textures::Cat);
-    //     break;
-    // case 2:
-    //     tmpTexture = context.mTextures->get(Textures::Friend);
-    //     break;
-    // case 3:
-    //     tmpTexture = context.mTextures->get(Textures::Rock);
-    //     break;
-    // default:
-    //     break;
-    // }
-    sf::Texture &tmpTexture = context.mTextures->get(Textures::Heart);
-    tmpAnimation.setTexture(tmpTexture);
-    int width = tmpTexture.getSize().x / 1;
-    int height = tmpTexture.getSize().y / 2;
+    // tmpAnimation.setPosition(1800.f, mGroundHeight);
+    
+    // sf::Texture &tmpTexture = context.mTextures->get(Textures::Heart);
+    // tmpAnimation.setTexture(tmpTexture);
+    // int width = tmpTexture.getSize().x / 1;
+    // int height = tmpTexture.getSize().y / 2;
 
-    tmpAnimation.setFrameSize(sf::Vector2i(width, height));
-    tmpAnimation.setNumFrames(2);
-    tmpAnimation.setDuration(sf::seconds(1.f));
-    tmpAnimation.centerOrigin();
-    tmpAnimation.setRepeating(true);
-    mObstacleQueue.push_back(std::make_pair(obstacleType, tmpAnimation));
+    // tmpAnimation.setFrameSize(sf::Vector2i(width, height));
+    // tmpAnimation.setNumFrames(2);
+    // tmpAnimation.setDuration(sf::seconds(1.f));
+    // tmpAnimation.centerOrigin();
+    // tmpAnimation.setRepeating(true);
+    // mObstacleQueue.push_back(std::make_pair(obstacleType, tmpAnimation));
+    mObstacleQueue.push_back(Object(context, (Object::Type)obstacleType, 1800.f, mGroundHeight));
 }
 
 void PlayingState::createObstacle()
 {
     srand(time(NULL));
-    if (mObstacleQueue.back().second.getPosition().x < 1600.f)
+    // if (mObstacleQueue.back().second.getPosition().x < 1600.f)
+    if (mObstacleQueue.back().getPosition().x < 1600.f)
     {
         bool hasHeart = false;
         bool hasCoin = false;
         
-        while (mObstacleQueue.back().second.getPosition().x < 3200.f)
+        // while (mObstacleQueue.back().second.getPosition().x < 3200.f)
+        while (mObstacleQueue.back().getPosition().x < 3200.f)
         {
-            Animation tmpAnimation;
+            // Animation tmpAnimation;
             int obstacleType = rand() % TypeCount;
             if (obstacleType == Heart && hasHeart)
                 obstacleType = rand() % (TypeCount - 1);
@@ -108,43 +95,23 @@ void PlayingState::createObstacle()
                 delta = mScrollSpeed * 2.f;
                 break;
             }
-            tmpAnimation.setPosition(mObstacleQueue.back().second.getPosition().x + delta, mGroundHeight);
-            // switch (obstacleType)
-            // {
-            // case 0:
-            //     tmpTexture = *getContext().mTextures->get(Textures::Milktea);
-            //     break;
-            // case 1:
-            //     tmpTexture = *getContext().mTextures->get(Textures::Cat);
-            //     break;
-            // case 2:
-            //     tmpTexture = *getContext().mTextures->get(Textures::Friend);
-            //     break;
-            // case 3:
-            //     tmpTexture = *getContext().mTextures->get(Textures::Rock);
-            //     break;
-            // case 4:
-            //     tmpTexture = *getContext().mTextures->get(Textures::Coin);
-            //     hasCoin = true;
-            //     break;
-            // case 5:
-            //     tmpTexture = *getContext().mTextures->get(Textures::Heart);
-            //     hasHeart = true;
-            //     break;
-            // default:
-            //     break;
-            // }
-            sf::Texture &tmpTexture = getContext().mTextures->get(Textures::Heart);
-            tmpAnimation.setTexture(tmpTexture);
-            int width = tmpTexture.getSize().x / 1;
-            int height = tmpTexture.getSize().y / 2;
+            // tmpAnimation.setPosition(mObstacleQueue.back().second.getPosition().x + delta, mGroundHeight);
 
-            tmpAnimation.setFrameSize(sf::Vector2i(width, height));
-            tmpAnimation.setNumFrames(2);
-            tmpAnimation.setDuration(sf::seconds(1.f));
-            tmpAnimation.centerOrigin();
-            tmpAnimation.setRepeating(true);
-            mObstacleQueue.push_back(std::make_pair(obstacleType, tmpAnimation));
+            obstacleType = Object::Type::Heart;
+            Object tmpOject(getContext(), (Object::Type)obstacleType, mObstacleQueue.back().getPosition().x + delta, mGroundHeight);
+            // tmpAnimation.setPosition(mObstacleQueue.back().getPosition().x + delta, mGroundHeight);
+
+            // sf::Texture &tmpTexture = getContext().mTextures->get(Textures::Heart);
+            // tmpAnimation.setTexture(tmpTexture);
+            // int width = tmpTexture.getSize().x / 1;
+            // int height = tmpTexture.getSize().y / 2;
+
+            // tmpAnimation.setFrameSize(sf::Vector2i(width, height));
+            // tmpAnimation.setNumFrames(2);
+            // tmpAnimation.setDuration(sf::seconds(1.f));
+            // tmpAnimation.centerOrigin();
+            // tmpAnimation.setRepeating(true);
+            // mObstacleQueue.push_back(std::make_pair(obstacleType, tmpAnimation));
         }
     }
 }
@@ -170,18 +137,21 @@ bool PlayingState::update(sf::Time dt)
     {
         mDistance += mScrollSpeed * dt.asSeconds();
         mDistanceText.setString("Distance: " + std::to_string((int)mDistance / 100) + "m");
-        if (!mObstacleQueue.empty() && mObstacleQueue.front().second.getPosition().x < -mObstacleQueue.front().second.getFrameSize().x)
+        // if (!mObstacleQueue.empty() && mObstacleQueue.front().second.getPosition().x < -mObstacleQueue.front().second.getFrameSize().x)
+        if (!mObstacleQueue.empty() && mObstacleQueue.front().isOutOfScreen())
             mObstacleQueue.pop_front();
         for (auto &obstacle : mObstacleQueue)
         {
-            obstacle.second.update(dt);
-            obstacle.second.move(-mScrollSpeed * dt.asSeconds(), 0.f);
+            // obstacle.second.update(dt);
+            // obstacle.second.move(-mScrollSpeed * dt.asSeconds(), 0.f);
+            obstacle.update(dt, mScrollSpeed, mGroundHeight);
         }
-        createObstacle();
+        // createObstacle();
 
         for (auto &obstacle : mObstacleQueue)
         {
-            if (Collision::pixelPerfectTest(mPlayer.getSprite(), obstacle.second.getSprite(), (sf::Uint8)0U))
+            // if (Collision::pixelPerfectTest(mPlayer.getSprite(), obstacle.second.getSprite(), (sf::Uint8)0U))
+            if (obstacle.isCollide(mPlayer))
             {
                 mIsPaused = true;
                 break;
@@ -208,14 +178,6 @@ bool PlayingState::update(sf::Time dt)
 
 void PlayingState::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    /*
-    // this code will cause unexpected behavior
-    for (int i = 0; i < 2; i++)
-    {
-        target.draw(mBackgroundSprite[i], states);
-        target.draw(mGroundSprite[i], states);
-    }
-    */
     for (auto &sprite : mBackgroundSprite)
     {
         target.draw(sprite, states);
@@ -228,7 +190,8 @@ void PlayingState::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
     for (auto &obstacle : mObstacleQueue)
     {
-        target.draw(obstacle.second, states);
+        // target.draw(obstacle.second, states);
+        target.draw(obstacle, states);
     }
     target.draw(mPlayer, states);
 }   
