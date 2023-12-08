@@ -1,27 +1,22 @@
 #include <MINE/Object.hpp>
 
-Object::Object(State::Context context, Type type, float x, float y)
+Object::Object(State::Context context, std::string type, float x, float y)
     : mPlayedCollideSound(false),
       mAnimation(),
       mCollideSound(),
-    //   mAnimation(context.mTextures->get(Textures::Heart)),
-    //   mCollideSound(context.mSoundBuffers->get(Sounds::Jump)),
       mIsCollide(false)
 {
     // switch (type)
     // {
     // case Object::Type::Heart:
-        sf::Texture &tmpTexture = context.mTextures->get(Textures::Heart);
-        mAnimation.setTexture(tmpTexture);
-        // sf::SoundBuffer& tmpSoundBuffer = context.mSoundBuffers->get(Sounds::Jump);
-        // mCollideSound.setBuffer(tmpSoundBuffer);
-        // mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
+        mAnimation.setTexture(context.mTextures->get(Textures::Heart));
+        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
     //     break;
     // }
-    // mCollideSound.setVolume(100);
+    mCollideSound.setVolume(100);
     // top, left, width, height
-    mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 1;
-    mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 2;
+    mWidth = context.mTextures->get(Textures::Heart).getSize().x / 1;
+    mHeight = context.mTextures->get(Textures::Heart).getSize().y / 2;
 
     mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
     mAnimation.setNumFrames(2);
@@ -44,7 +39,7 @@ sf::FloatRect Object::getGlobalBounds()
     return mAnimation.getGlobalBounds();
 }
 
-Object::Type Object::getType()
+std::string Object::getType()
 {
     return mType;
 }

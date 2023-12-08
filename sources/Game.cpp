@@ -36,7 +36,7 @@ mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mMouseSprite.setScale(0.2f, 0.2f);
 
 	registerStates();
-	mStateStack.pushState(States::Intro);
+	mStateStack.pushState(States::Playing);
 }
 
 void Game::run()

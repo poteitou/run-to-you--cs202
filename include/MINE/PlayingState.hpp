@@ -45,7 +45,7 @@ public:
 private:
     std::array<sf::Sprite, 3> mBackgroundSprite;
     std::array<sf::Sprite, 3> mGroundSprite;
-    // std::deque<std::pair<int, Animation>> mObstacleQueue;
+    std::array<std::string, 6> mTypeObject;
     std::deque<Object> mObstacleQueue;
     Player mPlayer;
     sf::Text mDistanceText;

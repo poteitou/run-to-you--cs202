@@ -1,13 +1,13 @@
 #include <MINE/PlayingState.hpp>
 
 PlayingState::PlayingState(StateStack &stack, Context context)
-    : State(stack, context), 
+    : State(stack, context),
       mBackgroundSprite(),
       mGroundSprite(),
       mDistanceText("", context.mFonts->get(Fonts::Main), 50),
       mPlayer(context),
       mGroundHeight(900.f - 200.f),
-      mScrollSpeed(200.f), 
+      mScrollSpeed(200.f),
       mDistance(0.f),
       mIsPaused(false)
 {
@@ -15,7 +15,7 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     sf::Texture &groundTexture = context.mTextures->get(Textures::Ground);
 
     sf::IntRect textureRect(0.f, 0.f, 1600.f, 900.f);
-    
+
     // prepare for background and ground continuous scrolling
     for (int i = 0; i < 3; i++)
     {
@@ -39,45 +39,27 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     mDistanceText.setColor(sf::Color::Black);
 
     // initialize obstacle queue, include some obstacles start from position 1800.f
-    // Animation tmpAnimation;
+    mTypeObject = {"Milktea", "Cat", "Friend", "Rock", "Bird", "Heart"};
     srand(time(NULL));
-    int obstacleType = rand() % (TypeCount - 2);
-            
-    // tmpAnimation.setPosition(1800.f, mGroundHeight);
-    
-    // sf::Texture &tmpTexture = context.mTextures->get(Textures::Heart);
-    // tmpAnimation.setTexture(tmpTexture);
-    // int width = tmpTexture.getSize().x / 1;
-    // int height = tmpTexture.getSize().y / 2;
+    int obstacleType = rand() % (mTypeObject.size() - 1);
 
-    // tmpAnimation.setFrameSize(sf::Vector2i(width, height));
-    // tmpAnimation.setNumFrames(2);
-    // tmpAnimation.setDuration(sf::seconds(1.f));
-    // tmpAnimation.centerOrigin();
-    // tmpAnimation.setRepeating(true);
-    // mObstacleQueue.push_back(std::make_pair(obstacleType, tmpAnimation));
-    mObstacleQueue.push_back(Object(context, (Object::Type)obstacleType, 1800.f, mGroundHeight));
+    mObstacleQueue.push_back(Object(context, mTypeObject[obstacleType], 1800.f, mGroundHeight));
 }
 
 void PlayingState::createObstacle()
 {
     srand(time(NULL));
-    // if (mObstacleQueue.back().second.getPosition().x < 1600.f)
     if (mObstacleQueue.back().getPosition().x < 1600.f)
     {
         bool hasHeart = false;
         bool hasCoin = false;
-        
-        // while (mObstacleQueue.back().second.getPosition().x < 3200.f)
+
         while (mObstacleQueue.back().getPosition().x < 3200.f)
         {
-            // Animation tmpAnimation;
-            int obstacleType = rand() % TypeCount;
-            if (obstacleType == Heart && hasHeart)
-                obstacleType = rand() % (TypeCount - 1);
-            else if (obstacleType == 4 && hasCoin)
-                obstacleType = rand() % (TypeCount - 2);
-            
+            int obstacleType = rand() % mTypeObject.size();
+            if (mTypeObject[obstacleType] == "Heart" && hasHeart)
+                obstacleType = rand() % (mTypeObject.size() - 1);
+
             int randPos = rand() % 4;
             float delta;
             switch (randPos)
@@ -95,23 +77,8 @@ void PlayingState::createObstacle()
                 delta = mScrollSpeed * 2.f;
                 break;
             }
-            // tmpAnimation.setPosition(mObstacleQueue.back().second.getPosition().x + delta, mGroundHeight);
 
-            obstacleType = Object::Type::Heart;
-            Object tmpOject(getContext(), (Object::Type)obstacleType, mObstacleQueue.back().getPosition().x + delta, mGroundHeight);
-            // tmpAnimation.setPosition(mObstacleQueue.back().getPosition().x + delta, mGroundHeight);
-
-            // sf::Texture &tmpTexture = getContext().mTextures->get(Textures::Heart);
-            // tmpAnimation.setTexture(tmpTexture);
-            // int width = tmpTexture.getSize().x / 1;
-            // int height = tmpTexture.getSize().y / 2;
-
-            // tmpAnimation.setFrameSize(sf::Vector2i(width, height));
-            // tmpAnimation.setNumFrames(2);
-            // tmpAnimation.setDuration(sf::seconds(1.f));
-            // tmpAnimation.centerOrigin();
-            // tmpAnimation.setRepeating(true);
-            // mObstacleQueue.push_back(std::make_pair(obstacleType, tmpAnimation));
+            mObstacleQueue.push_back(Object(getContext(), mTypeObject[obstacleType], mObstacleQueue.back().getPosition().x + delta, mGroundHeight));
         }
     }
 }
@@ -137,20 +104,16 @@ bool PlayingState::update(sf::Time dt)
     {
         mDistance += mScrollSpeed * dt.asSeconds();
         mDistanceText.setString("Distance: " + std::to_string((int)mDistance / 100) + "m");
-        // if (!mObstacleQueue.empty() && mObstacleQueue.front().second.getPosition().x < -mObstacleQueue.front().second.getFrameSize().x)
         if (!mObstacleQueue.empty() && mObstacleQueue.front().isOutOfScreen())
             mObstacleQueue.pop_front();
         for (auto &obstacle : mObstacleQueue)
         {
-            // obstacle.second.update(dt);
-            // obstacle.second.move(-mScrollSpeed * dt.asSeconds(), 0.f);
             obstacle.update(dt, mScrollSpeed, mGroundHeight);
         }
-        // createObstacle();
+        createObstacle();
 
         for (auto &obstacle : mObstacleQueue)
         {
-            // if (Collision::pixelPerfectTest(mPlayer.getSprite(), obstacle.second.getSprite(), (sf::Uint8)0U))
             if (obstacle.isCollide(mPlayer))
             {
                 mIsPaused = true;
@@ -168,7 +131,7 @@ bool PlayingState::update(sf::Time dt)
             if (mBackgroundSprite[i].getPosition().x < -1599.f)
                 mBackgroundSprite[i].setPosition(mBackgroundSprite[(i + 2) % 3].getPosition().x + 1599.f, 0.f);
             if (mGroundSprite[i].getPosition().x < -1599.f)
-                mGroundSprite[i].setPosition(mGroundSprite[(i + 2) % 3].getPosition().x + 1599.f, 0.f); 
+                mGroundSprite[i].setPosition(mGroundSprite[(i + 2) % 3].getPosition().x + 1599.f, 0.f);
         }
         if ((int)(mDistance) / 100 % 100 == 0)
             mScrollSpeed += 20.f;
@@ -190,8 +153,7 @@ void PlayingState::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
     for (auto &obstacle : mObstacleQueue)
     {
-        // target.draw(obstacle.second, states);
         target.draw(obstacle, states);
     }
     target.draw(mPlayer, states);
-}   
+}

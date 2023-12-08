@@ -11,6 +11,8 @@
 #include <MINE/Player.hpp>
 #include <MINE/State.hpp>
 
+#include <string>
+
 namespace sf
 {
     class RenderStates;
@@ -34,11 +36,11 @@ public:
     };
 
 public:
-    Object(State::Context context, Type type, float x, float y);
+    Object(State::Context context, std::string type, float x, float y);
 
     void centerOrigin(sf::Sprite& sprite);
     sf::FloatRect getGlobalBounds();
-    Type getType();
+    std::string getType();
 
     void setPosition(float x, float y);
     sf::Vector2f getPosition();
@@ -56,7 +58,7 @@ private:
 private:
     Animation mAnimation;
     sf::Sound mCollideSound;
-    Type mType;
+    std::string mType;
 
     int mWidth;
     int mHeight;

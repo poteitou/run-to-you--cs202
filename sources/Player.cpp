@@ -116,7 +116,7 @@ void Player::update(sf::Time dt, float groundHeight)
     mPosition.y += mVelocity.y;
     mPosition.x += mVelocity.x * dt.asSeconds();
 
-    if (!mPlayedJumpSound)
+    if (mIsJumping && !mPlayedJumpSound)
     {
         mJumpSound.play();
         mPlayedJumpSound = true;
