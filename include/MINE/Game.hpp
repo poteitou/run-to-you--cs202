@@ -14,7 +14,7 @@
 #include <Mine/IntroState.hpp>
 #include <Mine/MenuState.hpp>
 #include <Mine/PlayingState.hpp>
-// #include <Mine/PauseState.hpp>
+#include <Mine/PausedState.hpp>
 // #include <Mine/SettingsState.hpp>
 // #include <Mine/GameOverState.hpp>
 

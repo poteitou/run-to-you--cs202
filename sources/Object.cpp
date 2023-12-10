@@ -6,21 +6,62 @@ Object::Object(State::Context context, std::string type, float x, float y)
       mCollideSound(),
       mIsCollide(false)
 {
-    // switch (type)
-    // {
-    // case Object::Type::Heart:
+    type = "Heart";
+    if (type == "Milktea")
+    {
         mAnimation.setTexture(context.mTextures->get(Textures::Heart));
         mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
-    //     break;
-    // }
+        mWidth = mAnimation.getTexture()->getSize().x;
+        mHeight = mAnimation.getTexture()->getSize().y / 2;
+        mAnimation.setNumFrames(2);
+    }
+    else if (type == "Cat")
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::Cat));
+        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
+        mWidth = mAnimation.getTexture()->getSize().x / 6;
+        mHeight = mAnimation.getTexture()->getSize().y;
+        mAnimation.setNumFrames(6);
+        y += 20.f;
+    }
+    else if (type == "Friend")
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::Heart));
+        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
+        mWidth = mAnimation.getTexture()->getSize().x;
+        mHeight = mAnimation.getTexture()->getSize().y / 2;
+        mAnimation.setNumFrames(2);
+    }
+    else if (type == "Rock")
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::Heart));
+        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
+        mWidth = mAnimation.getTexture()->getSize().x;
+        mHeight = mAnimation.getTexture()->getSize().y / 2;
+        mAnimation.setNumFrames(2);
+    }
+    else if (type == "Bird")
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::Bird));
+        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
+        mWidth = mAnimation.getTexture()->getSize().x / 8;
+        mHeight = mAnimation.getTexture()->getSize().y;
+        mAnimation.setDuration(sf::seconds(0.7f));
+        mAnimation.setNumFrames(8);
+        y -= 300.f;
+    }
+    else if (type == "Heart")
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::Heart));
+        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Heart));
+        mWidth = mAnimation.getTexture()->getSize().x;
+        mHeight = mAnimation.getTexture()->getSize().y / 2;
+        mAnimation.setNumFrames(2);
+    }
     mCollideSound.setVolume(100);
-    // top, left, width, height
-    mWidth = context.mTextures->get(Textures::Heart).getSize().x / 1;
-    mHeight = context.mTextures->get(Textures::Heart).getSize().y / 2;
 
     mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
-    mAnimation.setNumFrames(2);
-    mAnimation.setDuration(sf::seconds(1.f));
+    mAnimation.setDuration(sf::seconds(0.7f));
     mAnimation.centerOrigin();
     mAnimation.setRepeating(true);
 
@@ -66,27 +107,38 @@ void Object::changeTexture(sf::Texture &texture)
 
 void Object::handleEvent(User user)
 {
-    
 }
 
-void Object::update(sf::Time dt, float scrollSpeed, float groundHeight)
+void Object::update(sf::Time dt, float scrollSpeed, const Player &player)
 {
     mAnimation.move(-scrollSpeed * dt.asSeconds(), 0.f);
+    if (Collision::pixelPerfectTest(player.getSprite(), mAnimation.getSprite(), (sf::Uint8)0U))
+    {
+        if (!mIsCollide)
+        {
+            mIsCollide = true;
+            mPlayedCollideSound = false;
+        }
+    }
+    else
+    {
+        mIsCollide = false;
+    }
 
-    if (!mPlayedCollideSound)
+    if (mIsCollide && !mPlayedCollideSound)
     {
         mCollideSound.play();
         mPlayedCollideSound = true;
     }
     if (mIsCollide)
         mAnimation.setFrame(0);
-    else 
+    else
         mAnimation.update(dt);
 }
 
-bool Object::isCollide(const Player &player) 
+bool Object::isCollide()
 {
-    return Collision::pixelPerfectTest(player.getSprite(), mAnimation.getSprite(), (sf::Uint8)0U);
+    return mIsCollide;
 }
 
 void Object::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -94,4 +146,3 @@ void Object::draw(sf::RenderTarget &target, sf::RenderStates states) const
     states.transform *= getTransform();
     target.draw(mAnimation, states);
 }
-

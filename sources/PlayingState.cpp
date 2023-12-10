@@ -85,9 +85,10 @@ void PlayingState::createObstacle()
 
 bool PlayingState::handleEvent(User user)
 {
-    if (user.isEscapePressed && !mIsPaused)
+    if (user.isEscapePressed)
     {
-        mIsPaused = true;
+        // mIsPaused = true;
+        requestStackPush(States::Paused);
     }
     if (user.isEnterPressed && mIsPaused)
     {
@@ -108,13 +109,13 @@ bool PlayingState::update(sf::Time dt)
             mObstacleQueue.pop_front();
         for (auto &obstacle : mObstacleQueue)
         {
-            obstacle.update(dt, mScrollSpeed, mGroundHeight);
+            obstacle.update(dt, mScrollSpeed, mPlayer);
         }
         createObstacle();
 
         for (auto &obstacle : mObstacleQueue)
         {
-            if (obstacle.isCollide(mPlayer))
+            if (obstacle.isCollide())
             {
                 mIsPaused = true;
                 break;

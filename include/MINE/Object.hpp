@@ -49,8 +49,8 @@ public:
     void changeTexture(sf::Texture &texture);
 
     void handleEvent(User user);
-    void update(sf::Time dt, float scrollSpeed, float groundHeight);
-    bool isCollide(const Player &player);
+    void update(sf::Time dt, float scrollSpeed, const Player &player);
+    bool isCollide();
 
 private:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
