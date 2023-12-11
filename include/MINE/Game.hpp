@@ -38,6 +38,8 @@ private:
     static const sf::Time TimePerFrame;
 
     sf::RenderWindow mWindow;
+    sf::Cursor mCursor;
+    sf::Image mCursorImage;
     SoundBufferHolder mSoundBuffers;
     TextureHolder mTextures;
     FontHolder mFonts;
@@ -49,7 +51,6 @@ private:
     std::size_t mStatisticsNumFrames;
     sf::Time mStatisticsUpdateTime;
     sf::Text mStatisticsText;
-    sf::Sprite mMouseSprite;
 };
 
 #endif // MINE_GAME_HPP

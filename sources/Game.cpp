@@ -13,7 +13,6 @@ Game::Game()
 , mStatisticsNumFrames(0)
 , mIsPaused(false)
 {
-	mWindow.setMouseCursorVisible(false);
 	// mWindow.setKeyRepeatEnabled(false);
 	auto desktop = sf::VideoMode::getDesktopMode();
 	mWindow.setPosition(sf::Vector2i(desktop.width/2 - mWindow.getSize().x / 2, desktop.height / 2 - mWindow.getSize().y / 2 - 100));
@@ -35,8 +34,13 @@ mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mStatisticsText.setPosition(50.f, 10.f);
 	mStatisticsText.setCharacterSize(50);
 
-	mMouseSprite.setTexture(mTextures.get(Textures::PinkMouse));
-	mMouseSprite.setScale(0.2f, 0.2f);
+	if (!mCursorImage.loadFromFile("resources/textures/PinkMouse.png"))
+		throw std::runtime_error("Cannot load cursor image");
+	sf::Vector2u size = mCursorImage.getSize();
+	sf::Uint8* pixels = new sf::Uint8[size.x * size.y * 4];
+	memcpy(pixels, mCursorImage.getPixelsPtr(), size.x * size.y * 4);
+	mCursor.loadFromPixels(pixels, size, sf::Vector2u(0, 0));
+	mWindow.setMouseCursor(mCursor);
 
 	registerStates();
 	mStateStack.pushState(States::Playing);
@@ -141,7 +145,6 @@ void Game::render()
 
 	mWindow.setView(mWindow.getDefaultView());
 	mWindow.draw(mStatisticsText);
-	mWindow.draw(mMouseSprite);
 
 	mWindow.display();
 }
@@ -157,7 +160,6 @@ void Game::updateStatistics(sf::Time dt)
 		mStatisticsUpdateTime -= sf::seconds(1.0f);
 		mStatisticsNumFrames = 0;
 	}
-	mMouseSprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(mWindow)));
 }
 
 void Game::registerStates()
