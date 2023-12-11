@@ -34,6 +34,7 @@ public:
 
 	void restart();
 	bool isFinished() const;
+	bool isNotLastFrame() const;
 
 	sf::FloatRect getLocalBounds() const;
 	sf::FloatRect getGlobalBounds() const;

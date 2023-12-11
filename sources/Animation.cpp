@@ -106,6 +106,11 @@ bool Animation::isFinished() const
 	return mCurrentFrame >= mNumFrames;
 }
 
+bool Animation::isNotLastFrame() const
+{
+	return mCurrentFrame < mNumFrames - 1;
+}
+
 sf::FloatRect Animation::getLocalBounds() const
 {
 	return sf::FloatRect(getOrigin(), static_cast<sf::Vector2f>(getFrameSize()));

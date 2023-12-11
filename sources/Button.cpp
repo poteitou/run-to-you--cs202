@@ -13,7 +13,7 @@ Button::Button(State::Context context)
     mHeight = context.mTextures->get(Textures::Button).getSize().y / 3;
     mSprite.setTextureRect(sf::IntRect(0, mHeight * 2, mWidth, mHeight));
     centerOrigin(mSprite);
-
+    mText.setColor(sf::Color::Black);
     mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
     mAnimation.setNumFrames(2);
     mAnimation.setDuration(sf::seconds(0.6f));
@@ -48,7 +48,7 @@ void Button::setPosition(float x, float y)
 {
     mAnimation.setPosition(x, y);
     mSprite.setPosition(x, y);
-    mText.setPosition(x, y);
+    mText.setPosition(x, y - 16.f);
 }
 
 void Button::handleEvent(User user)
@@ -59,15 +59,18 @@ void Button::handleEvent(User user)
         mIsHovered = true;
         if (user.isMousePressed)
             mIsPressed = true;
+        mText.setColor(sf::Color::White);
     }
     else
     {
         mIsHovered = false;
+        mText.setColor(sf::Color::Black);
     }
 }
 
 void Button::update(sf::Time dt)
 {
+    mText.setPosition(mAnimation.getPosition().x, mAnimation.getPosition().y - 16.f);
     if (mIsPressed)
     {
         mAnimation.update(dt);
@@ -76,11 +79,18 @@ void Button::update(sf::Time dt)
             mPressedSound.play();
             mPlayedPressedSound = true;
         }
+        if (mAnimation.isNotLastFrame())
+        {    mText.setPosition(mAnimation.getPosition().x, mAnimation.getPosition().y + 16.f);
+        }
     }
     else if (mIsHovered)
+    {
         changeTexture(Selected);
+    }
     else
+    {
         changeTexture(Normal);
+    }
 }
 
 bool Button::isPressed() const
