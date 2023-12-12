@@ -26,6 +26,7 @@ public:
 private:
     sf::RectangleShape mBackgroundRect;
     std::array<Button::Ptr, 2> mButtons;
+    sf::Text mTitle;
 };
 
 #endif // MINE_PAUSEDSTATE_HPP

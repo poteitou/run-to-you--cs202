@@ -53,6 +53,7 @@ void Button::setPosition(float x, float y)
 
 void Button::handleEvent(User user)
 {
+    mText.setColor(sf::Color::Black);
     sf::FloatRect bounds = mSprite.getGlobalBounds();
     if (bounds.contains(static_cast<sf::Vector2f>(user.mousePosition)))
     {
@@ -64,7 +65,6 @@ void Button::handleEvent(User user)
     else
     {
         mIsHovered = false;
-        mText.setColor(sf::Color::Black);
     }
 }
 
@@ -80,8 +80,8 @@ void Button::update(sf::Time dt)
             mPlayedPressedSound = true;
         }
         if (mAnimation.isNotLastFrame())
-        {    mText.setPosition(mAnimation.getPosition().x, mAnimation.getPosition().y + 16.f);
-        }
+            mText.setPosition(mAnimation.getPosition().x, mAnimation.getPosition().y + 16.f);
+        
     }
     else if (mIsHovered)
     {

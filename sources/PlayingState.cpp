@@ -11,6 +11,7 @@ PlayingState::PlayingState(StateStack &stack, Context context)
       mDistance(0.f),
       mIsPaused(false)
 {
+    mLives = 3;
     sf::Texture &backgroundTexture = context.mTextures->get(Textures::PinkBackground);
     sf::Texture &groundTexture = context.mTextures->get(Textures::Ground);
 
@@ -101,42 +102,42 @@ bool PlayingState::handleEvent(User user)
 
 bool PlayingState::update(sf::Time dt)
 {
-    if (!mIsPaused)
+    for (auto &obstacle : mObstacleQueue)
     {
-        mDistance += mScrollSpeed * dt.asSeconds();
-        mDistanceText.setString("Distance: " + std::to_string((int)mDistance / 100) + "m");
-        if (!mObstacleQueue.empty() && mObstacleQueue.front().isOutOfScreen())
-            mObstacleQueue.pop_front();
-        for (auto &obstacle : mObstacleQueue)
+        if (obstacle.isCollide())
         {
-            obstacle.update(dt, mScrollSpeed, mPlayer);
+            --mLives;
+            if (mLives == 0)
+                requestStackPush(States::GameOver);
+            return true;
         }
-        createObstacle();
-
-        for (auto &obstacle : mObstacleQueue)
-        {
-            if (obstacle.isCollide())
-            {
-                mIsPaused = true;
-                break;
-            }
-        }
-        mPlayer.update(dt, mGroundHeight);
-        for (int i = 0; i < 3; i++)
-        {
-            mBackgroundSprite[i].move(-mScrollSpeed / 4 * dt.asSeconds(), 0.f);
-            mGroundSprite[i].move(-mScrollSpeed * dt.asSeconds(), 0.f);
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            if (mBackgroundSprite[i].getPosition().x < -1599.f)
-                mBackgroundSprite[i].setPosition(mBackgroundSprite[(i + 2) % 3].getPosition().x + 1599.f, 0.f);
-            if (mGroundSprite[i].getPosition().x < -1599.f)
-                mGroundSprite[i].setPosition(mGroundSprite[(i + 2) % 3].getPosition().x + 1599.f, 0.f);
-        }
-        if ((int)(mDistance) / 100 % 100 == 0)
-            mScrollSpeed += 20.f;
     }
+
+    mDistance += mScrollSpeed * dt.asSeconds();
+    mDistanceText.setString("Distance: " + std::to_string((int)mDistance / 100) + "m");
+    if (!mObstacleQueue.empty() && mObstacleQueue.front().isOutOfScreen())
+        mObstacleQueue.pop_front();
+    for (auto &obstacle : mObstacleQueue)
+    {
+        obstacle.update(dt, mScrollSpeed, mPlayer);
+    }
+    createObstacle();
+
+    mPlayer.update(dt, mGroundHeight);
+    for (int i = 0; i < 3; i++)
+    {
+        mBackgroundSprite[i].move(-mScrollSpeed / 4 * dt.asSeconds(), 0.f);
+        mGroundSprite[i].move(-mScrollSpeed * dt.asSeconds(), 0.f);
+    }
+    for (int i = 0; i < 3; i++)
+    {
+        if (mBackgroundSprite[i].getPosition().x < -1599.f)
+            mBackgroundSprite[i].setPosition(mBackgroundSprite[(i + 2) % 3].getPosition().x + 1599.f, 0.f);
+        if (mGroundSprite[i].getPosition().x < -1599.f)
+            mGroundSprite[i].setPosition(mGroundSprite[(i + 2) % 3].getPosition().x + 1599.f, 0.f);
+    }
+    if ((int)(mDistance) / 100 % 100 == 0)
+        mScrollSpeed += 20.f;
     return true;
 }
 

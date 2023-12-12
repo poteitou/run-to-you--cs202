@@ -53,6 +53,7 @@ private:
     float mScrollSpeed;
     float mDistance;
     bool mIsPaused;
+    int mLives;
 };
 
 #endif // MINE_PLAYINGSTATE_HPP

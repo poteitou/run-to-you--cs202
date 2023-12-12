@@ -21,6 +21,7 @@ Game::Game()
 	mTextures.load(Textures::PinkMouse, "resources/textures/PinkMouse.png");
 	mTextures.load(Textures::BlueSkirt, "resources/textures/BlueSkirt.png");
 	mTextures.load(Textures::Heart, "resources/textures/Heart.png");
+	mTextures.load(Textures::Life, "resources/textures/Life.png");
 	mTextures.load(Textures::Bird, "resources/textures/Bird.png");
 	mTextures.load(Textures::Cat, "resources/textures/Cat.png");
 	mTextures.load(Textures::Ground, "resources/textures/Ground.png");
@@ -28,7 +29,8 @@ Game::Game()
 	mSoundBuffers.load(Sounds::Button, "resources/sounds/Button.wav");
 	mSoundBuffers.load(Sounds::Heart, "resources/sounds/Heart.wav");
 	mSoundBuffers.load(Sounds::Jump, "resources/sounds/Jump.wav");
-	mFonts.load(Fonts::Main, "resources/fonts/PixellettersFull.ttf");
+	mFonts.load(Fonts::Main, "resources/fonts/Main.ttf");
+	mFonts.load(Fonts::Title, "resources/fonts/Title.ttf");
 
 mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mStatisticsText.setPosition(50.f, 10.f);
@@ -169,7 +171,7 @@ void Game::registerStates()
     // mStateStack.registerState<SettingsState>(States::Setting);
     mStateStack.registerState<PlayingState>(States::Playing);
     mStateStack.registerState<PausedState>(States::Paused);
-    // mStateStack.registerState<GameOverState>(States::GameOver);
+    mStateStack.registerState<GameOverState>(States::GameOver);
     // mStateStack.registerState<EndLevelState>(States::EndLevel);
     // mStateStack.registerState<HighScoreState>(States::HighScore);
     // mStateStack.registerState<AboutState>(States::About);

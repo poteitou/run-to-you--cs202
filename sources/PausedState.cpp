@@ -2,8 +2,15 @@
 #include <iostream>
 
 PausedState::PausedState(StateStack &stack, Context context)
-    : State(stack, context), mButtons()
+    : State(stack, context), mButtons(),
+      mTitle("", context.mFonts->get(Fonts::Title), 100)
 {
+    mTitle.setString("Paused");
+    sf::FloatRect bounds = mTitle.getLocalBounds();
+    mTitle.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
+    mTitle.setColor(sf::Color(170, 226, 255));
+    mTitle.setPosition(0.5f * 1600.f, 0.25f * 900.f);
+
     mBackgroundRect.setPosition(0.f, 0.f);
     mBackgroundRect.setFillColor(sf::Color(0, 0, 0, 100));
     mBackgroundRect.setSize(sf::Vector2f(1600.f, 900.f));
@@ -46,6 +53,7 @@ void PausedState::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
     target.draw(mBackgroundRect, states);
+    target.draw(mTitle, states);
 
     for (auto &button : mButtons)
         target.draw(*button, states);
