@@ -4,7 +4,8 @@ Object::Object(State::Context context, std::string type, float x, float y)
     : mPlayedCollideSound(false),
       mAnimation(),
       mCollideSound(),
-      mIsCollide(false)
+      mIsCollide(false), 
+      mAlreadyCollide(false)
 {
     type = "Heart";
     if (type == "Milktea")
@@ -112,10 +113,11 @@ void Object::handleEvent(User user)
 void Object::update(sf::Time dt, float scrollSpeed, const Player &player)
 {
     mAnimation.move(-scrollSpeed * dt.asSeconds(), 0.f);
-    if (Collision::pixelPerfectTest(player.getSprite(), mAnimation.getSprite(), (sf::Uint8)0U))
+    if (!mAlreadyCollide && Collision::pixelPerfectTest(player.getSprite(), mAnimation.getSprite(), (sf::Uint8)0U))
     {
         if (!mIsCollide)
         {
+            mAlreadyCollide = true;
             mIsCollide = true;
             mPlayedCollideSound = false;
         }

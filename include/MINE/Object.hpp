@@ -59,12 +59,14 @@ private:
     Animation mAnimation;
     sf::Sound mCollideSound;
     std::string mType;
+    sf::Text mNotification;
 
     int mWidth;
     int mHeight;
 
     bool mPlayedCollideSound;
     bool mIsCollide;
+    bool mAlreadyCollide;
 };
 
 #endif // MINE_OBJECT_HPP

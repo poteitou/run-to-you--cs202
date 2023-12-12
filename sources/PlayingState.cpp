@@ -4,14 +4,15 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     : State(stack, context),
       mBackgroundSprite(),
       mGroundSprite(),
+      mLives(context.mTextures->get(Textures::Life)),
       mDistanceText("", context.mFonts->get(Fonts::Main), 50),
       mPlayer(context),
       mGroundHeight(900.f - 200.f),
       mScrollSpeed(200.f),
       mDistance(0.f),
-      mIsPaused(false)
+      mIsPaused(false),
+      mCntLives(3)
 {
-    mLives = 3;
     sf::Texture &backgroundTexture = context.mTextures->get(Textures::PinkBackground);
     sf::Texture &groundTexture = context.mTextures->get(Textures::Ground);
 
@@ -31,6 +32,9 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     mGroundSprite[0].setPosition(0.f, 0.f);
     mGroundSprite[1].setPosition(1599.f, 0.f);
     mGroundSprite[2].setPosition(3199.f, 0.f);
+
+    mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
+    mLives.setPosition(1600.f - 256.f - 50.f, 50.f);
 
     mPlayer.setPosition(150.f, mGroundHeight);
     mPlayer.setVelocity(0.f, 0.f);
@@ -106,10 +110,10 @@ bool PlayingState::update(sf::Time dt)
     {
         if (obstacle.isCollide())
         {
-            --mLives;
-            if (mLives == 0)
+            --mCntLives;
+            mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
+            if (mCntLives == 0)
                 requestStackPush(States::GameOver);
-            return true;
         }
     }
 
@@ -151,6 +155,7 @@ void PlayingState::draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
         target.draw(sprite, states);
     }
+    target.draw(mLives, states);
     target.draw(mDistanceText, states);
 
     for (auto &obstacle : mObstacleQueue)

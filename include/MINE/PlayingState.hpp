@@ -47,13 +47,14 @@ private:
     std::array<sf::Sprite, 3> mGroundSprite;
     std::array<std::string, 6> mTypeObject;
     std::deque<Object> mObstacleQueue;
+    sf::Sprite mLives;
     Player mPlayer;
     sf::Text mDistanceText;
     float mGroundHeight;
     float mScrollSpeed;
     float mDistance;
     bool mIsPaused;
-    int mLives;
+    int mCntLives;
 };
 
 #endif // MINE_PLAYINGSTATE_HPP
