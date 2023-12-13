@@ -7,14 +7,13 @@ Object::Object(State::Context context, std::string type, float x, float y)
       mIsCollide(false), 
       mAlreadyCollide(false)
 {
-    // type = "Heart";
     if (type == "Milktea")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Heart));
         mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
         mWidth = mAnimation.getTexture()->getSize().x;
-        mHeight = mAnimation.getTexture()->getSize().y / 2;
-        mAnimation.setNumFrames(2);
+        mHeight = mAnimation.getTexture()->getSize().y / 4;
+        mAnimation.setNumFrames(4);
     }
     else if (type == "Cat")
     {
@@ -23,23 +22,22 @@ Object::Object(State::Context context, std::string type, float x, float y)
         mWidth = mAnimation.getTexture()->getSize().x / 6;
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(6);
-        y += 20.f;
     }
     else if (type == "Friend")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Heart));
         mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
         mWidth = mAnimation.getTexture()->getSize().x;
-        mHeight = mAnimation.getTexture()->getSize().y / 2;
-        mAnimation.setNumFrames(2);
+        mHeight = mAnimation.getTexture()->getSize().y / 4;
+        mAnimation.setNumFrames(4);
     }
     else if (type == "Rock")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Heart));
         mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
         mWidth = mAnimation.getTexture()->getSize().x;
-        mHeight = mAnimation.getTexture()->getSize().y / 2;
-        mAnimation.setNumFrames(2);
+        mHeight = mAnimation.getTexture()->getSize().y / 4;
+        mAnimation.setNumFrames(4);
     }
     else if (type == "Bird")
     {
@@ -47,7 +45,6 @@ Object::Object(State::Context context, std::string type, float x, float y)
         mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
         mWidth = mAnimation.getTexture()->getSize().x / 8;
         mHeight = mAnimation.getTexture()->getSize().y;
-        mAnimation.setDuration(sf::seconds(0.7f));
         mAnimation.setNumFrames(8);
         y -= 300.f;
     }
@@ -56,24 +53,25 @@ Object::Object(State::Context context, std::string type, float x, float y)
         mAnimation.setTexture(context.mTextures->get(Textures::Heart));
         mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Heart));
         mWidth = mAnimation.getTexture()->getSize().x;
-        mHeight = mAnimation.getTexture()->getSize().y / 2;
-        mAnimation.setNumFrames(2);
+        mHeight = mAnimation.getTexture()->getSize().y / 4;
+        mAnimation.setNumFrames(4);
+        y -= 100.f;
     }
     mCollideSound.setVolume(100);
 
     mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
     mAnimation.setDuration(sf::seconds(0.7f));
-    mAnimation.centerOrigin();
+    mAnimation.centerBottom();
     mAnimation.setRepeating(true);
 
     mType = type;
     setPosition(x, y);
 }
 
-void Object::centerOrigin(sf::Sprite &sprite)
+void Object::centerBottom(sf::Sprite &sprite)
 {
     sf::FloatRect bounds = sprite.getLocalBounds();
-    sprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
+    sprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height));
 }
 
 sf::FloatRect Object::getGlobalBounds()

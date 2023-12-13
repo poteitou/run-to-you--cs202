@@ -1,7 +1,7 @@
 #include <MINE/Player.hpp>
 
 Player::Player(State::Context context)
-    : mAnimation(context.mTextures->get(Textures::BlueSkirt)),
+    : mAnimation(),
       mSprite(context.mTextures->get(Textures::BlueSkirt)),
       mJumpSound(context.mSoundBuffers->get(Sounds::Jump)),
       mVelocity(0.f, 0.f),
@@ -12,22 +12,23 @@ Player::Player(State::Context context)
 {
     mJumpSound.setVolume(100);
     // top, left, width, height
+    mAnimation.setTexture(context.mTextures->get(Textures::BlueSkirt));
     mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 4;
     mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 2;
     mSprite.setTextureRect(sf::IntRect(mWidth * 2, mHeight, mWidth, mHeight));
-    centerOrigin(mSprite);
+    centerBottom(mSprite);
 
     mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
     mAnimation.setNumFrames(8);
     mAnimation.setDuration(sf::seconds(1.f));
-    mAnimation.centerOrigin();
+    mAnimation.centerBottom();
     mAnimation.setRepeating(true);
 }
 
-void Player::centerOrigin(sf::Sprite &sprite)
+void Player::centerBottom(sf::Sprite &sprite)
 {
     sf::FloatRect bounds = sprite.getLocalBounds();
-    sprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
+    sprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height));
 }
 
 sf::FloatRect Player::getGlobalBounds()

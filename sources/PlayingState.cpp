@@ -7,7 +7,7 @@ PlayingState::PlayingState(StateStack &stack, Context context)
       mLives(context.mTextures->get(Textures::Life)),
       mDistanceText("", context.mFonts->get(Fonts::Main), 50),
       mPlayer(context),
-      mGroundHeight(900.f - 200.f),
+      mGroundHeight(900.f - 80.f),
       mScrollSpeed(400.f),
       mDistance(0.f),
       mIsPaused(false),
@@ -35,6 +35,11 @@ PlayingState::PlayingState(StateStack &stack, Context context)
 
     mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
     mLives.setPosition(1600.f - 256.f - 50.f, 50.f);
+
+    mPaused.setBuffer(context.mSoundBuffers->get(Sounds::Paused));
+    mPaused.setVolume(100);
+    mGameOver.setBuffer(context.mSoundBuffers->get(Sounds::GameOver));
+    mGameOver.setVolume(100);
 
     mPlayer.setPosition(150.f, mGroundHeight);
     mPlayer.setVelocity(0.f, 0.f);
@@ -94,6 +99,7 @@ bool PlayingState::handleEvent(User user)
 {
     if (user.isEscapePressed)
     {
+        mPaused.play();
         requestStackPush(States::Paused);
     }
     if (user.isEnterPressed && mIsPaused)
@@ -111,10 +117,17 @@ bool PlayingState::update(sf::Time dt)
     {
         if (obstacle.isCollide())
         {
-            --mCntLives;
+            if (obstacle.getType() == "Heart")
+                ++mCntLives;
+            else 
+                --mCntLives;
+            mCntLives = std::min(mCntLives, 3);
             mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
             if (mCntLives == 0)
+            {
+                mGameOver.play();
                 requestStackPush(States::GameOver);
+            }
         }
     }
 

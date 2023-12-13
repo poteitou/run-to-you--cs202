@@ -38,7 +38,7 @@ public:
 public:
     Object(State::Context context, std::string type, float x, float y);
 
-    void centerOrigin(sf::Sprite& sprite);
+    void centerBottom(sf::Sprite& sprite);
     sf::FloatRect getGlobalBounds();
     std::string getType();
 

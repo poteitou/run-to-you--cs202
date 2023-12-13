@@ -30,7 +30,7 @@ public:
 public:
     Player(State::Context context);
 
-    void centerOrigin(sf::Sprite& sprite);
+    void centerBottom(sf::Sprite& sprite);
     sf::FloatRect getGlobalBounds();
     void setVelocity(sf::Vector2f velocity);
     void setVelocity(float vx, float vy);

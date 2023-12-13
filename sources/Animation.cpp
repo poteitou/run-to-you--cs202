@@ -31,6 +31,12 @@ void Animation::centerOrigin()
 	mSprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
 }
 
+void Animation::centerBottom()
+{
+	sf::FloatRect bounds = getLocalBounds();
+	mSprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height));
+}
+
 void Animation::setPosition(float x, float y)
 {
 	mSprite.setPosition(x, y);
@@ -59,6 +65,7 @@ const sf::Sprite& Animation::getSprite() const
 void Animation::setFrameSize(sf::Vector2i frameSize)
 {
 	mFrameSize = frameSize;
+	mSprite.setTextureRect(sf::IntRect(0, 0, mFrameSize.x, mFrameSize.y));
 }
 
 sf::Vector2i Animation::getFrameSize() const

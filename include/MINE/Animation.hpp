@@ -13,6 +13,7 @@ public:
 	explicit Animation(const sf::Texture &texture);
 
 	void centerOrigin();
+	void centerBottom();
 	void setPosition(float x, float y);
 	void setPosition(const sf::Vector2f &position);
 

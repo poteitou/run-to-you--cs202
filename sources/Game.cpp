@@ -27,6 +27,8 @@ Game::Game()
 	mTextures.load(Textures::Ground, "resources/textures/Ground.png");
 	mTextures.load(Textures::Button, "resources/textures/Button.png");
 	mSoundBuffers.load(Sounds::Button, "resources/sounds/Button.wav");
+	mSoundBuffers.load(Sounds::Paused, "resources/sounds/Paused.wav");
+	mSoundBuffers.load(Sounds::GameOver, "resources/sounds/GameOver.wav");
 	mSoundBuffers.load(Sounds::Heart, "resources/sounds/Heart.wav");
 	mSoundBuffers.load(Sounds::Jump, "resources/sounds/Jump.wav");
 	mFonts.load(Fonts::Main, "resources/fonts/Main.ttf");
@@ -45,7 +47,7 @@ mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mWindow.setMouseCursor(mCursor);
 
 	registerStates();
-	mStateStack.pushState(States::Playing);
+	mStateStack.pushState(States::Menu);
 }
 
 void Game::run()
@@ -144,8 +146,6 @@ void Game::render()
 	mWindow.clear();
 
 	mWindow.draw(mStateStack);
-
-	mWindow.setView(mWindow.getDefaultView());
 	mWindow.draw(mStatisticsText);
 
 	mWindow.display();
