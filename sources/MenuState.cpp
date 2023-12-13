@@ -5,11 +5,10 @@ MenuState::MenuState(StateStack &stack, Context context)
     : State(stack, context), 
       mBackgroundSprite(), 
       mButtons(), 
-      mTitle("", context.mFonts->get(Fonts::Caro), 200),
+      mTitle("RUN", context.mFonts->get(Fonts::Caro), 200),
       mTitleSprite(context.mTextures->get(Textures::ToYou)),
       mGirl(context.mTextures->get(Textures::BlueSkirt))
 {
-    mTitle.setString("RUN");
     mTitle.setStyle(sf::Text::Bold);
     sf::FloatRect bounds = mTitle.getLocalBounds();
     mTitle.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
@@ -28,9 +27,7 @@ MenuState::MenuState(StateStack &stack, Context context)
 
     mTitleSprite.setPosition(0.5f * 1600.f, 0.25f * 900.f);
 
-    sf::Texture &texture = context.mTextures->get(Textures::PinkBackground);
-
-    mBackgroundSprite.setTexture(texture);
+    mBackgroundSprite.setTexture(context.mTextures->get(Textures::PinkBackground));
     mBackgroundSprite.setPosition(0.f, 0.f);
 
     mButtons[0] = std::make_shared<Button>(context);

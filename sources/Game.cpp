@@ -49,7 +49,7 @@ mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mWindow.setMouseCursor(mCursor);
 
 	registerStates();
-	mStateStack.pushState(States::Menu);
+	mStateStack.pushState(States::Intro);
 }
 
 void Game::run()
