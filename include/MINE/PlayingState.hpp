@@ -55,7 +55,6 @@ private:
     float mGroundHeight;
     float mScrollSpeed;
     float mDistance;
-    bool mIsPaused;
     int mCntLives;
 };
 

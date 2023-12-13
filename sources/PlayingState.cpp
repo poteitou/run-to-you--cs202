@@ -10,7 +10,6 @@ PlayingState::PlayingState(StateStack &stack, Context context)
       mGroundHeight(900.f - 80.f),
       mScrollSpeed(400.f),
       mDistance(0.f),
-      mIsPaused(false),
       mCntLives(3)
 {
     sf::Texture &backgroundTexture = context.mTextures->get(Textures::PinkBackground);
@@ -90,12 +89,7 @@ bool PlayingState::handleEvent(User user)
         mPaused.play();
         requestStackPush(States::Paused);
     }
-    if (user.isEnterPressed && mIsPaused)
-    {
-        mIsPaused = false;
-    }
-    if (!mIsPaused)
-        mPlayer.handleEvent(user);
+    mPlayer.handleEvent(user);
     return true;
 }
 

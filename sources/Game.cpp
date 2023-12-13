@@ -113,7 +113,7 @@ void Game::processInput()
 			else if (event.key.code == sf::Keyboard::Escape)
 				mUser.isEscapePressed = true;
 			else if (event.key.code == sf::Keyboard::Up)
-				mUser.isUpPressed = true;
+				mUser.isSpacePressed = true;
 			break;
         case sf::Event::TextEntered:
             if (event.text.unicode == 8) // Backspace

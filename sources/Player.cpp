@@ -84,7 +84,7 @@ void Player::changeTexture(sf::Texture &texture)
 
 void Player::handleEvent(User user)
 {
-    if (user.isSpacePressed || user.isUpPressed)
+    if (user.isSpacePressed)
     {
         if (!mIsJumping)
         {
