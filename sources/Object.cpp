@@ -1,8 +1,7 @@
 #include <MINE/Object.hpp>
 
 Object::Object(State::Context context, std::string type, float x, float y)
-    : mPlayedCollideSound(false),
-      mAnimation(),
+    : mAnimation(),
       mCollideSound(),
       mIsCollide(false), 
       mAlreadyCollide(false)
@@ -110,26 +109,31 @@ void Object::handleEvent(User user)
 
 void Object::update(sf::Time dt, float scrollSpeed, const Player &player)
 {
-    mAnimation.move(-scrollSpeed * dt.asSeconds(), 0.f);
+    if (mType == "Heart" && mAlreadyCollide)
+    {
+        if (mAnimation.getPosition().x > 1250.f)
+        {
+            mAnimation.setPosition(-mWidth * 2.f, mAnimation.getPosition().y);
+        }
+        else
+            mAnimation.move(1600.f * dt.asSeconds(), -900.f * dt.asSeconds());
+    }
+    else
+    {
+        mAnimation.move(-scrollSpeed * dt.asSeconds(), 0.f);
+    }
     if (!mAlreadyCollide && Collision::pixelPerfectTest(player.getSprite(), mAnimation.getSprite(), (sf::Uint8)0U))
     {
-        if (!mIsCollide)
-        {
-            mAlreadyCollide = true;
-            mIsCollide = true;
-            mPlayedCollideSound = false;
-        }
+        mCollideSound.play();
+        mAlreadyCollide = true;
+        mIsCollide = true;
     }
     else
     {
         mIsCollide = false;
     }
 
-    if (mIsCollide && !mPlayedCollideSound)
-    {
-        mCollideSound.play();
-        mPlayedCollideSound = true;
-    }
+
     if (mIsCollide)
         mAnimation.setFrame(0);
     else

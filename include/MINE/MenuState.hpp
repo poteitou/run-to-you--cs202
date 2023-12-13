@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <MINE/Animation.hpp>
 #include <MINE/State.hpp>
 #include <MINE/Button.hpp>
 
@@ -26,6 +27,9 @@ public:
 private:
     sf::Sprite mBackgroundSprite;
     std::array<Button::Ptr, 2> mButtons;
+    sf::Text mTitle;
+    sf::Sprite mTitleSprite;
+    Animation mGirl;
 };
 
 #endif // MINE_MENUSTATE_HPP

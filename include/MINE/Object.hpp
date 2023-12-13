@@ -64,7 +64,6 @@ private:
     int mWidth;
     int mHeight;
 
-    bool mPlayedCollideSound;
     bool mIsCollide;
     bool mAlreadyCollide;
 };

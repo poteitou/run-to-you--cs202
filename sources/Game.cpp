@@ -24,6 +24,7 @@ Game::Game()
 	mTextures.load(Textures::Life, "resources/textures/Life.png");
 	mTextures.load(Textures::Bird, "resources/textures/Bird.png");
 	mTextures.load(Textures::Cat, "resources/textures/Cat.png");
+	mTextures.load(Textures::ToYou, "resources/textures/ToYou.png");
 	mTextures.load(Textures::Ground, "resources/textures/Ground.png");
 	mTextures.load(Textures::Button, "resources/textures/Button.png");
 	mSoundBuffers.load(Sounds::Button, "resources/sounds/Button.wav");
@@ -31,8 +32,9 @@ Game::Game()
 	mSoundBuffers.load(Sounds::GameOver, "resources/sounds/GameOver.wav");
 	mSoundBuffers.load(Sounds::Heart, "resources/sounds/Heart.wav");
 	mSoundBuffers.load(Sounds::Jump, "resources/sounds/Jump.wav");
+	mFonts.load(Fonts::Title, "resources/fonts/Title.ttf");
+	mFonts.load(Fonts::Caro, "resources/fonts/Caro.ttf");
 	mFonts.load(Fonts::Main, "resources/fonts/Main.ttf");
-	mFonts.load(Fonts::Title, "resources/fonts/Title.otf");
 
 mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mStatisticsText.setPosition(50.f, 10.f);

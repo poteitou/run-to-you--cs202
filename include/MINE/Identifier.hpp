@@ -17,12 +17,12 @@ namespace States
 
 namespace Textures
 {
-    enum ID {PinkBackground, Ground, BlueSkirt, RainCoat, Life, Milktea, Cat, Friend, Rock, Bird, Heart, Button, PinkMouse};
+    enum ID {PinkBackground, Ground, ToYou, BlueSkirt, RainCoat, Life, Milktea, Cat, Friend, Rock, Bird, Heart, Button, PinkMouse};
 }
 
 namespace Fonts
 {
-    enum ID {Title, Main};
+    enum ID {Title, Caro, Main};
 }
 
 namespace Sounds

@@ -53,7 +53,7 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     srand(time(NULL));
     int obstacleType = rand() % (mTypeObject.size() - 1);
 
-    mObstacleQueue.push_back(Object(context, mTypeObject[obstacleType], 2000.f, mGroundHeight));
+    mObstacleQueue.push_back(Object(context, mTypeObject[obstacleType], 2400.f, mGroundHeight));
 }
 
 void PlayingState::createObstacle()
@@ -63,33 +63,21 @@ void PlayingState::createObstacle()
     {
         bool hasHeart = false;
         bool hasCoin = false;
-
+        
         while (mObstacleQueue.back().getPosition().x < 3200.f)
         {
             int obstacleType = rand() % mTypeObject.size();
-            if (mTypeObject[obstacleType] == "Heart" && hasHeart)
-                obstacleType = rand() % (mTypeObject.size() - 1);
+            if (mTypeObject[obstacleType] == "Heart")
+            {
+                if (hasHeart)
+                    obstacleType = rand() % (mTypeObject.size() - 1);
+                hasHeart = true;
+            }
 
             int randPos = rand() % 100;
             float minDis = mScrollSpeed * 2 / 3;
             float maxDis = mScrollSpeed * 2;
             float delta = minDis + (maxDis - minDis) * randPos / 100.f;
-            // switch (randPos)
-            // {
-            // case 0:
-            //     delta = mScrollSpeed * 2 / 3.f;
-            //     break;
-            // case 1:
-            //     delta = mScrollSpeed * 1.5f;
-            //     break;
-            // case 2:
-            //     delta = mScrollSpeed;
-            //     break;
-            // case 3:
-            //     delta = mScrollSpeed * 2.f;
-            //     break;
-            // }
-
             mObstacleQueue.push_back(Object(getContext(), mTypeObject[obstacleType], mObstacleQueue.back().getPosition().x + delta, mGroundHeight));
         }
     }
