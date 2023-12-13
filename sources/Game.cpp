@@ -30,7 +30,7 @@ Game::Game()
 	mSoundBuffers.load(Sounds::Heart, "resources/sounds/Heart.wav");
 	mSoundBuffers.load(Sounds::Jump, "resources/sounds/Jump.wav");
 	mFonts.load(Fonts::Main, "resources/fonts/Main.ttf");
-	mFonts.load(Fonts::Title, "resources/fonts/Title.ttf");
+	mFonts.load(Fonts::Title, "resources/fonts/Title.otf");
 
 mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mStatisticsText.setPosition(50.f, 10.f);

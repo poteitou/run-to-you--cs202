@@ -8,7 +8,7 @@ Player::Player(State::Context context)
       mIsRunning(true),
       mIsJumping(false),
       mPlayedJumpSound(false),
-      mGravity(1.f)
+      mGravity(1.2f)
 {
     mJumpSound.setVolume(100);
     // top, left, width, height
@@ -87,7 +87,7 @@ void Player::handleEvent(User user)
     {
         if (!mIsJumping)
         {
-            mVelocity.y = -25.f;
+            mVelocity.y = -24.f;
             mPlayedJumpSound = false;
             mIsJumping = true;
         }

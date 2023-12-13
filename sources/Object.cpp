@@ -7,7 +7,7 @@ Object::Object(State::Context context, std::string type, float x, float y)
       mIsCollide(false), 
       mAlreadyCollide(false)
 {
-    type = "Heart";
+    // type = "Heart";
     if (type == "Milktea")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Heart));

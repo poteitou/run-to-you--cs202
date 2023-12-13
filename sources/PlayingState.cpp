@@ -8,7 +8,7 @@ PlayingState::PlayingState(StateStack &stack, Context context)
       mDistanceText("", context.mFonts->get(Fonts::Main), 50),
       mPlayer(context),
       mGroundHeight(900.f - 200.f),
-      mScrollSpeed(200.f),
+      mScrollSpeed(400.f),
       mDistance(0.f),
       mIsPaused(false),
       mCntLives(3)
@@ -27,11 +27,11 @@ PlayingState::PlayingState(StateStack &stack, Context context)
         mGroundSprite[i].setTexture(groundTexture);
     }
     mBackgroundSprite[0].setPosition(0.f, 0.f);
-    mBackgroundSprite[1].setPosition(1599.f, 0.f);
-    mBackgroundSprite[2].setPosition(3198.f, 0.f);
+    mBackgroundSprite[1].setPosition(1600.f, 0.f);
+    mBackgroundSprite[2].setPosition(3200.f, 0.f);
     mGroundSprite[0].setPosition(0.f, 0.f);
-    mGroundSprite[1].setPosition(1599.f, 0.f);
-    mGroundSprite[2].setPosition(3199.f, 0.f);
+    mGroundSprite[1].setPosition(1600.f, 0.f);
+    mGroundSprite[2].setPosition(3200.f, 0.f);
 
     mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
     mLives.setPosition(1600.f - 256.f - 50.f, 50.f);
@@ -43,12 +43,12 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     mDistanceText.setPosition(50.f, 80.f);
     mDistanceText.setColor(sf::Color::Black);
 
-    // initialize obstacle queue, include some obstacles start from position 1800.f
+    // initialize obstacle queue, include some obstacles start from position 2000.f
     mTypeObject = {"Milktea", "Cat", "Friend", "Rock", "Bird", "Heart"};
     srand(time(NULL));
     int obstacleType = rand() % (mTypeObject.size() - 1);
 
-    mObstacleQueue.push_back(Object(context, mTypeObject[obstacleType], 1800.f, mGroundHeight));
+    mObstacleQueue.push_back(Object(context, mTypeObject[obstacleType], 2000.f, mGroundHeight));
 }
 
 void PlayingState::createObstacle()
@@ -65,23 +65,25 @@ void PlayingState::createObstacle()
             if (mTypeObject[obstacleType] == "Heart" && hasHeart)
                 obstacleType = rand() % (mTypeObject.size() - 1);
 
-            int randPos = rand() % 4;
-            float delta;
-            switch (randPos)
-            {
-            case 0:
-                delta = mScrollSpeed;
-                break;
-            case 1:
-                delta = mScrollSpeed * 1.5f;
-                break;
-            case 2:
-                delta = mScrollSpeed;
-                break;
-            case 3:
-                delta = mScrollSpeed * 2.f;
-                break;
-            }
+            int randPos = rand() % 100;
+            float minDis = mScrollSpeed * 2 / 3;
+            float maxDis = mScrollSpeed * 2;
+            float delta = minDis + (maxDis - minDis) * randPos / 100.f;
+            // switch (randPos)
+            // {
+            // case 0:
+            //     delta = mScrollSpeed * 2 / 3.f;
+            //     break;
+            // case 1:
+            //     delta = mScrollSpeed * 1.5f;
+            //     break;
+            // case 2:
+            //     delta = mScrollSpeed;
+            //     break;
+            // case 3:
+            //     delta = mScrollSpeed * 2.f;
+            //     break;
+            // }
 
             mObstacleQueue.push_back(Object(getContext(), mTypeObject[obstacleType], mObstacleQueue.back().getPosition().x + delta, mGroundHeight));
         }
@@ -92,7 +94,6 @@ bool PlayingState::handleEvent(User user)
 {
     if (user.isEscapePressed)
     {
-        // mIsPaused = true;
         requestStackPush(States::Paused);
     }
     if (user.isEnterPressed && mIsPaused)
@@ -135,13 +136,13 @@ bool PlayingState::update(sf::Time dt)
     }
     for (int i = 0; i < 3; i++)
     {
-        if (mBackgroundSprite[i].getPosition().x < -1599.f)
-            mBackgroundSprite[i].setPosition(mBackgroundSprite[(i + 2) % 3].getPosition().x + 1599.f, 0.f);
-        if (mGroundSprite[i].getPosition().x < -1599.f)
-            mGroundSprite[i].setPosition(mGroundSprite[(i + 2) % 3].getPosition().x + 1599.f, 0.f);
+        if (mBackgroundSprite[i].getPosition().x < -1600.f)
+            mBackgroundSprite[i].setPosition(mBackgroundSprite[(i + 2) % 3].getPosition().x + 1600.f, 0.f);
+        if (mGroundSprite[i].getPosition().x < -1600.f)
+            mGroundSprite[i].setPosition(mGroundSprite[(i + 2) % 3].getPosition().x + 1600.f, 0.f);
     }
-    if ((int)(mDistance) / 100 % 100 == 0)
-        mScrollSpeed += 20.f;
+    if (mScrollSpeed < 2000.f)
+        mScrollSpeed += 0.2f;
     return true;
 }
 
