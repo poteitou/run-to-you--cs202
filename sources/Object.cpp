@@ -3,6 +3,7 @@
 Object::Object(State::Context context, std::string type, float x, float y)
     : mAnimation(),
       mCollideSound(),
+      mIsDone(false),
       mIsCollide(false), 
       mAlreadyCollide(false)
 {
@@ -113,6 +114,7 @@ void Object::update(sf::Time dt, float scrollSpeed, const Player &player)
     {
         if (mAnimation.getPosition().x > 1250.f)
         {
+            mIsDone = true;
             mAnimation.setPosition(-mWidth * 2.f, mAnimation.getPosition().y);
         }
         else
@@ -133,16 +135,17 @@ void Object::update(sf::Time dt, float scrollSpeed, const Player &player)
         mIsCollide = false;
     }
 
-
-    if (mIsCollide)
-        mAnimation.setFrame(0);
-    else
-        mAnimation.update(dt);
+    mAnimation.update(dt);
 }
 
 bool Object::isCollide()
 {
     return mIsCollide;
+}
+
+bool Object::isDone()
+{
+    return mIsDone;
 }
 
 void Object::draw(sf::RenderTarget &target, sf::RenderStates states) const

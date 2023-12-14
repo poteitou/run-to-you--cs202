@@ -51,6 +51,7 @@ public:
     void handleEvent(User user);
     void update(sf::Time dt, float scrollSpeed, const Player &player);
     bool isCollide();
+    bool isDone();
 
 private:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -65,6 +66,7 @@ private:
     int mHeight;
 
     bool mIsCollide;
+    bool mIsDone;
     bool mAlreadyCollide;
 };
 

@@ -108,7 +108,9 @@ void Player::update(sf::Time dt, float groundHeight)
         mIsJumping = true;
     }
     else if (mPosition.y > groundHeight) // below ground
+    {
         mPosition.y = groundHeight;
+    }
 
     if (mPosition.y == groundHeight)
         mIsJumping = false;

@@ -40,7 +40,7 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     mGameOver.setBuffer(context.mSoundBuffers->get(Sounds::GameOver));
     mGameOver.setVolume(100);
 
-    mPlayer.setPosition(150.f, mGroundHeight);
+    mPlayer.setPosition(150.f, 300.f);
     mPlayer.setVelocity(0.f, 0.f);
 
     // prepare for distance text
@@ -97,13 +97,14 @@ bool PlayingState::update(sf::Time dt)
 {
     for (auto &obstacle : mObstacleQueue)
     {
-        if (obstacle.isCollide())
+        if (obstacle.isDone() && mCntLives < 3) 
         {
-            if (obstacle.getType() == "Heart")
-                ++mCntLives;
-            else 
-                --mCntLives;
-            mCntLives = std::min(mCntLives, 3);
+            ++mCntLives;
+            mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
+        }
+        else if (obstacle.isCollide() && obstacle.getType() != "Heart") 
+        {
+            --mCntLives;
             mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
             if (mCntLives == 0)
             {
