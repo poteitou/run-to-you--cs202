@@ -87,51 +87,54 @@ void Game::processInput()
 	while (mWindow.pollEvent(event))
 	{	
 		mIsPaused = false;
-		switch (event.type)
-        {
-        case sf::Event::Closed:
-            mWindow.close();
-            break;
-        case sf::Event::LostFocus:
-            mIsPaused = true;
-        case sf::Event::MouseButtonPressed:
-            if (event.mouseButton.button == sf::Mouse::Left)
-                mUser.isMousePressed = true;
-            break;
-        case sf::Event::MouseButtonReleased:
-            if (event.mouseButton.button == sf::Mouse::Left)
-                mUser.isMousePressed = false;
-            break;
-        case sf::Event::MouseMoved:
-            mUser.mousePosition = sf::Mouse::getPosition(mWindow);
-            break;
-		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Return)
-				mUser.isEnterPressed = true;
-			else if (event.key.code == sf::Keyboard::Space)
-				mUser.isSpacePressed = true;
-			else if (event.key.code == sf::Keyboard::Escape)
-				mUser.isEscapePressed = true;
-			else if (event.key.code == sf::Keyboard::Up)
-				mUser.isSpacePressed = true;
-			break;
-        case sf::Event::TextEntered:
-            if (event.text.unicode == 8) // Backspace
-                mUser.keyPress = '@';
-            else if ((event.text.unicode >= 48 && event.text.unicode <= 57) || (event.text.unicode >= 97 && event.text.unicode <= 122) || (event.text.unicode >= 65 && event.text.unicode <= 90) || event.text.unicode == 32) // 0 -> 9 or space
-                mUser.keyPress = static_cast<char>(event.text.unicode);
-            else
-                mUser.keyPress = '$';
-            break;
-        case sf::Event::KeyReleased:
-			mUser.isEnterPressed = false;
-			mUser.isSpacePressed = false;
-			mUser.isEscapePressed = false;
-			mUser.keyPress = '$';
-            break;
-        default:
-            break;
-        }
+		if (event.type == sf::Event::LostFocus)
+			mIsPaused = true;
+		if (!mIsPaused)
+		{
+			switch (event.type)
+			{
+			case sf::Event::Closed:
+				mWindow.close();
+				break;
+			case sf::Event::MouseButtonPressed:
+				if (event.mouseButton.button == sf::Mouse::Left)
+					mUser.isMousePressed = true;
+				break;
+			case sf::Event::MouseButtonReleased:
+				if (event.mouseButton.button == sf::Mouse::Left)
+					mUser.isMousePressed = false;
+				break;
+			case sf::Event::MouseMoved:
+				mUser.mousePosition = sf::Mouse::getPosition(mWindow);
+				break;
+			case sf::Event::KeyPressed:
+				if (event.key.code == sf::Keyboard::Return)
+					mUser.isEnterPressed = true;
+				else if (event.key.code == sf::Keyboard::Space)
+					mUser.isSpacePressed = true;
+				else if (event.key.code == sf::Keyboard::Escape)
+					mUser.isEscapePressed = true;
+				else if (event.key.code == sf::Keyboard::Up)
+					mUser.isSpacePressed = true;
+				break;
+			case sf::Event::TextEntered:
+				if (event.text.unicode == 8) // Backspace
+					mUser.keyPress = '@';
+				else if ((event.text.unicode >= 48 && event.text.unicode <= 57) || (event.text.unicode >= 97 && event.text.unicode <= 122) || (event.text.unicode >= 65 && event.text.unicode <= 90) || event.text.unicode == 32) // 0 -> 9 or space
+					mUser.keyPress = static_cast<char>(event.text.unicode);
+				else
+					mUser.keyPress = '$';
+				break;
+			case sf::Event::KeyReleased:
+				mUser.isEnterPressed = false;
+				mUser.isSpacePressed = false;
+				mUser.isEscapePressed = false;
+				mUser.keyPress = '$';
+				break;
+			default:
+				break;	
+			}
+		}
 		
 		if (!mIsPaused)
 			mStateStack.handleEvent(mUser);
