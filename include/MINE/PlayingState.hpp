@@ -47,10 +47,12 @@ private:
     std::array<sf::Sprite, 3> mGroundSprite;
     std::array<std::string, 6> mTypeObject;
     std::deque<Object> mObstacleQueue;
+    sf::Sound mCollide;
     sf::Sound mPaused;
     sf::Sound mGameOver;
     sf::Sprite mLives;
     Player mPlayer;
+    float mTimeCollide;
     sf::Text mDistanceText;
     float mGroundHeight;
     float mScrollSpeed;

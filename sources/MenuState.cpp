@@ -16,7 +16,7 @@ MenuState::MenuState(StateStack &stack, Context context)
     mTitle.setPosition(0.5f * 1600.f - 180.f, 0.25f * 900.f);
 
     int mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 4;
-    int mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 2;
+    int mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 3;
     mGirl.setFrameSize(sf::Vector2i(mWidth, mHeight));
     mGirl.setNumFrames(8);
     mGirl.setDuration(sf::seconds(0.8f));

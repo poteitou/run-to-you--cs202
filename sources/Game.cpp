@@ -20,6 +20,7 @@ Game::Game()
 	mTextures.load(Textures::PinkBackground, "resources/textures/PinkBackground.png");
 	mTextures.load(Textures::PinkMouse, "resources/textures/PinkMouse.png");
 	mTextures.load(Textures::BlueSkirt, "resources/textures/BlueSkirt.png");
+	mTextures.load(Textures::BlueCollide, "resources/textures/BlueCollide.png");
 	mTextures.load(Textures::Heart, "resources/textures/Heart.png");
 	mTextures.load(Textures::Life, "resources/textures/Life.png");
 	mTextures.load(Textures::Bird, "resources/textures/Bird.png");
@@ -30,6 +31,8 @@ Game::Game()
 	mSoundBuffers.load(Sounds::Button, "resources/sounds/Button.wav");
 	mSoundBuffers.load(Sounds::Paused, "resources/sounds/Paused.wav");
 	mSoundBuffers.load(Sounds::GameOver, "resources/sounds/GameOver.wav");
+	mSoundBuffers.load(Sounds::Collide, "resources/sounds/Collide.wav");
+	mSoundBuffers.load(Sounds::First, "resources/sounds/First.wav");
 	mSoundBuffers.load(Sounds::Heart, "resources/sounds/Heart.wav");
 	mSoundBuffers.load(Sounds::Jump, "resources/sounds/Jump.wav");
 	mFonts.load(Fonts::Title, "resources/fonts/Title.ttf");

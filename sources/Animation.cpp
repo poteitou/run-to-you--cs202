@@ -151,11 +151,13 @@ void Animation::update(sf::Time dt)
 	sf::Vector2i textureBounds(mSprite.getTexture()->getSize());
 	sf::IntRect textureRect = mSprite.getTextureRect();
 
+	if (mCurrentFrame >= mNumFrames)
+		mCurrentFrame = 0;
 	if (mCurrentFrame == 0)
 		textureRect = sf::IntRect(0, 0, mFrameSize.x, mFrameSize.y);
 	
 	// While we have a frame to process
-	while (mElapsedTime >= timePerFrame && (mCurrentFrame <= mNumFrames || mRepeat))
+	while (mElapsedTime >= timePerFrame && (mCurrentFrame < mNumFrames || mRepeat))
 	{
 		// Move the texture rect left
 		textureRect.left += textureRect.width;

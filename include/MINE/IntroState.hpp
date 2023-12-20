@@ -2,6 +2,7 @@
 #define MINE_INTROSTATE_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include <MINE/Animation.hpp>
 #include <MINE/State.hpp>
@@ -18,6 +19,7 @@ public:
 private:
     sf::Sprite mBackgroundSprite;
     sf::Text mTitle;
+    sf::Sound mFirstSound;
     sf::Sprite mTitleSprite;
     Animation mGirl;
     sf::Text mText;

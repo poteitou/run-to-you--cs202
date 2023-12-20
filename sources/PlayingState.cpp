@@ -9,6 +9,7 @@ PlayingState::PlayingState(StateStack &stack, Context context)
       mPlayer(context),
       mGroundHeight(900.f - 80.f),
       mScrollSpeed(400.f),
+      mTimeCollide(1.f),
       mDistance(0.f),
       mCntLives(3)
 {
@@ -39,6 +40,8 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     mPaused.setVolume(100);
     mGameOver.setBuffer(context.mSoundBuffers->get(Sounds::GameOver));
     mGameOver.setVolume(100);
+    mCollide.setBuffer(context.mSoundBuffers->get(Sounds::Collide));
+    mCollide.setVolume(100);
 
     mPlayer.setPosition(150.f, 300.f);
     mPlayer.setVelocity(0.f, 0.f);
@@ -73,10 +76,10 @@ void PlayingState::createObstacle()
                 hasHeart = true;
             }
 
-            int randPos = rand() % 100;
-            float minDis = mScrollSpeed * 2 / 3;
-            float maxDis = mScrollSpeed * 2;
-            float delta = minDis + (maxDis - minDis) * randPos / 100.f;
+            int randPos = rand() % 5;
+            float minDis = mScrollSpeed * 0.8f;
+            float maxDis = mScrollSpeed * 1.6f;
+            float delta = minDis + (maxDis - minDis) * randPos / 5;
             mObstacleQueue.push_back(Object(getContext(), mTypeObject[obstacleType], mObstacleQueue.back().getPosition().x + delta, mGroundHeight));
         }
     }
@@ -95,6 +98,21 @@ bool PlayingState::handleEvent(User user)
 
 bool PlayingState::update(sf::Time dt)
 {
+    if (mTimeCollide < 0.5f)
+    {
+        mTimeCollide += dt.asSeconds();
+        if (mTimeCollide >= 0.5f)
+        {
+            --mCntLives;
+            mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
+            if (mCntLives == 0)
+            {
+                mGameOver.play();
+                requestStackPush(States::GameOver);
+            }
+        }
+        return true;
+    }
     for (auto &obstacle : mObstacleQueue)
     {
         if (obstacle.isDone() && mCntLives < 3) 
@@ -104,6 +122,11 @@ bool PlayingState::update(sf::Time dt)
         }
         else if (obstacle.isCollide() && obstacle.getType() != "Heart") 
         {
+            mCollide.play();
+            mPlayer.update(dt, 0);
+            mTimeCollide = 0.f;
+            obstacle.update(dt, 0.f, mPlayer);
+            return true;
             --mCntLives;
             mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
             if (mCntLives == 0)
@@ -138,7 +161,7 @@ bool PlayingState::update(sf::Time dt)
             mGroundSprite[i].setPosition(mGroundSprite[(i + 2) % 3].getPosition().x + 1600.f, 0.f);
     }
     if (mScrollSpeed < 2000.f)
-        mScrollSpeed += 0.2f;
+        mScrollSpeed += 0.1f;
     return true;
 }
 

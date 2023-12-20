@@ -7,8 +7,11 @@ IntroState::IntroState(StateStack &stack, Context context)
       mTextEffectTime(sf::Time::Zero),
       mTitle("RUN", context.mFonts->get(Fonts::Caro), 200),
       mTitleSprite(context.mTextures->get(Textures::ToYou)),
-      mGirl(context.mTextures->get(Textures::BlueSkirt))
+      mGirl(context.mTextures->get(Textures::BlueSkirt)),
+      mFirstSound(context.mSoundBuffers->get(Sounds::First))
 {
+    mFirstSound.setVolume(100);
+    mFirstSound.play();
     mTitle.setStyle(sf::Text::Bold);
     sf::FloatRect bounds = mTitle.getLocalBounds();
     mTitle.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
@@ -18,7 +21,7 @@ IntroState::IntroState(StateStack &stack, Context context)
     // mTitle.setPosition(0.5f * 1600.f - 180.f, 0.25f * 900.f);
 
     int mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 4;
-    int mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 2;
+    int mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 3;
     mGirl.setFrameSize(sf::Vector2i(mWidth, mHeight));
     mGirl.setNumFrames(8);
     mGirl.setDuration(sf::seconds(0.8f));

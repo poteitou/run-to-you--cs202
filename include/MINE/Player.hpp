@@ -40,14 +40,13 @@ public:
     const sf::Sprite& getSprite() const;
     
     void setPosition(float x, float y);
-    void changeTexture(sf::Texture &texture);
+    void changeTexture(sf::Texture &texture1, sf::Texture &texture2);
 
     void handleEvent(User user);
     void update(sf::Time dt, float groundHeight);
     bool isJumping() const;
 
-private:
-    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 private:
     Animation mAnimation;
