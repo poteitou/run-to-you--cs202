@@ -27,6 +27,7 @@ public:
 private:
     sf::Sprite mBackgroundSprite;
     std::array<Button::Ptr, 2> mButtons;
+    sf::Music mMusic;
     sf::Text mTitle;
     sf::Sprite mTitleSprite;
     Animation mGirl;

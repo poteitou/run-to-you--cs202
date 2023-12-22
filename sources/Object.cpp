@@ -7,10 +7,10 @@ Object::Object(State::Context context, std::string type, float x, float y)
       mIsCollide(false), 
       mAlreadyCollide(false)
 {
+    mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Collide));
     if (type == "Milktea")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Heart));
-        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
         mWidth = mAnimation.getTexture()->getSize().x;
         mHeight = mAnimation.getTexture()->getSize().y / 4;
         mAnimation.setNumFrames(4);
@@ -18,7 +18,6 @@ Object::Object(State::Context context, std::string type, float x, float y)
     else if (type == "Cat")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Cat));
-        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
         mWidth = mAnimation.getTexture()->getSize().x / 6;
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(6);
@@ -26,7 +25,6 @@ Object::Object(State::Context context, std::string type, float x, float y)
     else if (type == "Friend")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Heart));
-        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
         mWidth = mAnimation.getTexture()->getSize().x;
         mHeight = mAnimation.getTexture()->getSize().y / 4;
         mAnimation.setNumFrames(4);
@@ -34,7 +32,6 @@ Object::Object(State::Context context, std::string type, float x, float y)
     else if (type == "Rock")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Heart));
-        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
         mWidth = mAnimation.getTexture()->getSize().x;
         mHeight = mAnimation.getTexture()->getSize().y / 4;
         mAnimation.setNumFrames(4);
@@ -42,7 +39,6 @@ Object::Object(State::Context context, std::string type, float x, float y)
     else if (type == "Bird")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Bird));
-        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Jump));
         mWidth = mAnimation.getTexture()->getSize().x / 8;
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(8);

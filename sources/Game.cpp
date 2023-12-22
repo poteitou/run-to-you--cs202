@@ -87,6 +87,9 @@ void Game::run()
 void Game::processInput()
 {
 	sf::Event event;
+	// if (!mWindow.pollEvent(event))
+	// 	if (!mIsPaused)
+	// 		mStateStack.handleEvent(mUser);
 	while (mWindow.pollEvent(event))
 	{	
 		mIsPaused = false;

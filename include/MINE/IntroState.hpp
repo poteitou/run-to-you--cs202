@@ -22,6 +22,7 @@ private:
     sf::Sound mFirstSound;
     sf::Sprite mTitleSprite;
     Animation mGirl;
+    sf::Music mMusic;
     sf::Text mText;
     bool mShowText;
     sf::Time mTextEffectTime;

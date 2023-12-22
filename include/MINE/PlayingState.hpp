@@ -50,6 +50,7 @@ private:
     sf::Sound mCollide;
     sf::Sound mPaused;
     sf::Sound mGameOver;
+    sf::Music mMusic;
     sf::Sprite mLives;
     Player mPlayer;
     float mTimeCollide;
@@ -58,6 +59,7 @@ private:
     float mScrollSpeed;
     float mDistance;
     int mCntLives;
+    bool mIsPaused;
 };
 
 #endif // MINE_PLAYINGSTATE_HPP

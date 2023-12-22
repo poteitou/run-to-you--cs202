@@ -36,7 +36,6 @@ IntroState::IntroState(StateStack &stack, Context context)
     mTitleSprite.setPosition(1600.f + 180.f, 0.25f * 900.f);
     // mTitleSprite.setPosition(0.5f * 1600.f, 0.25f * 900.f);
 
-
     mBackgroundSprite.setTexture(context.mTextures->get(Textures::PinkBackground));
     mBackgroundSprite.setPosition(0.f, 0.f);
 
@@ -50,11 +49,8 @@ bool IntroState::handleEvent(User user)
         return true;
     if (mTitleSprite.getPosition().x > 0.5f * 1600.f)
         return true;
-    if (user.isEnterPressed)
-    {
-        requestStackPop();
-        requestStackPush(States::Menu);
-    }
+    requestStackPop();
+    requestStackPush(States::Menu);
     return true;
 }
 
@@ -76,16 +72,16 @@ bool IntroState::update(sf::Time dt)
     }
     else if (mTitleSprite.getPosition().x > 0.5f * 1600.f)
         mTitleSprite.move(-1000.f * dt.asSeconds(), 0.f);
-    else
-    {
-        mTextEffectTime += dt;
+    // else
+    // {
+    //     mTextEffectTime += dt;
 
-        if (mTextEffectTime >= sf::seconds(0.5f))
-        {
-            mShowText = !mShowText;
-            mTextEffectTime = sf::Time::Zero;
-        }
-    }
+    //     if (mTextEffectTime >= sf::seconds(0.5f))
+    //     {
+    //         mShowText = !mShowText;
+    //         mTextEffectTime = sf::Time::Zero;
+    //     }
+    // }
 
     return true;
 }
@@ -97,6 +93,6 @@ void IntroState::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(mTitleSprite, states);
     target.draw(mGirl, states);
 
-    if (mShowText)
-        target.draw(mText, states);
+    // if (mShowText)
+    //     target.draw(mText, states);
 }

@@ -37,6 +37,12 @@ MenuState::MenuState(StateStack &stack, Context context)
     mButtons[1] = std::make_shared<Button>(context);
     mButtons[1]->setText("Back", 70);
     mButtons[1]->setPosition(0.5f * 1600.f, 0.75f * 900.f);
+
+    if (!mMusic.openFromFile("resources/sounds/FastMusic.ogg"))
+		throw std::runtime_error("Music FastMusic could not be loaded.");
+    mMusic.setVolume(30);
+    mMusic.setLoop(true);
+    mMusic.play();
 }
 
 bool MenuState::handleEvent(User user)
@@ -55,15 +61,16 @@ bool MenuState::update(sf::Time dt)
 
     if (mButtons[0]->isPressed())
     {
+        mMusic.stop();
         requestStackPop();
         requestStackPush(States::Playing);
     }
-    else if (mButtons[1]->isPressed())
-    {
-        requestStackPop();
-        requestStackPush(States::Intro);
-    }
-    return true;
+    // else if (mButtons[1]->isPressed())
+    // {
+    //     requestStackPop();
+    //     requestStackPush(States::Setting);
+    // }
+    return false;
 }
 
 void MenuState::draw(sf::RenderTarget &target, sf::RenderStates states) const

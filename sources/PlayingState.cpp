@@ -11,7 +11,8 @@ PlayingState::PlayingState(StateStack &stack, Context context)
       mScrollSpeed(400.f),
       mTimeCollide(1.f),
       mDistance(0.f),
-      mCntLives(3)
+      mCntLives(1),
+      mIsPaused(false)
 {
     sf::Texture &backgroundTexture = context.mTextures->get(Textures::PinkBackground);
     sf::Texture &groundTexture = context.mTextures->get(Textures::Ground);
@@ -56,6 +57,12 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     int obstacleType = rand() % (mTypeObject.size() - 1);
 
     mObstacleQueue.push_back(Object(context, mTypeObject[obstacleType], 2400.f, mGroundHeight));
+
+    if (!mMusic.openFromFile("resources/sounds/Forest.ogg"))
+		throw std::runtime_error("Music Forest could not be loaded.");
+    mMusic.setVolume(40);
+    mMusic.setLoop(true);
+    mMusic.play();
 }
 
 void PlayingState::createObstacle()
@@ -89,8 +96,15 @@ bool PlayingState::handleEvent(User user)
 {
     if (user.isEscapePressed)
     {
+        mIsPaused = true;
+        mMusic.pause();
         mPaused.play();
         requestStackPush(States::Paused);
+    }
+    else if (mIsPaused)
+    {
+        mMusic.play();
+        mIsPaused = false;
     }
     mPlayer.handleEvent(user);
     return true;
@@ -107,6 +121,7 @@ bool PlayingState::update(sf::Time dt)
             mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
             if (mCntLives == 0)
             {
+                mMusic.stop();
                 mGameOver.play();
                 requestStackPush(States::GameOver);
             }
@@ -122,7 +137,6 @@ bool PlayingState::update(sf::Time dt)
         }
         else if (obstacle.isCollide() && obstacle.getType() != "Heart") 
         {
-            mCollide.play();
             mPlayer.update(dt, 0);
             mTimeCollide = 0.f;
             obstacle.update(dt, 0.f, mPlayer);
@@ -131,6 +145,7 @@ bool PlayingState::update(sf::Time dt)
             mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
             if (mCntLives == 0)
             {
+                mMusic.stop();
                 mGameOver.play();
                 requestStackPush(States::GameOver);
             }
