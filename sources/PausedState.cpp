@@ -39,7 +39,6 @@ bool PausedState::update(sf::Time dt)
     if (mButtons[0]->isPressed())
     {
         requestStackPop();
-        // requestStackPush(States::Playing);
     }
     else if (mButtons[1]->isPressed())
     {

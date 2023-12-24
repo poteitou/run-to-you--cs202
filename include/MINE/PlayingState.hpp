@@ -11,7 +11,7 @@
 #include <queue>
 #include <vector>
 #include <string>
-#include <iostream>
+#include <fstream>
 
 
 namespace sf
@@ -38,6 +38,7 @@ public:
     PlayingState(StateStack &stack, Context context);
 
     virtual void createObstacle();
+    virtual void recordScore();
     virtual bool handleEvent(User user);
     virtual bool update(sf::Time dt);
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;

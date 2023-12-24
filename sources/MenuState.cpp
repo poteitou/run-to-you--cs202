@@ -32,10 +32,14 @@ MenuState::MenuState(StateStack &stack, Context context)
 
     mButtons[0] = std::make_shared<Button>(context);
     mButtons[0]->setText("Play", 70);
-    mButtons[0]->setPosition(0.5f * 1600.f, 0.5f * 900.f);
+    // button on the right botton of the screen
+    mButtons[0]->setPosition(1600.f - 100.f - 0.5f * mButtons[0]->getLocalBounds().width , 0.75f * 900.f + 0.5f * mButtons[0]->getLocalBounds().height);
+
+    // mButtons[0]->setPosition(0.5f * 1600.f, 0.5f * 900.f);
+
 
     mButtons[1] = std::make_shared<Button>(context);
-    mButtons[1]->setText("Back", 70);
+    mButtons[1]->setText("About", 70);
     mButtons[1]->setPosition(0.5f * 1600.f, 0.75f * 900.f);
 
     if (!mMusic.openFromFile("resources/sounds/FastMusic.ogg"))

@@ -2,7 +2,7 @@
 
 IntroState::IntroState(StateStack &stack, Context context)
     : State(stack, context),
-      mText("Press enter to start", context.mFonts->get(Fonts::Main), 50),
+      mText("Click anywhere to continue", context.mFonts->get(Fonts::Main), 50),
       mShowText(false),
       mTextEffectTime(sf::Time::Zero),
       mTitle("RUN", context.mFonts->get(Fonts::Caro), 200),
@@ -44,13 +44,12 @@ IntroState::IntroState(StateStack &stack, Context context)
 }
 
 bool IntroState::handleEvent(User user)
-{
-    if (mTitle.getPosition().x < 0.5f * 1600.f - 180.f)
-        return true;
-    if (mTitleSprite.getPosition().x > 0.5f * 1600.f)
-        return true;
-    requestStackPop();
-    requestStackPush(States::Menu);
+{   
+    if (user.isMousePressed)
+    {
+        requestStackPop();
+        requestStackPush(States::Menu);
+    }
     return true;
 }
 
@@ -72,16 +71,16 @@ bool IntroState::update(sf::Time dt)
     }
     else if (mTitleSprite.getPosition().x > 0.5f * 1600.f)
         mTitleSprite.move(-1000.f * dt.asSeconds(), 0.f);
-    // else
-    // {
-    //     mTextEffectTime += dt;
+    else
+    {
+        mTextEffectTime += dt;
 
-    //     if (mTextEffectTime >= sf::seconds(0.5f))
-    //     {
-    //         mShowText = !mShowText;
-    //         mTextEffectTime = sf::Time::Zero;
-    //     }
-    // }
+        if (mTextEffectTime >= sf::seconds(0.5f))
+        {
+            mShowText = !mShowText;
+            mTextEffectTime = sf::Time::Zero;
+        }
+    }
 
     return true;
 }
@@ -93,6 +92,6 @@ void IntroState::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(mTitleSprite, states);
     target.draw(mGirl, states);
 
-    // if (mShowText)
-    //     target.draw(mText, states);
+    if (mShowText)
+        target.draw(mText, states);
 }

@@ -60,7 +60,7 @@ PlayingState::PlayingState(StateStack &stack, Context context)
 
     if (!mMusic.openFromFile("resources/sounds/Forest.ogg"))
 		throw std::runtime_error("Music Forest could not be loaded.");
-    mMusic.setVolume(40);
+    mMusic.setVolume(30);
     mMusic.setLoop(true);
     mMusic.play();
 }
@@ -92,6 +92,26 @@ void PlayingState::createObstacle()
     }
 }
 
+void PlayingState::recordScore()
+{
+    std::ifstream fin("resources/texts/highscore.data");
+    std::vector<int> scores;
+    int score;
+    while (fin >> score)
+    {
+        scores.push_back(score);
+    }
+    fin.close();
+    scores.push_back((int)mDistance / 100);
+    std::sort(scores.begin(), scores.end(), std::greater<int>());
+    std::ofstream fout("resources/texts/highscore.data");
+    for (int i = 0; i < scores.size() && i < 10; i++)
+    {
+        fout << std::to_string(i + 1) << ". " << scores[i] << " meters" << std::endl;
+    }
+    fout.close();
+}
+
 bool PlayingState::handleEvent(User user)
 {
     if (user.isEscapePressed)
@@ -121,6 +141,7 @@ bool PlayingState::update(sf::Time dt)
             mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
             if (mCntLives == 0)
             {
+                recordScore();
                 mMusic.stop();
                 mGameOver.play();
                 requestStackPush(States::GameOver);
