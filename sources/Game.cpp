@@ -38,7 +38,6 @@ Game::Game()
 	mSoundBuffers.load(Sounds::Collide, "resources/sounds/Collide.wav");
 	mSoundBuffers.load(Sounds::First, "resources/sounds/First.wav");
 	mSoundBuffers.load(Sounds::Heart, "resources/sounds/Heart.wav");
-	mSoundBuffers.load(Sounds::Jump, "resources/sounds/Jump.wav");
 	mFonts.load(Fonts::Title, "resources/fonts/Title.ttf");
 	mFonts.load(Fonts::Caro, "resources/fonts/Caro.ttf");
 	mFonts.load(Fonts::Main, "resources/fonts/Main.ttf");

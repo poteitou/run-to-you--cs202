@@ -10,7 +10,7 @@ PlayingState::PlayingState(StateStack &stack, Context context)
       mGroundHeight(900.f - 80.f),
       mScrollSpeed(400.f),
       mTimeCollide(1.f),
-      mDistance(].f),
+      mDistance(0.f),
       mCntLives(1),
       mLevel(0),
       mStartLevelUp(false),

@@ -3,14 +3,12 @@
 Player::Player(State::Context context)
     : mAnimation(),
       mSprite(context.mTextures->get(Textures::BlueCollide)),
-      mJumpSound(context.mSoundBuffers->get(Sounds::Jump)),
       mVelocity(0.f, 0.f),
       mIsRunning(true),
-      mIsJumping(false),
-      mPlayedJumpSound(false),
-      mGravity(3750.f)
+      mAlreadyJump(false),
+      mIsJumping(0),
+      mGravity(1875.f)
 {
-    mJumpSound.setVolume(100);
     // top, left, width, height
     mAnimation.setTexture(context.mTextures->get(Textures::BlueSkirt));
     mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 4;
@@ -91,16 +89,16 @@ void Player::handleEvent(User user)
 {
     if (user.isSpacePressed)
     {
-        if (!mIsJumping)
+        if (!mAlreadyJump && mIsJumping <= 1)
         {
-            mVelocity.y = -1500.f;
-            mPlayedJumpSound = false;
-            mIsJumping = true;
+            mVelocity.y = -750.f;
+            mAlreadyJump = true;
+            ++mIsJumping;
         }
     }
-    else if (!mIsJumping)
+    else 
     {
-        mVelocity.y = 0.f;
+        mAlreadyJump = false;
     }
 }
 
@@ -111,11 +109,17 @@ void Player::update(sf::Time dt, float groundHeight)
         mAnimation.setFrame(8);
         return;
     }
+
+    mPosition.y += mVelocity.y * dt.asSeconds();
+    mPosition.x += mVelocity.x * dt.asSeconds();
+    mAnimation.setPosition(mPosition);
+    mSprite.setPosition(mPosition);
+
     // jumping mechanic
     if (mPosition.y < groundHeight) // above ground
     {
         mVelocity.y += mGravity * dt.asSeconds(); // add gravity
-        mIsJumping = true;
+        // mIsJumping = true;
     }
     else if (mPosition.y > groundHeight) // below ground
     {
@@ -123,19 +127,12 @@ void Player::update(sf::Time dt, float groundHeight)
     }
 
     if (mPosition.y == groundHeight)
-        mIsJumping = false;
-
-    mAnimation.setPosition(mPosition);
-    mSprite.setPosition(mPosition);
-    mPosition.y += mVelocity.y * dt.asSeconds();
-    mPosition.x += mVelocity.x * dt.asSeconds();
-
-    if (mIsJumping && !mPlayedJumpSound)
     {
-        mJumpSound.play();
-        mPlayedJumpSound = true;
+        mIsJumping = 0;
+        mVelocity.y = 0.f;
     }
-    if (mIsJumping)
+
+    if (mIsJumping > 0)
         mAnimation.setFrame(0);
     else 
         mAnimation.update(dt);
@@ -143,7 +140,7 @@ void Player::update(sf::Time dt, float groundHeight)
 
 bool Player::isJumping() const
 {
-    return mIsJumping;
+    return mIsJumping > 0;
 }
 
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const

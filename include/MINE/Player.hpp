@@ -52,7 +52,6 @@ public:
 private:
     Animation mAnimation;
     sf::Sprite mSprite;
-    sf::Sound mJumpSound;
     sf::Vector2f mVelocity;
     sf::Vector2f mPosition;
     float mGravity;
@@ -60,9 +59,9 @@ private:
     int mWidth;
     int mHeight;
 
+    bool mAlreadyJump;
     bool mIsRunning;
-    bool mIsJumping;
-    bool mPlayedJumpSound;
+    int mIsJumping;
 };
 
 #endif // MINE_PLAYER_HPP
