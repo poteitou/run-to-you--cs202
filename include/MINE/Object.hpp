@@ -27,7 +27,7 @@ public:
     enum Type
     {
         Milktea,
-        Cat,
+        Dog,
         Friend,
         Rock,
         Bird,

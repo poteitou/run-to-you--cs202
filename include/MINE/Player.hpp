@@ -40,6 +40,7 @@ public:
     const sf::Sprite& getSprite() const;
     
     void setPosition(float x, float y);
+    sf::Vector2f getPosition() const;
     void changeTexture(sf::Texture &texture1, sf::Texture &texture2);
 
     void handleEvent(User user);

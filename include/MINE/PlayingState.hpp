@@ -23,22 +23,11 @@ namespace sf
 class PlayingState : public State
 {
 public:
-    enum Type
-    {
-        Milktea,
-        Cat,
-        Friend,
-        Rock,
-        Bird,
-        Heart,
-        TypeCount
-    };
-
-public:
     PlayingState(StateStack &stack, Context context);
 
     virtual void createObstacle();
     virtual void recordScore();
+    virtual void levelUp(sf::Time dt);
     virtual bool handleEvent(User user);
     virtual bool update(sf::Time dt);
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -46,8 +35,10 @@ public:
 private:
     std::array<sf::Sprite, 3> mBackgroundSprite;
     std::array<sf::Sprite, 3> mGroundSprite;
-    std::array<std::string, 6> mTypeObject;
+    std::array<std::string, 6> mTypeObject[3];
     std::deque<Object> mObstacleQueue;
+    Animation mChange;
+    Animation mCrush;
     sf::Sound mCollide;
     sf::Sound mPaused;
     sf::Sound mGameOver;
@@ -60,7 +51,10 @@ private:
     float mScrollSpeed;
     float mDistance;
     int mCntLives;
+    int mLevel;
     bool mIsPaused;
+    bool mStartLevelUp;
+    bool mLevelingUp;
 };
 
 #endif // MINE_PLAYINGSTATE_HPP

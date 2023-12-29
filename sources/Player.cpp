@@ -76,6 +76,11 @@ void Player::setPosition(float x, float y)
     mSprite.setPosition(x, y);
 }
 
+sf::Vector2f Player::getPosition() const
+{
+    return mPosition;
+}
+
 void Player::changeTexture(sf::Texture &texture1, sf::Texture &texture2)
 {
     mAnimation.setTexture(texture1);

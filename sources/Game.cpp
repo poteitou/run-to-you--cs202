@@ -18,13 +18,17 @@ Game::Game()
 	mWindow.setPosition(sf::Vector2i(desktop.width/2 - mWindow.getSize().x / 2, desktop.height / 2 - mWindow.getSize().y / 2 - 100));
 
 	mTextures.load(Textures::PinkBackground, "resources/textures/PinkBackground.png");
+	mTextures.load(Textures::PinkToOrange, "resources/textures/PinkToOrange.png");
+	mTextures.load(Textures::OrangeSky, "resources/textures/OrangeSky.png");
+	mTextures.load(Textures::CityNight, "resources/textures/CityNight.png");
 	mTextures.load(Textures::PinkMouse, "resources/textures/PinkMouse.png");
 	mTextures.load(Textures::BlueSkirt, "resources/textures/BlueSkirt.png");
+	mTextures.load(Textures::CrushRight, "resources/textures/CrushRight.png");
 	mTextures.load(Textures::BlueCollide, "resources/textures/BlueCollide.png");
 	mTextures.load(Textures::Heart, "resources/textures/Heart.png");
 	mTextures.load(Textures::Life, "resources/textures/Life.png");
 	mTextures.load(Textures::Bird, "resources/textures/Bird.png");
-	mTextures.load(Textures::Cat, "resources/textures/Cat.png");
+	mTextures.load(Textures::Dog, "resources/textures/Dog.png");
 	mTextures.load(Textures::ToYou, "resources/textures/ToYou.png");
 	mTextures.load(Textures::Ground, "resources/textures/Ground.png");
 	mTextures.load(Textures::Button, "resources/textures/Button.png");

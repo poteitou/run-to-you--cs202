@@ -15,9 +15,9 @@ Object::Object(State::Context context, std::string type, float x, float y)
         mHeight = mAnimation.getTexture()->getSize().y / 4;
         mAnimation.setNumFrames(4);
     }
-    else if (type == "Cat")
+    else if (type == "Dog")
     {
-        mAnimation.setTexture(context.mTextures->get(Textures::Cat));
+        mAnimation.setTexture(context.mTextures->get(Textures::Dog));
         mWidth = mAnimation.getTexture()->getSize().x / 6;
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(6);
