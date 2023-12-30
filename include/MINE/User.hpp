@@ -8,6 +8,8 @@ struct User
     User();
 
     sf::Vector2i mousePosition;
+    bool isMouseWheelUp;
+    bool isMouseWheelDown;
     bool isMousePressed;
     bool isMouseReleased;
     bool isEnterPressed;

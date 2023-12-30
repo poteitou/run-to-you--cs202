@@ -36,6 +36,7 @@ Game::Game()
 	mTextures.load(Textures::ButtonMute, "resources/textures/ButtonMute.png");
 	mTextures.load(Textures::ButtonAbout, "resources/textures/ButtonAbout.png");
 	mTextures.load(Textures::ButtonRank, "resources/textures/ButtonRank.png");
+	mTextures.load(Textures::ButtonX, "resources/textures/ButtonX.png");
 	mSoundBuffers.load(Sounds::Button, "resources/sounds/Button.wav");
 	mSoundBuffers.load(Sounds::Paused, "resources/sounds/Paused.wav");
 	mSoundBuffers.load(Sounds::GameOver, "resources/sounds/GameOver.wav");
@@ -101,10 +102,17 @@ void Game::processInput()
 			mIsPaused = true;
 		if (!mIsPaused)
 		{
+			mUser.isMouseWheelUp = mUser.isMouseWheelDown = false;
 			switch (event.type)
 			{
 			case sf::Event::Closed:
 				mWindow.close();
+				break;
+			case sf::Event::MouseWheelMoved:
+				if (event.mouseWheel.delta > 0)
+					mUser.isMouseWheelUp = true;
+				else if (event.mouseWheel.delta < 0)
+					mUser.isMouseWheelDown = true;
 				break;
 			case sf::Event::MouseButtonPressed:
 				if (event.mouseButton.button == sf::Mouse::Left)

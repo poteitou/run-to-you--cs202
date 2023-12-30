@@ -8,6 +8,8 @@
 #include <MINE/Button.hpp>
 
 #include <array>
+#include <string>
+#include <fstream>
 
 namespace sf
 {
@@ -27,12 +29,18 @@ public:
 private:
     sf::Sprite mBackgroundSprite;
     sf::Sprite mGroundSprite;
+    sf::RectangleShape mBackgroundRect;
+    sf::RectangleShape mPopupRect, mScrollRect;
+    sf::View mView;
+    std::vector<sf::Text> mPopupText;
     std::array<Button::Ptr, 4> mButtons;
+    Button::Ptr mCloseButton;
     sf::Music mMusic;
     sf::Text mTitle;
     sf::Sprite mTitleSprite;
     Animation mGirl;
-    std::array<bool, 4> mButtonPressed;
+    std::array<bool, 5> mButtonPressed;
+    int mDrawPopup;
 };
 
 #endif // MINE_MENUSTATE_HPP

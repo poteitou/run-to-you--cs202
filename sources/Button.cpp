@@ -17,6 +17,7 @@ Button::Button(State::Context context, Textures::ID texture)
         mHeight = context.mTextures->get(texture).getSize().y / 3;
     mSprite.setTextureRect(sf::IntRect(0, mHeight * (2 + mIsNotNormal), mWidth, mHeight));
     centerOrigin(mSprite);
+    mText.setStyle(sf::Text::Bold);
     mText.setColor(sf::Color::Black);
     mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
     mAnimation.setNumFrames(2);
