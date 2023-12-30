@@ -76,7 +76,11 @@ PlayingState::PlayingState(StateStack &stack, Context context)
 
     if (!mMusic.openFromFile("resources/sounds/Forest.ogg"))
         throw std::runtime_error("Music Forest could not be loaded.");
-    mMusic.setVolume(30);
+    if (playMusic())
+        mMusic.setVolume(30);
+    else
+        mMusic.setVolume(0);
+        
     mMusic.setLoop(true);
     mMusic.play();
 }

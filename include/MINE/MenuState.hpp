@@ -26,11 +26,13 @@ public:
 
 private:
     sf::Sprite mBackgroundSprite;
-    std::array<Button::Ptr, 2> mButtons;
+    sf::Sprite mGroundSprite;
+    std::array<Button::Ptr, 4> mButtons;
     sf::Music mMusic;
     sf::Text mTitle;
     sf::Sprite mTitleSprite;
     Animation mGirl;
+    std::array<bool, 4> mButtonPressed;
 };
 
 #endif // MINE_MENUSTATE_HPP

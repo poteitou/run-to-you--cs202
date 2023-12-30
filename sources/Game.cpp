@@ -32,6 +32,10 @@ Game::Game()
 	mTextures.load(Textures::ToYou, "resources/textures/ToYou.png");
 	mTextures.load(Textures::Ground, "resources/textures/Ground.png");
 	mTextures.load(Textures::Button, "resources/textures/Button.png");
+	mTextures.load(Textures::ButtonMusic, "resources/textures/ButtonMusic.png");
+	mTextures.load(Textures::ButtonMute, "resources/textures/ButtonMute.png");
+	mTextures.load(Textures::ButtonAbout, "resources/textures/ButtonAbout.png");
+	mTextures.load(Textures::ButtonRank, "resources/textures/ButtonRank.png");
 	mSoundBuffers.load(Sounds::Button, "resources/sounds/Button.wav");
 	mSoundBuffers.load(Sounds::Paused, "resources/sounds/Paused.wav");
 	mSoundBuffers.load(Sounds::GameOver, "resources/sounds/GameOver.wav");

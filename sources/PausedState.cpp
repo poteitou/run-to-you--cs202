@@ -14,11 +14,11 @@ PausedState::PausedState(StateStack &stack, Context context)
     mBackgroundRect.setPosition(0.f, 0.f);
     mBackgroundRect.setFillColor(sf::Color(0, 0, 0, 100));
     mBackgroundRect.setSize(sf::Vector2f(1600.f, 900.f));
-    mButtons[0] = std::make_shared<Button>(context);
+    mButtons[0] = std::make_shared<Button>(context, Textures::Button);
     mButtons[0]->setText("Resume", 70);
     mButtons[0]->setPosition(0.5f * 1600.f, 0.5f * 900.f);
 
-    mButtons[1] = std::make_shared<Button>(context);
+    mButtons[1] = std::make_shared<Button>(context, Textures::Button);
     mButtons[1]->setText("Quit", 70);
     mButtons[1]->setPosition(0.5f * 1600.f, 0.75f * 900.f);
 }

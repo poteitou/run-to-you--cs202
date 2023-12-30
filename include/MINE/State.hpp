@@ -47,6 +47,8 @@ protected:
 	void requestStackPush(States::ID stateID);
 	void requestStackPop();
 	void requestStateClear();
+	void setPlayMusic();
+	bool playMusic() const;
 
 	Context getContext() const;
 

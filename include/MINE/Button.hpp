@@ -34,7 +34,7 @@ public:
     };
 
 public:
-    Button(State::Context context);
+    Button(State::Context context, Textures::ID texture);
 
     void centerOrigin(sf::Sprite& sprite);
     void centerOrigin(sf::Text& text);
@@ -42,6 +42,7 @@ public:
 
     void setText(const std::string &text, unsigned int size);
     void setPosition(float x, float y);
+    void setTexture(const sf::Texture& texture);
 
     void handleEvent(User user);
     void update(sf::Time dt);
@@ -63,6 +64,7 @@ private:
     bool mIsHovered;
     bool mIsPressed;
     bool mPlayedPressedSound;
+    bool mIsNotNormal;
 };
 
 #endif // MINE_BUTTON_HPP

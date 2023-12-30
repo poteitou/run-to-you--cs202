@@ -44,8 +44,10 @@ public:
 	void pushState(States::ID stateID);
 	void popState();
 	void clearStates();
-
 	bool isEmpty() const;
+
+	void setPlayMusic();
+	bool playMusic() const;
 
 private:
 	State::Ptr createState(States::ID stateID);
@@ -63,6 +65,7 @@ private:
 private:
 	std::vector<State::Ptr> mStack;
 	std::vector<PendingChange> mPendingList;
+	bool mPlayMusic;
 
 	State::Context mContext;
 	std::map<States::ID, std::function<State::Ptr()>> mFactories;

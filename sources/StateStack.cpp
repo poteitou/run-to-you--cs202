@@ -7,6 +7,7 @@ StateStack::StateStack(State::Context context)
 , mPendingList()
 , mContext(context)
 , mFactories()
+, mPlayMusic(true)
 {
 }
 
@@ -60,6 +61,16 @@ void StateStack::clearStates()
 bool StateStack::isEmpty() const
 {
 	return mStack.empty();
+}
+
+void StateStack::setPlayMusic()
+{
+	mPlayMusic = !mPlayMusic;
+}
+
+bool StateStack::playMusic() const
+{
+	return mPlayMusic;
 }
 
 State::Ptr StateStack::createState(States::ID stateID)

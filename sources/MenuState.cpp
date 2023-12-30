@@ -30,7 +30,10 @@ MenuState::MenuState(StateStack &stack, Context context)
     mBackgroundSprite.setTexture(context.mTextures->get(Textures::PinkBackground));
     mBackgroundSprite.setPosition(0.f, 0.f);
 
-    mButtons[0] = std::make_shared<Button>(context);
+    mGroundSprite.setTexture(context.mTextures->get(Textures::Ground));
+    mGroundSprite.setPosition(0.f, 0.f);
+
+    mButtons[0] = std::make_shared<Button>(context, Textures::Button);
     mButtons[0]->setText("Play", 70);
     // button on the right botton of the screen
     mButtons[0]->setPosition(1600.f - 100.f - 0.5f * mButtons[0]->getLocalBounds().width , 0.75f * 900.f + 0.5f * mButtons[0]->getLocalBounds().height);
@@ -38,13 +41,28 @@ MenuState::MenuState(StateStack &stack, Context context)
     // mButtons[0]->setPosition(0.5f * 1600.f, 0.5f * 900.f);
 
 
-    mButtons[1] = std::make_shared<Button>(context);
-    mButtons[1]->setText("About", 70);
-    mButtons[1]->setPosition(0.5f * 1600.f, 0.75f * 900.f);
+    mButtons[1] = std::make_shared<Button>(context, Textures::ButtonAbout);
+    // button on the left of Play button[0]
+    mButtons[1]->setPosition(1600.f - 100.f - 0.5f * mButtons[1]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 30.f, 0.75f * 900.f + 0.5f * mButtons[1]->getLocalBounds().height + 50.f);
+
+    mButtons[2] = std::make_shared<Button>(context, Textures::ButtonRank);
+    // button on the left of button[1]
+    mButtons[2]->setPosition(1600.f - 100.f - 0.5f * mButtons[2]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 160.f, 0.75f * 900.f + 0.5f * mButtons[2]->getLocalBounds().height + 50.f);
+
+    mButtons[3] = std::make_shared<Button>(context, Textures::ButtonMusic);
+    // button on the left of button[2]
+    mButtons[3]->setPosition(1600.f - 100.f - 0.5f * mButtons[3]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 290.f, 0.75f * 900.f + 0.5f * mButtons[3]->getLocalBounds().height + 50.f);
+
+    for (int i = 0; i < 4; i++)
+        mButtonPressed[i] = false;
 
     if (!mMusic.openFromFile("resources/sounds/FastMusic.ogg"))
 		throw std::runtime_error("Music FastMusic could not be loaded.");
-    mMusic.setVolume(30);
+    
+    if (playMusic())
+        mMusic.setVolume(40);
+    else
+        mMusic.setVolume(0);
     mMusic.setLoop(true);
     mMusic.play();
 }
@@ -69,11 +87,27 @@ bool MenuState::update(sf::Time dt)
         requestStackPop();
         requestStackPush(States::Playing);
     }
-    // else if (mButtons[1]->isPressed())
-    // {
-    //     requestStackPop();
-    //     requestStackPush(States::Setting);
-    // }
+
+    if (mButtons[3]->isPressed() && mButtonPressed[3] == false)
+    {
+        mButtonPressed[3] = true;
+        setPlayMusic();
+        if (playMusic())
+        {
+            mMusic.setVolume(40);
+            mButtons[3]->setTexture(getContext().mTextures->get(Textures::ButtonMusic));
+        }
+        else
+        {
+            mMusic.setVolume(0);
+            mButtons[3]->setTexture(getContext().mTextures->get(Textures::ButtonMute));
+        }
+    }
+
+    for (int i = 0; i < 4; i++)
+        if (!mButtons[i]->isPressed())
+            mButtonPressed[i] = false;
+
     return false;
 }
 
@@ -81,6 +115,7 @@ void MenuState::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
     target.draw(mBackgroundSprite, states);
+    target.draw(mGroundSprite, states);
     target.draw(mTitle, states);
     target.draw(mTitleSprite, states);
     target.draw(mGirl, states);

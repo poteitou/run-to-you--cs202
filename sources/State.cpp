@@ -30,6 +30,16 @@ void State::requestStateClear()
 	mStack->clearStates();
 }
 
+void State::setPlayMusic() 
+{
+	mStack->setPlayMusic();
+}
+
+bool State::playMusic() const
+{
+	return mStack->playMusic();
+}
+
 State::Context State::getContext() const
 {
 	return mContext;

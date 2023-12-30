@@ -1,23 +1,28 @@
 #include <MINE/Button.hpp>
 
-Button::Button(State::Context context)
-    : mAnimation(context.mTextures->get(Textures::Button)),
+Button::Button(State::Context context, Textures::ID texture)
+    : mAnimation(context.mTextures->get(texture)),
+      mSprite(context.mTextures->get(texture)),
       mPressedSound(context.mSoundBuffers->get(Sounds::Button)),
-      mSprite(context.mTextures->get(Textures::Button)),
       mText("", context.mFonts->get(Fonts::Main), 70),
-      mIsPressed(false), mIsHovered(false), mPlayedPressedSound(false)
+      mIsPressed(false), mIsHovered(false), mPlayedPressedSound(false),
+      mIsNotNormal(texture == Textures::ButtonMusic || texture == Textures::ButtonMute)
 {
     mPressedSound.setVolume(100);
     // top, left, width, height
-    mWidth = context.mTextures->get(Textures::Button).getSize().x;
-    mHeight = context.mTextures->get(Textures::Button).getSize().y / 3;
-    mSprite.setTextureRect(sf::IntRect(0, mHeight * 2, mWidth, mHeight));
+    mWidth = context.mTextures->get(texture).getSize().x;
+    if (texture == Textures::ButtonMusic || texture == Textures::ButtonMute)
+        mHeight = context.mTextures->get(texture).getSize().y / 4;
+    else
+        mHeight = context.mTextures->get(texture).getSize().y / 3;
+    mSprite.setTextureRect(sf::IntRect(0, mHeight * (2 + mIsNotNormal), mWidth, mHeight));
     centerOrigin(mSprite);
     mText.setColor(sf::Color::Black);
     mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
     mAnimation.setNumFrames(2);
     mAnimation.setDuration(sf::seconds(0.6f));
     mAnimation.centerOrigin();
+    mAnimation.setRepeating(false);
 }
 
 void Button::centerOrigin(sf::Sprite &sprite)
@@ -49,6 +54,13 @@ void Button::setPosition(float x, float y)
     mAnimation.setPosition(x, y);
     mSprite.setPosition(x, y);
     mText.setPosition(x, y - 16.f);
+}
+
+void Button::setTexture(const sf::Texture& texture)
+{
+    mSprite.setTexture(texture);
+    mAnimation.setTexture(texture);
+    mAnimation.setFrame(0);
 }
 
 void Button::handleEvent(User user)
@@ -85,12 +97,17 @@ void Button::update(sf::Time dt)
     }
     else if (mIsHovered)
     {
+        mPlayedPressedSound = false;
         changeTexture(Selected);
     }
     else
     {
+        mPlayedPressedSound = false;
         changeTexture(Normal);
     }
+
+    if (isPressed())
+        mIsPressed = false;
 }
 
 bool Button::isPressed() const
@@ -115,6 +132,6 @@ void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Button::changeTexture(Type type)
 {
-    sf::IntRect textureRect(0, mHeight * type, mWidth, mHeight);
+    sf::IntRect textureRect(0, mHeight * (type + mIsNotNormal), mWidth, mHeight);
     mSprite.setTextureRect(textureRect);
 }
