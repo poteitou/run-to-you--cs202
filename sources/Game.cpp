@@ -29,6 +29,8 @@ Game::Game()
 	mTextures.load(Textures::Life, "resources/textures/Life.png");
 	mTextures.load(Textures::Bird, "resources/textures/Bird.png");
 	mTextures.load(Textures::Dog, "resources/textures/Dog.png");
+	mTextures.load(Textures::Tree, "resources/textures/Tree.png");
+	mTextures.load(Textures::Rock, "resources/textures/Rock.png");
 	mTextures.load(Textures::ToYou, "resources/textures/ToYou.png");
 	mTextures.load(Textures::Ground, "resources/textures/Ground.png");
 	mTextures.load(Textures::Button, "resources/textures/Button.png");

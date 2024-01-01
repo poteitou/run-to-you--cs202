@@ -58,16 +58,16 @@ PlayingState::PlayingState(StateStack &stack, Context context)
     mCrush.setDuration(sf::seconds(0.8f));
     mCrush.centerBottom();
     mCrush.setRepeating(true);
-    mCrush.setPosition(50000.f, mGroundHeight);
+    mCrush.setPosition(50000.f + 1200.f, mGroundHeight);
 
     // prepare for distance text
     mDistanceText.setPosition(50.f, 80.f);
     mDistanceText.setColor(sf::Color::Black);
 
     // initialize obstacle queue, include some obstacles start from position 2000.f
-    mTypeObject[0] = {"Milktea", "Dog", "Friend", "Rock", "Bird", "Heart"};
-    mTypeObject[1] = {"Milktea", "Dog", "Friend", "Rock", "Bird", "Heart"};
-    mTypeObject[2] = {"Milktea", "Dog", "Friend", "Rock", "Bird", "Heart"};
+    mTypeObject[0] = {"Tree", "Rock", "Bird", "Heart"};
+    mTypeObject[1] = {"Milktea", "Dog", "Tree", "Rock", "Bird", "Heart"};
+    mTypeObject[2] = {"Milktea", "Dog", "Tree", "Rock", "Bird", "Heart"};
 
     srand(time(NULL));
     int obstacleType = rand() % (mTypeObject[0].size() - 1);
@@ -148,14 +148,27 @@ void PlayingState::levelUp(sf::Time dt)
 {
     if (mStartLevelUp)
     {
+        mCrush.setFrame(8);
+        mPlayer.setFrame(9);
         mStartLevelUp = false;
         mObstacleQueue.clear();
-        mPlayer.setVelocity(400.f, 0.f);
+        mTimeCollide = 0.f;
+        mPlayer.setVelocity(0.f, 0.f);
     }
     
-    mPlayer.update(dt, mGroundHeight);
-    if (mPlayer.getPosition().x > 1600.f / 2 - mPlayer.getGlobalBounds().width / 2)
+    mTimeCollide += dt.asSeconds();
+    if (mTimeCollide > 1.f)
     {
+        mPlayer.update(dt, mGroundHeight);
+        mPlayer.setVelocity(400.f, 0.f);
+    }   
+
+    if (mPlayer.getPosition().x > 1600.f / 4)
+    {
+        mTimeCollide = 0.f;
+        mPlayer.setFrame(9);
+        mPlayer.setVelocity(0.f, 0.f);
+        return;
         sf::Texture &backgroundTexture = mLevel == 1 ? getContext().mTextures->get(Textures::OrangeSky) : getContext().mTextures->get(Textures::CityNight);
         sf::Texture &groundTexture = getContext().mTextures->get(Textures::Ground);
 
@@ -195,11 +208,6 @@ bool PlayingState::handleEvent(User user)
         mPaused.play();
         requestStackPush(States::Paused);
     }
-    else if (mIsPaused)
-    {
-        mMusic.play();
-        mIsPaused = false;
-    }
     if (!mLevelingUp)
         mPlayer.handleEvent(user);
     return true;
@@ -207,6 +215,11 @@ bool PlayingState::handleEvent(User user)
 
 bool PlayingState::update(sf::Time dt)
 {
+    if (mIsPaused)
+    {
+        mMusic.play();
+        mIsPaused = false;
+    }
     if (mLevelingUp)
     {
         levelUp(dt);

@@ -22,19 +22,19 @@ Object::Object(State::Context context, std::string type, float x, float y)
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(6);
     }
-    else if (type == "Friend")
+    else if (type == "Tree")
     {
-        mAnimation.setTexture(context.mTextures->get(Textures::Heart));
+        mAnimation.setTexture(context.mTextures->get(Textures::Tree));
         mWidth = mAnimation.getTexture()->getSize().x;
-        mHeight = mAnimation.getTexture()->getSize().y / 4;
-        mAnimation.setNumFrames(4);
+        mHeight = mAnimation.getTexture()->getSize().y;
+        mAnimation.setNumFrames(1);
     }
     else if (type == "Rock")
     {
-        mAnimation.setTexture(context.mTextures->get(Textures::Heart));
+        mAnimation.setTexture(context.mTextures->get(Textures::Rock));
         mWidth = mAnimation.getTexture()->getSize().x;
-        mHeight = mAnimation.getTexture()->getSize().y / 4;
-        mAnimation.setNumFrames(4);
+        mHeight = mAnimation.getTexture()->getSize().y;
+        mAnimation.setNumFrames(1);
     }
     else if (type == "Bird")
     {

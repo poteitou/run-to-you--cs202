@@ -34,6 +34,11 @@ sf::FloatRect Player::getGlobalBounds()
     return mAnimation.getGlobalBounds();
 }
 
+void Player::setFrame(int frame)
+{
+    mAnimation.setFrame(frame);
+}
+
 void Player::setVelocity(sf::Vector2f velocity)
 {
     mVelocity = velocity;

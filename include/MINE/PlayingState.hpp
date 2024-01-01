@@ -35,7 +35,7 @@ public:
 private:
     std::array<sf::Sprite, 3> mBackgroundSprite;
     std::array<sf::Sprite, 3> mGroundSprite;
-    std::array<std::string, 6> mTypeObject[3];
+    std::array<std::vector<std::string>, 3> mTypeObject;
     std::deque<Object> mObstacleQueue;
     Animation mChange;
     Animation mCrush;

@@ -32,6 +32,7 @@ public:
 
     void centerBottom(sf::Sprite& sprite);
     sf::FloatRect getGlobalBounds();
+    void setFrame(int frame);
     void setVelocity(sf::Vector2f velocity);
     void setVelocity(float vx, float vy);
     void accelerate(sf::Vector2f velocity);

@@ -68,7 +68,7 @@ MenuState::MenuState(StateStack &stack, Context context)
 		throw std::runtime_error("Music FastMusic could not be loaded.");
     
     if (playMusic())
-        mMusic.setVolume(50);
+        mMusic.setVolume(70);
     else
         mMusic.setVolume(0);
     mMusic.setLoop(true);
@@ -160,7 +160,7 @@ bool MenuState::update(sf::Time dt)
             setPlayMusic();
             if (playMusic())
             {
-                mMusic.setVolume(50);
+                mMusic.setVolume(70);
                 mButtons[3]->setTexture(getContext().mTextures->get(Textures::ButtonMusic));
             }
             else
