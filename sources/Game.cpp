@@ -194,10 +194,10 @@ void Game::registerStates()
 	mStateStack.registerState<IntroState>(States::Intro);
     mStateStack.registerState<MenuState>(States::Menu);
     // mStateStack.registerState<SettingsState>(States::Setting);
-    mStateStack.registerState<PlayingState>(States::Playing);
+    mStateStack.registerState<BeginState>(States::Begin);
     mStateStack.registerState<PausedState>(States::Paused);
     mStateStack.registerState<GameOverState>(States::GameOver);
+	mStateStack.registerState<BTMState>(States::BTM);
     // mStateStack.registerState<EndLevelState>(States::EndLevel);
     // mStateStack.registerState<HighScoreState>(States::HighScore);
-    // mStateStack.registerState<AboutState>(States::About);
 }

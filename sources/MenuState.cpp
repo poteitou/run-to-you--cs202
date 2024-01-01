@@ -109,7 +109,7 @@ bool MenuState::update(sf::Time dt)
         {
             mMusic.stop();
             requestStackPop();
-            requestStackPush(States::Playing);
+            requestStackPush(States::BTM);
         }
 
         if (mButtons[1]->isPressed() && mButtonPressed[1] == false)

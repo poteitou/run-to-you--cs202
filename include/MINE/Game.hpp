@@ -13,9 +13,10 @@
 #include <MINE/User.hpp>
 #include <Mine/IntroState.hpp>
 #include <Mine/MenuState.hpp>
-#include <Mine/PlayingState.hpp>
+#include <Mine/BeginState.hpp>
 #include <Mine/PausedState.hpp>
 #include <Mine/GameOverState.hpp>
+#include <Mine/BTMState.hpp>
 // #include <Mine/SettingsState.hpp>
 
 #include <string.h>

@@ -39,7 +39,7 @@ bool GameOverState::update(sf::Time dt)
     if (mButtons[0]->isPressed())
     {
         requestStateClear();
-        requestStackPush(States::Playing);
+        requestStackPush(States::Begin);
     }
     else if (mButtons[1]->isPressed())
     {

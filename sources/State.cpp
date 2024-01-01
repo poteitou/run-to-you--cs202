@@ -40,6 +40,16 @@ bool State::playMusic() const
 	return mStack->playMusic();
 }
 
+void State::setCount(int count)
+{
+	mStack->setCount(count);
+}
+
+int State::getCount() const
+{
+	return mStack->getCount();
+}
+
 State::Context State::getContext() const
 {
 	return mContext;

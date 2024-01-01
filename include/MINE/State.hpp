@@ -49,6 +49,8 @@ protected:
 	void requestStateClear();
 	void setPlayMusic();
 	bool playMusic() const;
+	void setCount(int count);
+	int getCount() const;
 
 	Context getContext() const;
 

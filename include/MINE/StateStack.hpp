@@ -48,6 +48,8 @@ public:
 
 	void setPlayMusic();
 	bool playMusic() const;
+	void setCount(int count);
+	int getCount() const;
 
 private:
 	State::Ptr createState(States::ID stateID);
@@ -66,6 +68,7 @@ private:
 	std::vector<State::Ptr> mStack;
 	std::vector<PendingChange> mPendingList;
 	bool mPlayMusic;
+	int mCount;
 
 	State::Context mContext;
 	std::map<States::ID, std::function<State::Ptr()>> mFactories;

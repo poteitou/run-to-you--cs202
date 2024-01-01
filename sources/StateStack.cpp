@@ -73,6 +73,16 @@ bool StateStack::playMusic() const
 	return mPlayMusic;
 }
 
+void StateStack::setCount(int count)
+{
+	mCount = count;
+}
+
+int StateStack::getCount() const
+{
+	return mCount;
+}
+
 State::Ptr StateStack::createState(States::ID stateID)
 {
 	auto found = mFactories.find(stateID);

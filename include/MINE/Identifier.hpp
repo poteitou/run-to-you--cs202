@@ -12,7 +12,7 @@ namespace sf
 
 namespace States
 {
-    enum ID {None, Intro, Menu, Setting, Playing, Paused, EndLevel, GameOver, HighScore, About};
+    enum ID {None, Intro, Menu, Setting, Begin, Middle, End, Paused, BTM, MTE, GameOver, HighScore};
 }
 
 namespace Textures
