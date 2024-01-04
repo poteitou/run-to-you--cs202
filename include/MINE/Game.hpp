@@ -17,7 +17,7 @@
 #include <Mine/PausedState.hpp>
 #include <Mine/GameOverState.hpp>
 #include <Mine/BTMState.hpp>
-// #include <Mine/SettingsState.hpp>
+#include <Mine/Countdown.hpp>
 
 #include <string.h>
 

@@ -36,7 +36,7 @@ IntroState::IntroState(StateStack &stack, Context context)
     mTitleSprite.setPosition(1600.f + 180.f, 0.25f * 900.f);
     // mTitleSprite.setPosition(0.5f * 1600.f, 0.25f * 900.f);
 
-    mBackgroundSprite.setTexture(context.mTextures->get(Textures::PinkBackground));
+    mBackgroundSprite.setTexture(context.mTextures->get(Textures::MenuBG));
     mBackgroundSprite.setPosition(0.f, 0.f);
 
     mText.setColor(sf::Color::White);

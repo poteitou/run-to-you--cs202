@@ -12,12 +12,12 @@ namespace sf
 
 namespace States
 {
-    enum ID {None, Intro, Menu, Setting, Begin, Middle, End, Paused, BTM, MTE, GameOver, HighScore};
+    enum ID {None, Intro, Menu, Countdown, Setting, Begin, Middle, End, Paused, BTM, MTE, GameOver, HighScore};
 }
 
 namespace Textures
 {
-    enum ID {PinkBackground, PinkToOrange, OrangeToNight, OrangeSky, CityNight, Ground, ToYou, CrushRight, BlueSkirt, BlueCollide, RainCoat, Life, Milktea, Dog, Tree, Rock, Bird, Heart, Button, ButtonMusic, ButtonMute, ButtonAbout, ButtonRank, ButtonX, PinkMouse};
+    enum ID {MenuBG, PinkBG, OrangeBG, BlueBG, PinkToOrange, OrangeToBlue, Ground, ToYou, CrushRight, BlueSkirt, BlueCollide, RainCoat, Life, Milktea, Dog, Tree, Rock, Bird, Heart, Button, ButtonMusic, ButtonMute, ButtonAbout, ButtonRank, ButtonX, PinkMouse};
 }
 
 namespace Fonts

@@ -35,7 +35,7 @@ BTMState::BTMState(StateStack &stack, Context context)
     mCrush.setFrame(8);
     mTime = 0.f;
 
-    mBackgroundSprite.setTexture(context.mTextures->get(Textures::PinkBackground));
+    mBackgroundSprite.setTexture(context.mTextures->get(Textures::PinkBG));
     mBackgroundSprite.setPosition(0.f, 0.f);
     mGroundSprite.setTexture(context.mTextures->get(Textures::Ground));
     mGroundSprite.setPosition(0.f, 0.f);

@@ -25,7 +25,7 @@ public:
 
 private:
     sf::RectangleShape mBackgroundRect;
-    std::array<Button::Ptr, 2> mButtons;
+    std::array<Button::Ptr, 3> mButtons;
     sf::Text mTitle;
 };
 

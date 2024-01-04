@@ -16,11 +16,15 @@ PausedState::PausedState(StateStack &stack, Context context)
     mBackgroundRect.setSize(sf::Vector2f(1600.f, 900.f));
     mButtons[0] = std::make_shared<Button>(context, Textures::Button);
     mButtons[0]->setText("Resume", 70);
-    mButtons[0]->setPosition(0.5f * 1600.f, 0.5f * 900.f);
+    mButtons[0]->setPosition(0.5f * 1600.f, 0.45f * 900.f);
 
     mButtons[1] = std::make_shared<Button>(context, Textures::Button);
-    mButtons[1]->setText("Quit", 70);
-    mButtons[1]->setPosition(0.5f * 1600.f, 0.75f * 900.f);
+    mButtons[1]->setText("Restart", 70);
+    mButtons[1]->setPosition(0.5f * 1600.f, 0.65f * 900.f);
+
+    mButtons[2] = std::make_shared<Button>(context, Textures::Button);
+    mButtons[2]->setText("Save & Quit", 70);
+    mButtons[2]->setPosition(0.5f * 1600.f, 0.85f * 900.f);
 }
 
 bool PausedState::handleEvent(User user)
@@ -41,6 +45,11 @@ bool PausedState::update(sf::Time dt)
         requestStackPop();
     }
     else if (mButtons[1]->isPressed())
+    {
+        requestStateClear();
+        requestStackPush(States::Begin);
+    }
+    else if (mButtons[2]->isPressed())
     {
         // requestStateClear();
         requestStackPop();

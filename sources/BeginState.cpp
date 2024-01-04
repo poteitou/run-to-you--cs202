@@ -14,7 +14,7 @@ BeginState::BeginState(StateStack &stack, Context context)
       mCntLives(1),
       mIsPaused(false)
 {
-    sf::Texture &backgroundTexture = context.mTextures->get(Textures::PinkBackground);
+    sf::Texture &backgroundTexture = context.mTextures->get(Textures::PinkBG);
     sf::Texture &groundTexture = context.mTextures->get(Textures::Ground);
 
     sf::IntRect textureRect(0.f, 0.f, 1600.f, 900.f);

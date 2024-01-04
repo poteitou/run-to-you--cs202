@@ -28,7 +28,7 @@ MenuState::MenuState(StateStack &stack, Context context)
 
     mTitleSprite.setPosition(0.5f * 1600.f, 0.25f * 900.f);
 
-    mBackgroundSprite.setTexture(context.mTextures->get(Textures::PinkBackground));
+    mBackgroundSprite.setTexture(context.mTextures->get(Textures::MenuBG));
     mBackgroundSprite.setPosition(0.f, 0.f);
 
     mGroundSprite.setTexture(context.mTextures->get(Textures::Ground));
@@ -111,6 +111,7 @@ bool MenuState::update(sf::Time dt)
             requestStackPop();
             if (getStackSize() == 1)
                 requestStackPush(States::Begin);
+            requestStackPush(States::Countdown);
         }
 
         if (mButtons[1]->isPressed() && mButtonPressed[1] == false)

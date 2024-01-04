@@ -17,10 +17,11 @@ Game::Game()
 	auto desktop = sf::VideoMode::getDesktopMode();
 	mWindow.setPosition(sf::Vector2i(desktop.width/2 - mWindow.getSize().x / 2, desktop.height / 2 - mWindow.getSize().y / 2 - 100));
 
-	mTextures.load(Textures::PinkBackground, "resources/textures/PinkBackground.png");
+	mTextures.load(Textures::MenuBG, "resources/textures/MenuBG.png");
+	mTextures.load(Textures::PinkBG, "resources/textures/PinkBG.png");
+	mTextures.load(Textures::OrangeBG, "resources/textures/OrangeBG.png");
+	mTextures.load(Textures::BlueBG, "resources/textures/BlueBG.png");
 	mTextures.load(Textures::PinkToOrange, "resources/textures/PinkToOrange.png");
-	mTextures.load(Textures::OrangeSky, "resources/textures/OrangeSky.png");
-	mTextures.load(Textures::CityNight, "resources/textures/CityNight.png");
 	mTextures.load(Textures::PinkMouse, "resources/textures/PinkMouse.png");
 	mTextures.load(Textures::BlueSkirt, "resources/textures/BlueSkirt.png");
 	mTextures.load(Textures::CrushRight, "resources/textures/CrushRight.png");
@@ -193,7 +194,7 @@ void Game::registerStates()
 {
 	mStateStack.registerState<IntroState>(States::Intro);
     mStateStack.registerState<MenuState>(States::Menu);
-    // mStateStack.registerState<SettingsState>(States::Setting);
+    mStateStack.registerState<Countdown>(States::Countdown);
     mStateStack.registerState<BeginState>(States::Begin);
     mStateStack.registerState<PausedState>(States::Paused);
     mStateStack.registerState<GameOverState>(States::GameOver);
