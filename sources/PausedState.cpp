@@ -42,7 +42,8 @@ bool PausedState::update(sf::Time dt)
     }
     else if (mButtons[1]->isPressed())
     {
-        requestStateClear();
+        // requestStateClear();
+        requestStackPop();
         requestStackPush(States::Menu);
     }
     return false;

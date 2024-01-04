@@ -15,6 +15,11 @@ State::~State()
 {
 }
 
+int State::getStackSize() const
+{
+	return mStack->getSize();
+}
+
 void State::requestStackPush(States::ID stateID)
 {
 	mStack->pushState(stateID);

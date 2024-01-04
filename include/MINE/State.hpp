@@ -39,6 +39,7 @@ public:
 	State(StateStack &stack, Context context);
 	virtual ~State();
 
+	virtual int getStackSize() const;
 	virtual bool handleEvent(User user) = 0;
 	virtual bool update(sf::Time dt) = 0;
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;

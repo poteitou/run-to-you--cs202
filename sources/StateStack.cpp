@@ -63,6 +63,11 @@ bool StateStack::isEmpty() const
 	return mStack.empty();
 }
 
+int StateStack::getSize() const
+{
+	return mStack.size();
+}
+
 void StateStack::setPlayMusic()
 {
 	mPlayMusic = !mPlayMusic;

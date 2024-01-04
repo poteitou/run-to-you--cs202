@@ -47,12 +47,12 @@ BTMState::BTMState(StateStack &stack, Context context)
     mChange.setRepeating(false);
     mChange.setPosition(0.f, 0.f);
 
-    mLives.setTextureRect(sf::IntRect(0, getCount() * 80, 256, 80));
-    mLives.setPosition(1600.f - 256.f - 50.f, 50.f);
+    mLives.setTextureRect(sf::IntRect(0, getCount() * 100, 320, 100));
+    mLives.setPosition(1600.f - 320.f - 50.f, 50.f);
 
     mDistanceText.setPosition(50.f, 80.f);
     mDistanceText.setColor(sf::Color::Black);
-    mDistanceText.setString("Distance: 360m");
+    mDistanceText.setString("Distance: 320m");
 
     mText[0].setFont(context.mFonts->get(Fonts::Main));
     mText[1].setFont(context.mFonts->get(Fonts::Main));
@@ -61,6 +61,17 @@ BTMState::BTMState(StateStack &stack, Context context)
     mText[1].setCharacterSize(50);
     mText[0].setColor(sf::Color::White);
     mText[0].setPosition(0.5f * 1600.f - 0.5f * mText[0].getLocalBounds().width, 0.5f * 900.f - 0.5f * mText[0].getLocalBounds().height);
+
+    if (!mMusic.openFromFile("resources/sounds/FastMusic.ogg"))
+		throw std::runtime_error("Music FastMusic could not be loaded.");
+    
+    if (playMusic())
+        mMusic.setVolume(70);
+    else
+        mMusic.setVolume(0);
+        
+    mMusic.setLoop(true);
+    mMusic.play();
 }
 
 bool BTMState::handleEvent(User user)
@@ -87,7 +98,7 @@ bool BTMState::update(sf::Time dt)
     else if (mShowText == 2) // after click 0.5f
     {
         mTime += dt.asSeconds();
-        if (mTime > 1.5f)
+        if (mTime > 1.8f)
         {
             mTime = 0.f;
             mGirl.update(dt);
@@ -97,11 +108,8 @@ bool BTMState::update(sf::Time dt)
     }
     else if (mShowText == 3) // moving to 700.f
     {
-        // if (mGirl.getPosition().x < 700.f)
-        {
-            mGirl.update(dt);
-            mGirl.move(200.f * dt.asSeconds(), 0.f);
-        }
+        mGirl.update(dt);
+        mGirl.move(200.f * dt.asSeconds(), 0.f);
         if (mGirl.getPosition().x >= 700.f)
         {
             mShowText = 4;
@@ -126,7 +134,7 @@ bool BTMState::update(sf::Time dt)
             mRect[1].setFillColor(sf::Color::Black);
 
             mText[0].setColor(sf::Color::Black);
-            mText[0].setString("Oh, Hello :D");
+            mText[0].setString("Oh, Hello! :D");
             mText[0].setOrigin(0.5f * mText[0].getLocalBounds().width, 0.5f * mText[0].getLocalBounds().height);
             mText[0].setPosition(mRect[0].getPosition().x, mRect[0].getPosition().y - 25.f);
 
@@ -141,7 +149,7 @@ bool BTMState::update(sf::Time dt)
         {
             mTime = 0.f;
             mShowText = 6;
-            mRect[2].setSize(sf::Vector2f(300.f, 100.f));
+            mRect[2].setSize(sf::Vector2f(250.f, 100.f));
             mRect[2].setOrigin(0.5f * mRect[2].getLocalBounds().width, 0.5f * mRect[2].getLocalBounds().height);
             mRect[2].setPosition(mGirl.getPosition().x - 150.f, mGirl.getPosition().y - mGirl.getFrameSize().y - 75.f - 0.5f * mRect[2].getLocalBounds().height);
             mRect[2].setFillColor(sf::Color::White);
@@ -152,7 +160,7 @@ bool BTMState::update(sf::Time dt)
             mRect[3].setFillColor(sf::Color::Black);
 
             mText[1].setColor(sf::Color::Black);
-            mText[1].setString("H-Hi >///<");
+            mText[1].setString("H-Hi! ><");
             mText[1].setOrigin(0.5f * mText[1].getLocalBounds().width, 0.5f * mText[1].getLocalBounds().height);
             mText[1].setPosition(mRect[2].getPosition().x, mRect[2].getPosition().y - 25.f);
 
@@ -206,7 +214,7 @@ bool BTMState::update(sf::Time dt)
             mRect[2].setOrigin(0.5f * mRect[2].getLocalBounds().width, 0.5f * mRect[2].getLocalBounds().height);
             mRect[2].setPosition(mGirl.getPosition().x - 150.f, mGirl.getPosition().y - mGirl.getFrameSize().y - 75.f - 0.5f * mRect[2].getLocalBounds().height);
 
-            mText[1].setString("Y-yah");
+            mText[1].setString("Y-yah...");
             mText[1].setOrigin(0.5f * mText[1].getLocalBounds().width, 0.5f * mText[1].getLocalBounds().height);
             mText[1].setPosition(mRect[2].getPosition().x, mRect[2].getPosition().y - 25.f);
 
@@ -221,7 +229,7 @@ bool BTMState::update(sf::Time dt)
         {
             mTime = 0.f;
             mShowText = 10;
-            mRect[2].setSize(sf::Vector2f(350.f, 100.f));
+            mRect[2].setSize(sf::Vector2f(300.f, 100.f));
             mRect[2].setOrigin(0.5f * mRect[2].getLocalBounds().width, 0.5f * mRect[2].getLocalBounds().height);
             mRect[2].setPosition(mGirl.getPosition().x - 150.f, mGirl.getPosition().y - mGirl.getFrameSize().y - 75.f - 0.5f * mRect[2].getLocalBounds().height);
 
@@ -268,7 +276,7 @@ bool BTMState::update(sf::Time dt)
         {
             mTime = 0.f;
             mShowText = 13;
-            mRect[2].setSize(sf::Vector2f(350.f, 100.f));
+            mRect[2].setSize(sf::Vector2f(250.f, 100.f));
             mRect[2].setOrigin(0.5f * mRect[2].getLocalBounds().width, 0.5f * mRect[2].getLocalBounds().height);
             mRect[2].setPosition(mGirl.getPosition().x - 150.f, mGirl.getPosition().y - mGirl.getFrameSize().y - 75.f - 0.5f * mRect[2].getLocalBounds().height);
 
@@ -292,7 +300,7 @@ bool BTMState::update(sf::Time dt)
     else if (mShowText == 14) // Silence
     {
         mTime += dt.asSeconds();
-        if (mTime > 3.f)
+        if (mTime > 2.5f)
         {
             mTime = 0.f;
             mShowText = 15;

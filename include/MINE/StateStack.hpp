@@ -45,6 +45,7 @@ public:
 	void popState();
 	void clearStates();
 	bool isEmpty() const;
+	int getSize() const;
 
 	void setPlayMusic();
 	bool playMusic() const;

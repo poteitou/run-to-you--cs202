@@ -8,14 +8,7 @@ Object::Object(State::Context context, std::string type, float x, float y)
       mAlreadyCollide(false)
 {
     mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Collide));
-    if (type == "Milktea")
-    {
-        mAnimation.setTexture(context.mTextures->get(Textures::Heart));
-        mWidth = mAnimation.getTexture()->getSize().x;
-        mHeight = mAnimation.getTexture()->getSize().y / 4;
-        mAnimation.setNumFrames(4);
-    }
-    else if (type == "Dog")
+    if (type == "Dog")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Dog));
         mWidth = mAnimation.getTexture()->getSize().x / 6;
@@ -36,22 +29,47 @@ Object::Object(State::Context context, std::string type, float x, float y)
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(1);
     }
-    else if (type == "Bird")
+    else if (type == "Bird1")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Bird));
         mWidth = mAnimation.getTexture()->getSize().x / 8;
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(8);
-        y -= 300.f;
+        y -= 75.f;
     }
-    else if (type == "Heart")
+    else if (type == "Bird2")
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::Bird));
+        mWidth = mAnimation.getTexture()->getSize().x / 8;
+        mHeight = mAnimation.getTexture()->getSize().y;
+        mAnimation.setNumFrames(8);
+        y -= 200.f;
+    }
+    else if (type == "Heart1")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Heart));
         mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Heart));
         mWidth = mAnimation.getTexture()->getSize().x;
         mHeight = mAnimation.getTexture()->getSize().y / 4;
         mAnimation.setNumFrames(4);
-        y -= 100.f;
+    }
+    else if (type == "Heart2")
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::Heart));
+        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Heart));
+        mWidth = mAnimation.getTexture()->getSize().x;
+        mHeight = mAnimation.getTexture()->getSize().y / 4;
+        mAnimation.setNumFrames(4);
+        y -= 80.f;
+    }
+    else if (type == "Heart3")
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::Heart));
+        mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Heart));
+        mWidth = mAnimation.getTexture()->getSize().x;
+        mHeight = mAnimation.getTexture()->getSize().y / 4;
+        mAnimation.setNumFrames(4);
+        y -= 200.f;
     }
     mCollideSound.setVolume(100);
 
@@ -106,7 +124,7 @@ void Object::handleEvent(User user)
 
 void Object::update(sf::Time dt, float scrollSpeed, const Player &player)
 {
-    if (mType == "Heart" && mAlreadyCollide)
+    if ((mType == "Heart1" || mType == "Heart2" || mType == "Heart3") && mAlreadyCollide)
     {
         if (mAnimation.getPosition().x > 1250.f)
         {

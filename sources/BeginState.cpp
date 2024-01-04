@@ -34,8 +34,8 @@ BeginState::BeginState(StateStack &stack, Context context)
     mGroundSprite[1].setPosition(1600.f, 0.f);
     mGroundSprite[2].setPosition(3200.f, 0.f);
 
-    mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
-    mLives.setPosition(1600.f - 256.f - 50.f, 50.f);
+    mLives.setTextureRect(sf::IntRect(0, mCntLives * 100, 320, 100));
+    mLives.setPosition(1600.f - 320.f - 50.f, 50.f);
 
     mPaused.setBuffer(context.mSoundBuffers->get(Sounds::Paused));
     mPaused.setVolume(100);
@@ -55,13 +55,13 @@ BeginState::BeginState(StateStack &stack, Context context)
     mCrush.setDuration(sf::seconds(0.8f));
     mCrush.centerBottom();
     mCrush.setRepeating(true);
-    mCrush.setPosition(36000.f + 900.f, mGroundHeight);
+    mCrush.setPosition(32000.f + 900.f, mGroundHeight);
 
     // prepare for distance text
     mDistanceText.setPosition(50.f, 80.f);
     mDistanceText.setColor(sf::Color::Black);
 
-    mTypeObject = {"Tree", "Rock", "Bird", "Heart"};
+    mTypeObject = {"Rock", "Rock", "Bird1", "Bird2", "Heart1", "Heart2", "Heart3"};
     // mTypeObject[1] = {"Milktea", "Dog", "Tree", "Rock", "Bird", "Heart"};
 
     srand(time(NULL));
@@ -69,7 +69,7 @@ BeginState::BeginState(StateStack &stack, Context context)
 
     mObstacleQueue.push_back(Object(context, mTypeObject[obstacleType], 2400.f, mGroundHeight));
 
-    if (!mMusic.openFromFile("resources/sounds/Forest.ogg"))
+    if (!mMusic.openFromFile("resources/sounds/MediumMusic.ogg"))
         throw std::runtime_error("Music Forest could not be loaded.");
     if (playMusic())
         mMusic.setVolume(30);
@@ -83,24 +83,19 @@ BeginState::BeginState(StateStack &stack, Context context)
 void BeginState::createObstacle()
 {
     srand(time(NULL));
-    if (((int)mDistance / 100) > 320.f)
+    if (((int)mDistance / 100) > 240.f)
         return;
     // if (((int)mDistance / 100) > 910.f)
     //     return;
     if (!mObstacleQueue.empty() && mObstacleQueue.back().getPosition().x < 1600.f)
     {
         bool hasHeart = false;
-        bool hasCoin = false;
 
-        while (mObstacleQueue.back().getPosition().x < 3200.f)
+        while (mObstacleQueue.back().getPosition().x < 6400.f)
         {
-            int obstacleType = rand() % mTypeObject.size();
-            if (mTypeObject[obstacleType] == "Heart")
-            {
-                if (hasHeart)
-                    obstacleType = rand() % (mTypeObject.size() - 1);
+            int obstacleType = rand() % (mTypeObject.size() - 3 * hasHeart);
+            if (mTypeObject[obstacleType] == "Heart1" || mTypeObject[obstacleType] == "Heart2" || mTypeObject[obstacleType] == "Heart3")
                 hasHeart = true;
-            }
 
             int randPos = rand() % 5;
             float minDis = mScrollSpeed * 0.8f;
@@ -158,7 +153,7 @@ bool BeginState::update(sf::Time dt)
         if (mTimeCollide >= 0.5f)
         {
             // --mCntLives;
-            mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
+            mLives.setTextureRect(sf::IntRect(0, mCntLives * 100, 320, 100));
             if (mCntLives == 0)
             {
                 recordScore();
@@ -174,9 +169,9 @@ bool BeginState::update(sf::Time dt)
         if (obstacle.isDone() && mCntLives < 3)
         {
             ++mCntLives;
-            mLives.setTextureRect(sf::IntRect(0, mCntLives * 80, 256, 80));
+            mLives.setTextureRect(sf::IntRect(0, mCntLives * 100, 320, 100));
         }
-        // else if (obstacle.isCollide() && obstacle.getType() != "Heart")
+        // else if (obstacle.isCollide() && (obstacle.getType() != "Heart1" && obstacle.getType() != "Heart2" && obstacle.getType() != "Heart3"))
         // {
         //     mPlayer.update(dt, 0);
         //     mTimeCollide = 0.f;
@@ -187,9 +182,9 @@ bool BeginState::update(sf::Time dt)
 
     mDistance += mScrollSpeed * dt.asSeconds();
 
-    if (((int)mDistance / 100) > 360.f)
+    if (((int)mDistance / 100) > 320.f)
     {
-        mDistance = 36000.f;
+        mDistance = 32000.f;
         setCount(mCntLives);
         requestStackPop();
         requestStackPush(States::BTM);
