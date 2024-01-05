@@ -117,12 +117,11 @@ void BeginState::recordScore()
     fin.close();
     scores.push_back((int)mDistance / 100);
     std::sort(scores.begin(), scores.end(), std::greater<int>());
+    while (scores.size() > 3)
+        scores.pop_back();
     std::ofstream fout("resources/texts/highscore.data");
-    for (int i = 0; i < scores.size() && i < 10; i++)
-    {
+    for (int i = 0; i < 3; i++)
         fout << scores[i] << std::endl;
-        // fout << std::to_string(i + 1) << ". " << scores[i] << " meters" << std::endl;
-    }
     fout.close();
 }
 

@@ -28,13 +28,12 @@ public:
 
 private:
     sf::Sprite mBackgroundSprite;
-    sf::Sprite mGroundSprite, mPopupRect;
+    sf::Sprite mGroundSprite, mPopupRect, mPopup, mRank;
     sf::RectangleShape mBackgroundRect;
     sf::RectangleShape mScrollRect;
     sf::View mView;
     std::vector<sf::Text> mPopupText;
-    std::array<Button::Ptr, 4> mButtons;
-    Button::Ptr mCloseButton, mResetButton;
+    std::array<Button::Ptr, 8> mButtons;
     sf::Music mMusic;
     sf::Text mTitle;
     sf::Sprite mTitleSprite;

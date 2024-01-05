@@ -42,8 +42,6 @@ MenuState::MenuState(StateStack &stack, Context context)
     mScrollRect.setSize(sf::Vector2f(50.f, 0.1f * 900.f));
     mScrollRect.setFillColor(sf::Color(31, 65, 114));
 
-    mPopupRect.setTexture(context.mTextures->get(Textures::PopupRect));
-
     mButtons[0] = std::make_shared<Button>(context, Textures::ButtonPlay);
     mButtons[0]->setText("   Play", 100);
     // button on the right botton of the screen
@@ -61,10 +59,20 @@ MenuState::MenuState(StateStack &stack, Context context)
     // button on the left of button[2]
     mButtons[3]->setPosition(1600.f - 50.f - 0.5f * mButtons[3]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 375.f, 0.75f * 900.f + 0.5f * mButtons[3]->getLocalBounds().height);
 
-    mCloseButton = std::make_shared<Button>(context, Textures::ButtonX);
-    mResetButton = std::make_shared<Button>(context, Textures::Button);
-    mResetButton->setText("Reset", 70);
-    mResetButton->setPosition(0.5f * 1600.f - 0.5f * mResetButton->getLocalBounds().width, 787.5f - 0.5f * mResetButton->getLocalBounds().height - 25.f);
+    mButtons[4] = std::make_shared<Button>(context, Textures::ButtonX);
+    mButtons[5] = std::make_shared<Button>(context, Textures::Button);
+    mButtons[5]->setText("Reset", 70);
+    mButtons[5]->setPosition(0.5f * 1600.f, 787.5f - 0.5f * mButtons[5]->getLocalBounds().height - 25.f);
+    mButtons[6] = std::make_shared<Button>(context, Textures::Button);
+    mButtons[6]->setText("OK", 70);
+    mButtons[6]->setPosition(0.5f * 1600.f - 0.5 * 450.f, 631.f);
+    mButtons[7] = std::make_shared<Button>(context, Textures::Button);
+    mButtons[7]->setText("New game", 70);
+    mButtons[7]->setPosition(0.5f * 1600.f + 0.5 * 450.f, 631.f);
+    mRank.setTexture(context.mTextures->get(Textures::Rank));
+    mRank.setPosition(0.5f * 1600.f - 0.5f * mRank.getLocalBounds().width, 0.5f * 900.f - 0.5f * mRank.getLocalBounds().height - 25.f);
+    mPopup.setTexture(context.mTextures->get(Textures::Popup));
+    mPopupRect.setTexture(context.mTextures->get(Textures::PopupRect));
 
     for (int i = 0; i < 6; i++)
         mButtonPressed[i] = false;
@@ -85,10 +93,18 @@ MenuState::MenuState(StateStack &stack, Context context)
 
 bool MenuState::handleEvent(User user)
 {
-    for (auto &button : mButtons)
-        button->handleEvent(user);
-    mCloseButton->handleEvent(user);
-    mResetButton->handleEvent(user);
+    if (!mDrawPopup)
+        for (int i = 0; i < 4; i++)
+            mButtons[i]->handleEvent(user);
+    if (mDrawPopup > 0)
+        mButtons[4]->handleEvent(user);
+    if (mDrawPopup == 2)
+        mButtons[5]->handleEvent(user);
+    if (mDrawPopup == 3)
+    {
+        mButtons[6]->handleEvent(user);
+        mButtons[7]->handleEvent(user);
+    }
     if (mDrawPopup == 1)
     {
         if (user.isMouseWheelUp && mView.getCenter().y - 0.5f * mView.getSize().y > 0.f)
@@ -103,40 +119,79 @@ bool MenuState::handleEvent(User user)
         }
     }
 
-    return true;
+    return false;
 }
 
 bool MenuState::update(sf::Time dt)
 {
     mGirl.update(dt);
-    if (!mDrawPopup)
+    if (mDrawPopup == 3)
     {
-        for (auto &button : mButtons)
-            button->update(dt);
-        if (mButtons[0]->isPressed())
+        mButtons[4]->update(dt);
+        mButtons[6]->update(dt);
+        mButtons[7]->update(dt);
+        if (mButtons[4]->isPressed() && mButtonPressed[4] == false)
+        {
+            mButtonPressed[4] = true;
+            mDrawPopup = false;
+            mButtons[4]->reset();
+        }
+        else if (mButtons[6]->isPressed())
         {
             mMusic.stop();
             requestStackPop();
-            if (getStackSize() == 1)
+            requestStackPush(States::Countdown);
+        }
+        else if (mButtons[7]->isPressed())
+        {
+            mMusic.stop();
+            requestStateClear();
+            requestStackPush(States::Begin);
+        }
+    }
+    else if (!mDrawPopup)
+    {
+        for (int i = 0; i < 4; i++)
+            mButtons[i]->update(dt);
+        if (mButtons[0]->isPressed() && mButtonPressed[0] == false)
+        {
+            if (getStackSize() > 1)
+            {
+                mDrawPopup = 3;
+                mButtonPressed[0] = true;
+                mButtons[0]->reset();
+
+                mPopup.setPosition(0.5f * 1600.f - 0.5f * mPopup.getLocalBounds().width, 0.5f * 900.f - 0.5f * mPopup.getLocalBounds().height);
+                mButtons[4]->setPosition(0.5f * 1600.f + 0.5f * mPopup.getLocalBounds().width - 0.5f * mButtons[4]->getLocalBounds().width - 25.f, 0.5f * 900.f - 0.5f * mPopup.getLocalBounds().height + 0.5f * mButtons[4]->getLocalBounds().height + 25.f);
+                mPopupText.clear();
+                mPopupText.push_back(sf::Text("Notification", getContext().mFonts->get(Fonts::Title), 70));
+                mPopupText.back().setColor(sf::Color(63, 105, 195));
+                mPopupText.back().setPosition(800.f - mPopupText.back().getLocalBounds().width / 2.f, 110.f + 81.5f + 20.f);
+                mPopupText.push_back(sf::Text("Continue your last game?", getContext().mFonts->get(Fonts::Main), 70));
+                mPopupText.back().setColor(sf::Color::Black);
+                mPopupText.back().setPosition(800.f - mPopupText.back().getLocalBounds().width / 2.f, 375.f);
+            }
+            else
+            {
+                mMusic.stop();
+                requestStackPop();
                 requestStackPush(States::Begin);
-            else requestStackPush(States::Countdown);
+            }
         }
 
-        if (mButtons[1]->isPressed() && mButtonPressed[1] == false)
+        else if (mButtons[1]->isPressed() && mButtonPressed[1] == false)
         {
             mDrawPopup = 1;
             mButtonPressed[1] = true;
+            mButtons[1]->reset();
 
             mPopupRect.setPosition(0.5f * 1600.f - 0.5f * mPopupRect.getLocalBounds().width, 0.5f * 900.f - 0.5f * mPopupRect.getLocalBounds().height);
-            // mView equals to mPopupRect.width, mPopupRect.height-125
             mView.reset(sf::FloatRect(0.f, 0.f, mPopupRect.getLocalBounds().width, mPopupRect.getLocalBounds().height - 130.f));
-            // mView is a rectangle with the size mPopupRect.width, mPopupRect.height-125 and position mPopupRect.x, mPopupRect.y+125
             mView.setViewport(sf::FloatRect(mPopupRect.getPosition().x / 1600.f, (mPopupRect.getPosition().y + 125.f) / 900.f, mPopupRect.getLocalBounds().width / 1600.f, (mPopupRect.getLocalBounds().height - 140.f) / 900.f));
 
-            // mScrollRect is on the right of mPopupRect
             mScrollRect.setPosition(0.5f * 1600.f + 0.5f * mPopupRect.getLocalBounds().width - 0.5f * mScrollRect.getSize().x - 30.f, 0.5f * 900.f - 0.5f * mPopupRect.getLocalBounds().height + 125.f);
 
-            mCloseButton->setPosition(0.5f * 1600.f + 0.5f * mPopupRect.getLocalBounds().width - 0.5f * mCloseButton->getLocalBounds().width - 25.f, 0.5f * 900.f - 0.5f * mPopupRect.getLocalBounds().height + 0.5f * mCloseButton->getLocalBounds().height + 25.f);
+            mButtons[4]->setPosition(0.5f * 1600.f + 0.5f * mPopupRect.getLocalBounds().width - 0.5f * mButtons[4]->getLocalBounds().width - 25.f, 0.5f * 900.f - 0.5f * mPopupRect.getLocalBounds().height + 0.5f * mButtons[4]->getLocalBounds().height + 25.f);
 
             mPopupText.clear();
             mPopupText.push_back(sf::Text("About", getContext().mFonts->get(Fonts::Title), 70));
@@ -148,19 +203,19 @@ bool MenuState::update(sf::Time dt)
             {
                 mPopupText.push_back(sf::Text(line, getContext().mFonts->get(Fonts::Main), 50));
                 mPopupText.back().setColor(sf::Color::Black);
-                                mPopupText.back().setOrigin(mPopupText.back().getLocalBounds().left, 0.f);
+                mPopupText.back().setOrigin(mPopupText.back().getLocalBounds().left, 0.f);
                 mPopupText.back().setPosition(100.f, mPopupText.back().getLocalBounds().height + 60.f * (mPopupText.size() - 2));
             }
             file.close();
         }
 
-        if (mButtons[2]->isPressed() && mButtonPressed[2] == false)
+        else if (mButtons[2]->isPressed() && mButtonPressed[2] == false)
         {
             mDrawPopup = 2;
             mButtonPressed[2] = true;
-
+            mButtons[2]->reset();
             mPopupRect.setPosition(0.5f * 1600.f - 0.5f * mPopupRect.getLocalBounds().width, 0.5f * 900.f - 0.5f * mPopupRect.getLocalBounds().height);
-            mCloseButton->setPosition(0.5f * 1600.f + 0.5f * mPopupRect.getLocalBounds().width - 0.5f * mCloseButton->getLocalBounds().width - 25.f, 0.5f * 900.f - 0.5f * mPopupRect.getLocalBounds().height + 0.5f * mCloseButton->getLocalBounds().height + 25.f);
+            mButtons[4]->setPosition(0.5f * 1600.f + 0.5f * mPopupRect.getLocalBounds().width - 0.5f * mButtons[4]->getLocalBounds().width - 25.f, 0.5f * 900.f - 0.5f * mPopupRect.getLocalBounds().height + 0.5f * mButtons[4]->getLocalBounds().height + 25.f);
 
             mPopupText.clear();
             mPopupText.push_back(sf::Text("Highscore", getContext().mFonts->get(Fonts::Title), 70));
@@ -168,19 +223,19 @@ bool MenuState::update(sf::Time dt)
             mPopupText.back().setPosition(800.f - mPopupText.back().getLocalBounds().width / 2.f, 110.f + 20.f);
             std::ifstream file("resources/texts/highscore.data");
             std::string line;
-            int cnt = 1;
             while (std::getline(file, line))
             {
-                mPopupText.push_back(sf::Text(std::to_string(cnt) + ". " + line, getContext().mFonts->get(Fonts::Main), 50));
+                mPopupText.push_back(sf::Text(line, getContext().mFonts->get(Fonts::Main), 80));
                 mPopupText.back().setColor(sf::Color::Black);
-                                mPopupText.back().setOrigin(mPopupText.back().getLocalBounds().left, 0.f);
-                mPopupText.back().setPosition(100.f, mPopupText.back().getLocalBounds().height + 60.f * (mPopupText.size() - 2));
-                cnt++;
+
+                // origin to the right top of mPopupText
+                mPopupText.back().setOrigin(mPopupText.back().getLocalBounds().left + mPopupText.back().getLocalBounds().width, 0.f);
+                mPopupText.back().setPosition(1000.f, 210.f + mPopupText.back().getLocalBounds().height + 115.f * (mPopupText.size() - 2));
             }
             file.close();
         }
 
-        if (mButtons[3]->isPressed() && mButtonPressed[3] == false)
+        else if (mButtons[3]->isPressed() && mButtonPressed[3] == false)
         {
             mButtonPressed[3] = true;
             setPlayMusic();
@@ -198,10 +253,10 @@ bool MenuState::update(sf::Time dt)
     }
     else
     {
-        mCloseButton->update(dt);
+        mButtons[4]->update(dt);
         if (mDrawPopup == 2)
-            mResetButton->update(dt);
-        if (mDrawPopup == 2 && mResetButton->isPressed() && mButtonPressed[5] == false)
+            mButtons[5]->update(dt);
+        if (mDrawPopup == 2 && mButtons[5]->isPressed() && mButtonPressed[5] == false)
         {
             mButtonPressed[5] = true;
             std::ofstream out("resources/texts/highscore.data");
@@ -213,31 +268,26 @@ bool MenuState::update(sf::Time dt)
             mPopupText.back().setPosition(800.f - mPopupText.back().getLocalBounds().width / 2.f, 110.f + 20.f);
             std::ifstream file("resources/texts/highscore.data");
             std::string line;
-            int cnt = 1;
             while (std::getline(file, line))
             {
-                mPopupText.push_back(sf::Text(std::to_string(cnt) + ". " + line, getContext().mFonts->get(Fonts::Main), 50));
+                mPopupText.push_back(sf::Text(line, getContext().mFonts->get(Fonts::Main), 80));
                 mPopupText.back().setColor(sf::Color::Black);
-                                mPopupText.back().setOrigin(mPopupText.back().getLocalBounds().left, 0.f);
-                mPopupText.back().setPosition(100.f, mPopupText.back().getLocalBounds().height + 60.f * (mPopupText.size() - 2));
-                cnt++;
+                mPopupText.back().setOrigin(mPopupText.back().getLocalBounds().left + mPopupText.back().getLocalBounds().width, 0.f);
+                mPopupText.back().setPosition(1000.f, 210.f + mPopupText.back().getLocalBounds().height + 115.f * (mPopupText.size() - 2));
             }
             file.close();
         }
-        if (mCloseButton->isPressed() && mButtonPressed[4] == false)
+        if (mButtons[4]->isPressed() && mButtonPressed[4] == false)
         {
             mButtonPressed[4] = true;
             mDrawPopup = false;
+            mButtons[4]->reset();
         }
     }
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 8; i++)
         if (!mButtons[i]->isPressed())
             mButtonPressed[i] = false;
-    if (!mCloseButton->isPressed())
-        mButtonPressed[4] = false;
-    if (!mResetButton->isPressed())
-        mButtonPressed[5] = false;
 
     return false;
 }
@@ -252,14 +302,14 @@ void MenuState::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(mTitleSprite, states);
     target.draw(mGirl, states);
 
-    for (auto &button : mButtons)
-        target.draw(*button, states);
+    for (int i = 0; i < 4; i++)
+        target.draw(*mButtons[i], states);
 
     if (mDrawPopup == 1)
     {
         target.draw(mBackgroundRect, states);
         target.draw(mPopupRect, states);
-        target.draw(*mCloseButton, states);
+        target.draw(*mButtons[4], states);
         target.draw(mScrollRect, states);
         target.draw(mPopupText[0], states);
         target.setView(mView);
@@ -271,10 +321,20 @@ void MenuState::draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
         target.draw(mBackgroundRect, states);
         target.draw(mPopupRect, states);
-        target.draw(*mCloseButton, states);
-        target.draw(*mResetButton, states);
+        target.draw(mRank, states);
+        target.draw(*mButtons[4], states);
+        target.draw(*mButtons[5], states);
         for (auto &text : mPopupText)
             target.draw(text, states);
-        target.setView(target.getDefaultView());
+    }
+    else if (mDrawPopup == 3)
+    {
+        target.draw(mBackgroundRect, states);
+        target.draw(mPopup, states);
+        target.draw(*mButtons[4], states);
+        target.draw(*mButtons[6], states);
+        target.draw(*mButtons[7], states);
+        for (auto &text : mPopupText)
+            target.draw(text, states);
     }
 }

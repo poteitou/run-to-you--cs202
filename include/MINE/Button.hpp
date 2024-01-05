@@ -36,6 +36,7 @@ public:
 public:
     Button(State::Context context, Textures::ID texture);
 
+    void reset();
     void centerOrigin(sf::Sprite& sprite);
     void centerOrigin(sf::Text& text);
     sf::FloatRect getLocalBounds();

@@ -35,6 +35,8 @@ Game::Game()
 	mTextures.load(Textures::ToYou, "resources/textures/ToYou.png");
 	mTextures.load(Textures::Ground, "resources/textures/Ground.png");
 	mTextures.load(Textures::PopupRect, "resources/textures/PopupRect.png");
+	mTextures.load(Textures::Popup, "resources/textures/Popup.png");
+	mTextures.load(Textures::Rank, "resources/textures/Rank.png");
 	mTextures.load(Textures::Button, "resources/textures/Button.png");
 	mTextures.load(Textures::ButtonPlay, "resources/textures/ButtonPlay.png");
 	mTextures.load(Textures::ButtonMusic, "resources/textures/ButtonMusic.png");
