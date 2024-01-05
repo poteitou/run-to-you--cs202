@@ -28,18 +28,18 @@ public:
 
 private:
     sf::Sprite mBackgroundSprite;
-    sf::Sprite mGroundSprite;
+    sf::Sprite mGroundSprite, mPopupRect;
     sf::RectangleShape mBackgroundRect;
-    sf::RectangleShape mPopupRect, mScrollRect;
+    sf::RectangleShape mScrollRect;
     sf::View mView;
     std::vector<sf::Text> mPopupText;
     std::array<Button::Ptr, 4> mButtons;
-    Button::Ptr mCloseButton;
+    Button::Ptr mCloseButton, mResetButton;
     sf::Music mMusic;
     sf::Text mTitle;
     sf::Sprite mTitleSprite;
     Animation mGirl;
-    std::array<bool, 5> mButtonPressed;
+    std::array<bool, 6> mButtonPressed;
     int mDrawPopup;
 };
 

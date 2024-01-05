@@ -116,6 +116,12 @@ bool Button::isPressed() const
     return mAnimation.isFinished();
 }
 
+void Button::changeTexture(Type type)
+{
+    sf::IntRect textureRect(0, mHeight * (type + mIsNotNormal), mWidth, mHeight);
+    mSprite.setTextureRect(textureRect);
+}
+
 void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
@@ -129,10 +135,4 @@ void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
         target.draw(mSprite, states);
         target.draw(mText, states);
     }
-}
-
-void Button::changeTexture(Type type)
-{
-    sf::IntRect textureRect(0, mHeight * (type + mIsNotNormal), mWidth, mHeight);
-    mSprite.setTextureRect(textureRect);
 }

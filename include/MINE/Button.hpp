@@ -47,10 +47,10 @@ public:
     void handleEvent(User user);
     void update(sf::Time dt);
     bool isPressed() const;
+    void changeTexture(Type type);
 
 private:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-    void changeTexture(Type type);
 
 private:
     Animation mAnimation;

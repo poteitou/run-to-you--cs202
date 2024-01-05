@@ -5,7 +5,7 @@ IntroState::IntroState(StateStack &stack, Context context)
       mText("Click anywhere to continue", context.mFonts->get(Fonts::Main), 60),
       mShowText(false),
       mTextEffectTime(sf::Time::Zero),
-      mTitle("RUN", context.mFonts->get(Fonts::Caro), 200),
+      mTitle("RUN", context.mFonts->get(Fonts::Caro), 300),
       mTitleSprite(context.mTextures->get(Textures::ToYou)),
       mGirl(context.mTextures->get(Textures::BlueSkirt)),
       mFirstSound(context.mSoundBuffers->get(Sounds::First))
@@ -17,8 +17,8 @@ IntroState::IntroState(StateStack &stack, Context context)
     mTitle.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
     mTitle.setColor(sf::Color(63, 105, 195));
     // outside the screen to the left
-    mTitle.setPosition(-180.f, 0.25f * 900.f);
-    // mTitle.setPosition(0.5f * 1600.f - 180.f, 0.25f * 900.f);
+    mTitle.setPosition(-180.f, 0.3 * 900.f);
+    // mTitle.setPosition(0.5f * 1600.f - 180.f, 0.3 * 900.f);
 
     int mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 4;
     int mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 3;
@@ -28,19 +28,18 @@ IntroState::IntroState(StateStack &stack, Context context)
     mGirl.centerBottom();
     mGirl.setRepeating(true);
     // outside the screen to the left
-    mGirl.setPosition(-180.f - 1.75f * mWidth, 0.25f * 900.f + 0.5f * mHeight);
+    mGirl.setPosition(-180.f - 2.3f * mWidth, 0.3 * 900.f + 0.5f * mHeight);
     // mGirl is on the left of mTitle
-    // mGirl.setPosition(0.5f * 1600.f - 180.f - 1.75f * mWidth, 0.25f * 900.f + 0.5f * mHeight);
+    // mGirl.setPosition(0.5f * 1600.f - 180.f - 1.75f * mWidth, 0.3 * 900.f + 0.5f * mHeight);
 
     // outside the screen to the right
-    mTitleSprite.setPosition(1600.f + 180.f, 0.25f * 900.f);
-    // mTitleSprite.setPosition(0.5f * 1600.f, 0.25f * 900.f);
+    mTitleSprite.setPosition(1600.f + 180.f, 0.35 * 900.f);
 
     mBackgroundSprite.setTexture(context.mTextures->get(Textures::MenuBG));
     mBackgroundSprite.setPosition(0.f, 0.f);
 
     mText.setColor(sf::Color::White);
-    mText.setPosition(0.5f * 1600.f - 0.5f * mText.getLocalBounds().width, 0.75f * 900.f - 0.5f * mText.getLocalBounds().height);
+    mText.setPosition(0.5f * 1600.f - 0.5f * mText.getLocalBounds().width, 0.65f * 900.f - 0.5f * mText.getLocalBounds().height);
 }
 
 bool IntroState::handleEvent(User user)
@@ -58,11 +57,11 @@ bool IntroState::update(sf::Time dt)
     mGirl.update(dt);
     if (mTitle.getPosition().x > 0.5f * 1600.f - 180.f)
     {
-        mTitle.setPosition(0.5f * 1600.f - 180.f, 0.25f * 900.f);
-        mGirl.setPosition(0.5f * 1600.f - 180.f - 1.75f * mGirl.getFrameSize().x, 0.25f * 900.f + 0.5f * mGirl.getFrameSize().y);
+        mTitle.setPosition(0.5f * 1600.f - 180.f, 0.3 * 900.f);
+        mGirl.setPosition(0.5f * 1600.f - 180.f - 2.3f * mGirl.getFrameSize().x, 0.3 * 900.f + 0.5f * mGirl.getFrameSize().y);
     }
     if (mTitleSprite.getPosition().x < 0.5f * 1600.f)
-        mTitleSprite.setPosition(0.5f * 1600.f, 0.25f * 900.f);
+        mTitleSprite.setPosition(0.5f * 1600.f, 0.35 * 900.f);
         
     if (mTitle.getPosition().x < 0.5f * 1600.f - 180.f)
     {

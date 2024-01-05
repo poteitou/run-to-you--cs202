@@ -17,7 +17,7 @@ namespace States
 
 namespace Textures
 {
-    enum ID {MenuBG, PinkBG, OrangeBG, BlueBG, PinkToOrange, OrangeToBlue, Ground, ToYou, CrushRight, BlueSkirt, BlueCollide, RainCoat, Life, Milktea, Dog, Tree, Rock, Bird, Heart, Button, ButtonPlay, ButtonMusic, ButtonMute, ButtonAbout, ButtonRank, ButtonX, ButtonSkip, PinkMouse};
+    enum ID {MenuBG, PinkBG, OrangeBG, BlueBG, PinkToOrange, OrangeToBlue, Ground, ToYou, PopupRect, CrushRight, BlueSkirt, BlueCollide, RainCoat, Life, Milktea, Dog, Tree, Rock, Bird, Heart, Button, ButtonPlay, ButtonMusic, ButtonMute, ButtonAbout, ButtonRank, ButtonX, ButtonSkip, PinkMouse};
 }
 
 namespace Fonts
