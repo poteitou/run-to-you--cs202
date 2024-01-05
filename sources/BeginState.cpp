@@ -12,7 +12,7 @@ BeginState::BeginState(StateStack &stack, Context context)
       mTimeCollide(1.f),
       mDistance(0.f),
       mCntLives(1),
-      mIsPaused(false)
+      mIsPaused(true)
 {
     sf::Texture &backgroundTexture = context.mTextures->get(Textures::PinkBG);
     sf::Texture &groundTexture = context.mTextures->get(Textures::Ground);
@@ -69,15 +69,14 @@ BeginState::BeginState(StateStack &stack, Context context)
 
     mObstacleQueue.push_back(Object(context, mTypeObject[obstacleType], 2400.f, mGroundHeight));
 
-    if (!mMusic.openFromFile("resources/sounds/MediumMusic.ogg"))
+    if (!mMusic.openFromFile("resources/sounds/Forest.ogg"))
         throw std::runtime_error("Music Forest could not be loaded.");
     if (playMusic())
-        mMusic.setVolume(30);
+        mMusic.setVolume(40);
     else
         mMusic.setVolume(0);
         
     mMusic.setLoop(true);
-    mMusic.play();
 }
 
 void BeginState::createObstacle()
@@ -152,7 +151,7 @@ bool BeginState::update(sf::Time dt)
         mTimeCollide += dt.asSeconds();
         if (mTimeCollide >= 0.5f)
         {
-            // --mCntLives;
+            --mCntLives;
             mLives.setTextureRect(sf::IntRect(0, mCntLives * 100, 320, 100));
             if (mCntLives == 0)
             {
@@ -171,13 +170,13 @@ bool BeginState::update(sf::Time dt)
             ++mCntLives;
             mLives.setTextureRect(sf::IntRect(0, mCntLives * 100, 320, 100));
         }
-        // else if (obstacle.isCollide() && (obstacle.getType() != "Heart1" && obstacle.getType() != "Heart2" && obstacle.getType() != "Heart3"))
-        // {
-        //     mPlayer.update(dt, 0);
-        //     mTimeCollide = 0.f;
-        //     obstacle.update(dt, 0.f, mPlayer);
-        //     return true;
-        // }
+        else if (obstacle.isCollide() && (obstacle.getType() != "Heart1" && obstacle.getType() != "Heart2" && obstacle.getType() != "Heart3"))
+        {
+            mPlayer.update(dt, 0);
+            mTimeCollide = 0.f;
+            obstacle.update(dt, 0.f, mPlayer);
+            return true;
+        }
     }
 
     mDistance += mScrollSpeed * dt.asSeconds();
@@ -186,7 +185,7 @@ bool BeginState::update(sf::Time dt)
     {
         mDistance = 32000.f;
         setCount(mCntLives);
-        requestStackPop();
+        // requestStackPop();
         requestStackPush(States::BTM);
     }
     // if (((int)mDistance / 100) > 1000.f)

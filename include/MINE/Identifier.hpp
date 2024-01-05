@@ -17,7 +17,7 @@ namespace States
 
 namespace Textures
 {
-    enum ID {MenuBG, PinkBG, OrangeBG, BlueBG, PinkToOrange, OrangeToBlue, Ground, ToYou, CrushRight, BlueSkirt, BlueCollide, RainCoat, Life, Milktea, Dog, Tree, Rock, Bird, Heart, Button, ButtonMusic, ButtonMute, ButtonAbout, ButtonRank, ButtonX, PinkMouse};
+    enum ID {MenuBG, PinkBG, OrangeBG, BlueBG, PinkToOrange, OrangeToBlue, Ground, ToYou, CrushRight, BlueSkirt, BlueCollide, RainCoat, Life, Milktea, Dog, Tree, Rock, Bird, Heart, Button, ButtonPlay, ButtonMusic, ButtonMute, ButtonAbout, ButtonRank, ButtonX, ButtonSkip, PinkMouse};
 }
 
 namespace Fonts
@@ -27,7 +27,7 @@ namespace Fonts
 
 namespace Sounds
 {
-    enum ID {First, Button, Collide, Paused, GameOver, Heart};
+    enum ID {First, Button, Collide, Paused, GameOver, Heart, Countdown};
 }
 
 template <typename Resource, typename Identifier>

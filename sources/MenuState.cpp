@@ -42,22 +42,22 @@ MenuState::MenuState(StateStack &stack, Context context)
     mScrollRect.setSize(sf::Vector2f(50.f, 0.15f * 900.f));
     mScrollRect.setFillColor(sf::Color(31, 65, 114));
 
-    mButtons[0] = std::make_shared<Button>(context, Textures::Button);
-    mButtons[0]->setText("Play", 70);
+    mButtons[0] = std::make_shared<Button>(context, Textures::ButtonPlay);
+    mButtons[0]->setText("   Play", 100);
     // button on the right botton of the screen
-    mButtons[0]->setPosition(1600.f - 100.f - 0.5f * mButtons[0]->getLocalBounds().width , 0.75f * 900.f + 0.5f * mButtons[0]->getLocalBounds().height);
+    mButtons[0]->setPosition(1600.f - 50.f - 0.5f * mButtons[0]->getLocalBounds().width , 0.75f * 900.f + 0.5f * mButtons[0]->getLocalBounds().height - 75.f);
 
     mButtons[1] = std::make_shared<Button>(context, Textures::ButtonAbout);
     // button on the left of Play button[0]
-    mButtons[1]->setPosition(1600.f - 100.f - 0.5f * mButtons[1]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 30.f, 0.75f * 900.f + 0.5f * mButtons[1]->getLocalBounds().height + 50.f);
+    mButtons[1]->setPosition(1600.f - 50.f - 0.5f * mButtons[1]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 25.f, 0.75f * 900.f + 0.5f * mButtons[1]->getLocalBounds().height);
 
     mButtons[2] = std::make_shared<Button>(context, Textures::ButtonRank);
     // button on the left of button[1]
-    mButtons[2]->setPosition(1600.f - 100.f - 0.5f * mButtons[2]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 160.f, 0.75f * 900.f + 0.5f * mButtons[2]->getLocalBounds().height + 50.f);
+    mButtons[2]->setPosition(1600.f - 50.f - 0.5f * mButtons[2]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 200.f, 0.75f * 900.f + 0.5f * mButtons[2]->getLocalBounds().height);
 
     mButtons[3] = std::make_shared<Button>(context, Textures::ButtonMusic);
     // button on the left of button[2]
-    mButtons[3]->setPosition(1600.f - 100.f - 0.5f * mButtons[3]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 290.f, 0.75f * 900.f + 0.5f * mButtons[3]->getLocalBounds().height + 50.f);
+    mButtons[3]->setPosition(1600.f - 50.f - 0.5f * mButtons[3]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 375.f, 0.75f * 900.f + 0.5f * mButtons[3]->getLocalBounds().height);
 
     mCloseButton = std::make_shared<Button>(context, Textures::ButtonX);
 
@@ -70,7 +70,10 @@ MenuState::MenuState(StateStack &stack, Context context)
     if (playMusic())
         mMusic.setVolume(70);
     else
+    {
         mMusic.setVolume(0);
+        mButtons[3]->setTexture(getContext().mTextures->get(Textures::ButtonMute));
+    }
     mMusic.setLoop(true);
     mMusic.play();
 }
@@ -110,8 +113,8 @@ bool MenuState::update(sf::Time dt)
             mMusic.stop();
             requestStackPop();
             if (getStackSize() == 1)
-                requestStackPush(States::Begin);
-            requestStackPush(States::Countdown);
+                requestStackPush(States::BTM);
+            // requestStackPush(States::Countdown);
         }
 
         if (mButtons[1]->isPressed() && mButtonPressed[1] == false)

@@ -2,7 +2,6 @@
 
 Player::Player(State::Context context)
     : mAnimation(),
-      mSprite(context.mTextures->get(Textures::BlueCollide)),
       mVelocity(0.f, 0.f),
       mIsRunning(true),
       mAlreadyJump(false),
@@ -13,8 +12,6 @@ Player::Player(State::Context context)
     mAnimation.setTexture(context.mTextures->get(Textures::BlueSkirt));
     mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 4;
     mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 3;
-    sf::FloatRect bounds = mSprite.getLocalBounds();
-    mSprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height) + 6.f);
 
     mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
     mAnimation.setNumFrames(8);
@@ -76,7 +73,6 @@ void Player::setPosition(float x, float y)
     mPosition.x = x;
     mPosition.y = y;
     mAnimation.setPosition(x, y);
-    mSprite.setPosition(x, y);
 }
 
 sf::Vector2f Player::getPosition() const
@@ -84,10 +80,9 @@ sf::Vector2f Player::getPosition() const
     return mPosition;
 }
 
-void Player::changeTexture(sf::Texture &texture1, sf::Texture &texture2)
+void Player::changeTexture(sf::Texture &texture)
 {
-    mAnimation.setTexture(texture1);
-    mSprite.setTexture(texture2);
+    mAnimation.setTexture(texture);
 }
 
 void Player::handleEvent(User user)
@@ -118,7 +113,6 @@ void Player::update(sf::Time dt, float groundHeight)
     mPosition.y += mVelocity.y * dt.asSeconds();
     mPosition.x += mVelocity.x * dt.asSeconds();
     mAnimation.setPosition(mPosition);
-    mSprite.setPosition(mPosition);
 
     // jumping mechanic
     if (mPosition.y < groundHeight) // above ground

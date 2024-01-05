@@ -2,7 +2,7 @@
 
 IntroState::IntroState(StateStack &stack, Context context)
     : State(stack, context),
-      mText("Click anywhere to continue", context.mFonts->get(Fonts::Main), 50),
+      mText("Click anywhere to continue", context.mFonts->get(Fonts::Main), 60),
       mShowText(false),
       mTextEffectTime(sf::Time::Zero),
       mTitle("RUN", context.mFonts->get(Fonts::Caro), 200),

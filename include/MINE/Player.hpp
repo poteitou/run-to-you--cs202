@@ -42,7 +42,7 @@ public:
     
     void setPosition(float x, float y);
     sf::Vector2f getPosition() const;
-    void changeTexture(sf::Texture &texture1, sf::Texture &texture2);
+    void changeTexture(sf::Texture &texture);
 
     void handleEvent(User user);
     void update(sf::Time dt, float groundHeight);
@@ -52,7 +52,6 @@ public:
 
 private:
     Animation mAnimation;
-    sf::Sprite mSprite;
     sf::Vector2f mVelocity;
     sf::Vector2f mPosition;
     float mGravity;

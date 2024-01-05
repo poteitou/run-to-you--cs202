@@ -54,7 +54,7 @@ void Button::setPosition(float x, float y)
 {
     mAnimation.setPosition(x, y);
     mSprite.setPosition(x, y);
-    mText.setPosition(x, y - 16.f);
+    mText.setPosition(x, y - 10.f);
 }
 
 void Button::setTexture(const sf::Texture& texture)
@@ -83,7 +83,7 @@ void Button::handleEvent(User user)
 
 void Button::update(sf::Time dt)
 {
-    mText.setPosition(mAnimation.getPosition().x, mAnimation.getPosition().y - 16.f);
+    mText.setPosition(mAnimation.getPosition().x, mAnimation.getPosition().y - 10.f);
     if (mIsPressed)
     {
         mAnimation.update(dt);
@@ -93,7 +93,7 @@ void Button::update(sf::Time dt)
             mPlayedPressedSound = true;
         }
         if (mAnimation.isNotLastFrame())
-            mText.setPosition(mAnimation.getPosition().x, mAnimation.getPosition().y + 16.f);
+            mText.setPosition(mAnimation.getPosition().x, mAnimation.getPosition().y + 22.f);
         
     }
     else if (mIsHovered)

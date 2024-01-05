@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 
 #include <MINE/Animation.hpp>
+#include <MINE/Button.hpp>
 #include <MINE/State.hpp>
 
 class BTMState : public State
@@ -19,6 +20,7 @@ public:
 private:
     sf::Sprite mBackgroundSprite;
     sf::Sprite mGroundSprite;
+    Button::Ptr mButton;
     sf::Sound mTextSound;
     Animation mGirl;
     Animation mCrush;

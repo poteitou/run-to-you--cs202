@@ -19,7 +19,7 @@ public:
 private:
     sf::RectangleShape mBackgroundRect;
     sf::Text mTitle;
-    // sf::Sound mFirstSound;
+    sf::Sound mSound;
     // sf::Music mMusic;
     sf::Text mText;
     bool mShowText;

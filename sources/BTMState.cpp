@@ -57,35 +57,49 @@ BTMState::BTMState(StateStack &stack, Context context)
     mText[0].setFont(context.mFonts->get(Fonts::Main));
     mText[1].setFont(context.mFonts->get(Fonts::Main));
     mText[0].setString("Click anywhere to continue");
-    mText[0].setCharacterSize(50);
+    mText[0].setCharacterSize(60);
     mText[1].setCharacterSize(50);
     mText[0].setColor(sf::Color::White);
-    mText[0].setPosition(0.5f * 1600.f - 0.5f * mText[0].getLocalBounds().width, 0.5f * 900.f - 0.5f * mText[0].getLocalBounds().height);
+    mText[0].setPosition(0.5f * 1600.f - 0.5f * mText[0].getLocalBounds().width, 0.4f * 900.f - 0.5f * mText[0].getLocalBounds().height);
 
-    if (!mMusic.openFromFile("resources/sounds/FastMusic.ogg"))
-		throw std::runtime_error("Music FastMusic could not be loaded.");
+    mButton = std::make_shared<Button>(context, Textures::ButtonSkip);
+    mButton->setPosition(1600.f - 0.5f * mButton->getLocalBounds().width - 50.f, 900.f - 0.5f * mButton->getLocalBounds().height - 50.f);
+    // if (!mMusic.openFromFile("resources/sounds/FastMusic.ogg"))
+	// 	throw std::runtime_error("Music FastMusic could not be loaded.");
     
-    if (playMusic())
-        mMusic.setVolume(70);
-    else
-        mMusic.setVolume(0);
+    // if (playMusic())
+    //     mMusic.setVolume(70);
+    // else
+    //     mMusic.setVolume(0);
         
-    mMusic.setLoop(true);
-    mMusic.play();
+    // mMusic.setLoop(true);
+    // mMusic.play();
 }
 
 bool BTMState::handleEvent(User user)
 {   
     if (mShowText <= 1 && user.isMousePressed)
     {
+        mText[0].setCharacterSize(50);
         mShowText = 2;
         mTime = 0.f;
+    }
+    else if (mShowText > 1)
+    {
+        mButton->handleEvent(user);
     }
     return false;
 }
 
 bool BTMState::update(sf::Time dt)
 {
+    if (mShowText > 1)
+        mButton->update(dt);
+    if (mButton->isPressed())
+    {
+        mShowText = 15;
+        mTime = 0.f;
+    }
     if (mShowText <= 1) // not click
     {
         mTime += dt.asSeconds();
@@ -312,11 +326,12 @@ bool BTMState::update(sf::Time dt)
         if (mChange.isFinished())
         {
             requestStackPop();
+            requestStackPop();
             requestStackPush(States::Begin);
         }
     }
 
-    return true;
+    return false;
 }
 
 void BTMState::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -327,6 +342,8 @@ void BTMState::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(mCrush, states);
     target.draw(mLives, states);
     target.draw(mDistanceText, states);
+    if (mShowText > 1)
+        target.draw(*mButton, states);
 
     if (mShowText == 1)
         target.draw(mText[0], states);
