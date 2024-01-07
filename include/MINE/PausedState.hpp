@@ -25,8 +25,12 @@ public:
 
 private:
     sf::RectangleShape mBackgroundRect;
-    std::array<Button::Ptr, 3> mButtons;
+    sf::Sprite mPopup;
+    std::vector<sf::Text> mPopupText;
+    std::array<Button::Ptr, 6> mButtons;
+    std::array<bool, 4> mButtonPressed;
     sf::Text mTitle;
+    bool mDrawPopup;
 };
 
 #endif // MINE_PAUSEDSTATE_HPP

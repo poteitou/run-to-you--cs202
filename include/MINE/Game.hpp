@@ -11,13 +11,14 @@
 #include <MINE/StateStack.hpp>
 #include <MINE/Collision.hpp>
 #include <MINE/User.hpp>
-#include <Mine/IntroState.hpp>
-#include <Mine/MenuState.hpp>
-#include <Mine/BeginState.hpp>
-#include <Mine/PausedState.hpp>
 #include <Mine/GameOverState.hpp>
-#include <Mine/BTMState.hpp>
+#include <Mine/Instruction.hpp>
+#include <Mine/PausedState.hpp>
+#include <Mine/IntroState.hpp>
+#include <Mine/BeginState.hpp>
+#include <Mine/MenuState.hpp>
 #include <Mine/Countdown.hpp>
+#include <Mine/BTMState.hpp>
 
 #include <string.h>
 

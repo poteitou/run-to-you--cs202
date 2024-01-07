@@ -8,14 +8,7 @@ Object::Object(State::Context context, std::string type, float x, float y)
       mAlreadyCollide(false)
 {
     mCollideSound.setBuffer(context.mSoundBuffers->get(Sounds::Collide));
-    if (type == "Dog")
-    {
-        mAnimation.setTexture(context.mTextures->get(Textures::Dog));
-        mWidth = mAnimation.getTexture()->getSize().x / 6;
-        mHeight = mAnimation.getTexture()->getSize().y;
-        mAnimation.setNumFrames(6);
-    }
-    else if (type == "Tree")
+    if (type == "Tree")
     {
         mAnimation.setTexture(context.mTextures->get(Textures::Tree));
         mWidth = mAnimation.getTexture()->getSize().x;
@@ -29,9 +22,16 @@ Object::Object(State::Context context, std::string type, float x, float y)
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(1);
     }
+    else if (type == "RockHeap")
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::RockHeap));
+        mWidth = mAnimation.getTexture()->getSize().x;
+        mHeight = mAnimation.getTexture()->getSize().y;
+        mAnimation.setNumFrames(1);
+    }
     else if (type == "Bird1")
     {
-        mAnimation.setTexture(context.mTextures->get(Textures::Bird));
+        mAnimation.setTexture(context.mTextures->get(Textures::BirdGreen));
         mWidth = mAnimation.getTexture()->getSize().x / 8;
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(8);
@@ -44,6 +44,14 @@ Object::Object(State::Context context, std::string type, float x, float y)
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(8);
         y -= 200.f;
+    }
+    else if (type == "Bird3")
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::Bird));
+        mWidth = mAnimation.getTexture()->getSize().x / 8;
+        mHeight = mAnimation.getTexture()->getSize().y;
+        mAnimation.setNumFrames(8);
+        y -= 360.f;
     }
     else if (type == "Heart1")
     {
@@ -60,7 +68,7 @@ Object::Object(State::Context context, std::string type, float x, float y)
         mWidth = mAnimation.getTexture()->getSize().x;
         mHeight = mAnimation.getTexture()->getSize().y / 4;
         mAnimation.setNumFrames(4);
-        y -= 80.f;
+        y -= 120.f;
     }
     else if (type == "Heart3")
     {
@@ -132,7 +140,7 @@ void Object::update(sf::Time dt, float scrollSpeed, const Player &player)
             mAnimation.setPosition(-mWidth * 2.f, mAnimation.getPosition().y);
         }
         else
-            mAnimation.move(1600.f * dt.asSeconds(), -900.f * dt.asSeconds());
+            mAnimation.move(2 * 1600.f * dt.asSeconds(), 2 * -900.f * dt.asSeconds());
     }
     else
     {

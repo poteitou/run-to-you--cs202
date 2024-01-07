@@ -38,7 +38,7 @@ IntroState::IntroState(StateStack &stack, Context context)
     mBackgroundSprite.setTexture(context.mTextures->get(Textures::MenuBG));
     mBackgroundSprite.setPosition(0.f, 0.f);
 
-    mText.setColor(sf::Color::White);
+    mText.setColor(sf::Color::Black);
     mText.setPosition(0.5f * 1600.f - 0.5f * mText.getLocalBounds().width, 0.65f * 900.f - 0.5f * mText.getLocalBounds().height);
 }
 

@@ -45,19 +45,19 @@ MenuState::MenuState(StateStack &stack, Context context)
     mButtons[0] = std::make_shared<Button>(context, Textures::ButtonPlay);
     mButtons[0]->setText("   Play", 100);
     // button on the right botton of the screen
-    mButtons[0]->setPosition(1600.f - 50.f - 0.5f * mButtons[0]->getLocalBounds().width , 0.75f * 900.f + 0.5f * mButtons[0]->getLocalBounds().height - 75.f);
+    mButtons[0]->setPosition(1600.f - 25.f - 0.5f * mButtons[0]->getLocalBounds().width , 0.75f * 900.f + 0.5f * mButtons[0]->getLocalBounds().height - 75.f);
 
     mButtons[1] = std::make_shared<Button>(context, Textures::ButtonAbout);
     // button on the left of Play button[0]
-    mButtons[1]->setPosition(1600.f - 50.f - 0.5f * mButtons[1]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 25.f, 0.75f * 900.f + 0.5f * mButtons[1]->getLocalBounds().height);
+    mButtons[1]->setPosition(1600.f - 25.f - 0.5f * mButtons[1]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 25.f, 0.75f * 900.f + 0.5f * mButtons[1]->getLocalBounds().height);
 
     mButtons[2] = std::make_shared<Button>(context, Textures::ButtonRank);
     // button on the left of button[1]
-    mButtons[2]->setPosition(1600.f - 50.f - 0.5f * mButtons[2]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 200.f, 0.75f * 900.f + 0.5f * mButtons[2]->getLocalBounds().height);
+    mButtons[2]->setPosition(1600.f - 25.f - 0.5f * mButtons[2]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 200.f, 0.75f * 900.f + 0.5f * mButtons[2]->getLocalBounds().height);
 
     mButtons[3] = std::make_shared<Button>(context, Textures::ButtonMusic);
     // button on the left of button[2]
-    mButtons[3]->setPosition(1600.f - 50.f - 0.5f * mButtons[3]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 375.f, 0.75f * 900.f + 0.5f * mButtons[3]->getLocalBounds().height);
+    mButtons[3]->setPosition(1600.f - 25.f - 0.5f * mButtons[3]->getLocalBounds().width - mButtons[0]->getLocalBounds().width - 375.f, 0.75f * 900.f + 0.5f * mButtons[3]->getLocalBounds().height);
 
     mButtons[4] = std::make_shared<Button>(context, Textures::ButtonX);
     mButtons[5] = std::make_shared<Button>(context, Textures::Button);
@@ -147,6 +147,7 @@ bool MenuState::update(sf::Time dt)
             mMusic.stop();
             requestStateClear();
             requestStackPush(States::Begin);
+            requestStackPush(States::Instruct);
         }
     }
     else if (!mDrawPopup)
@@ -285,7 +286,7 @@ bool MenuState::update(sf::Time dt)
         }
     }
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 6; i++)
         if (!mButtons[i]->isPressed())
             mButtonPressed[i] = false;
 

@@ -61,13 +61,12 @@ BeginState::BeginState(StateStack &stack, Context context)
     mDistanceText.setPosition(50.f, 80.f);
     mDistanceText.setColor(sf::Color::Black);
 
-    mTypeObject = {"Rock", "Rock", "Bird1", "Bird2", "Heart1", "Heart2", "Heart3"};
+    mTypeObject = {"Tree", "Rock", "RockHeap", "Bird1", "Bird2", "Heart1", "Heart2", "Heart3"};
     // mTypeObject[1] = {"Milktea", "Dog", "Tree", "Rock", "Bird", "Heart"};
 
-    srand(time(NULL));
-    int obstacleType = rand() % (mTypeObject.size() - 1);
+    int obstacleType = randomInt(1, mTypeObject.size() - 3) - 1;
 
-    mObstacleQueue.push_back(Object(context, mTypeObject[obstacleType], 2400.f, mGroundHeight));
+    mObstacleQueue.push_back(Object(context, "Heart1", 2400.f, mGroundHeight));
 
     if (!mMusic.openFromFile("resources/sounds/Forest.ogg"))
         throw std::runtime_error("Music Forest could not be loaded.");
@@ -79,10 +78,16 @@ BeginState::BeginState(StateStack &stack, Context context)
     mMusic.setLoop(true);
 }
 
+int BeginState::randomInt(int l, int r)
+{
+    std::mt19937 rd(std::chrono::steady_clock::now().time_since_epoch().count());
+    return l + rd() % (r - l + 1);
+}
+
 void BeginState::createObstacle()
 {
-    srand(time(NULL));
-    if (((int)mDistance / 100) > 240.f)
+    // srand(time(NULL));
+    if (((int)mDistance / 100) > 250.f)
         return;
     // if (((int)mDistance / 100) > 910.f)
     //     return;
@@ -92,15 +97,22 @@ void BeginState::createObstacle()
 
         while (mObstacleQueue.back().getPosition().x < 6400.f)
         {
-            int obstacleType = rand() % (mTypeObject.size() - 3 * hasHeart);
+            int obstacleType = randomInt(1, mTypeObject.size() - 3 * hasHeart) - 1;
             if (mTypeObject[obstacleType] == "Heart1" || mTypeObject[obstacleType] == "Heart2" || mTypeObject[obstacleType] == "Heart3")
                 hasHeart = true;
 
-            int randPos = rand() % 5;
-            float minDis = mScrollSpeed * 0.8f;
-            float maxDis = mScrollSpeed * 1.6f;
+            int randPos = randomInt(0, 5);
+            float minDis = mScrollSpeed * 1.f;
+            float maxDis = mScrollSpeed * 1.8f;
             float delta = minDis + (maxDis - minDis) * randPos / 5;
-            mObstacleQueue.push_back(Object(getContext(), mTypeObject[obstacleType], mObstacleQueue.back().getPosition().x + delta, mGroundHeight));
+            float pos = mObstacleQueue.back().getPosition().x + delta;
+            if (mTypeObject[obstacleType] == "Bird1")
+                mObstacleQueue.push_back(Object(getContext(), "Bird3", pos, mGroundHeight));
+            if (mTypeObject[obstacleType] == "Heart2")
+                mObstacleQueue.push_back(Object(getContext(), "Rock", pos, mGroundHeight));
+            if (mTypeObject[obstacleType] == "Heart3")
+                mObstacleQueue.push_back(Object(getContext(), "RockHeap", pos, mGroundHeight));
+            mObstacleQueue.push_back(Object(getContext(), mTypeObject[obstacleType], pos, mGroundHeight));
         }
     }
 }

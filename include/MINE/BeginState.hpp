@@ -8,10 +8,12 @@
 #include <MINE/Player.hpp>
 #include <MINE/Object.hpp>
 
-#include <queue>
-#include <vector>
-#include <string>
 #include <fstream>
+#include <chrono>
+#include <random>
+#include <string>
+#include <vector>
+#include <queue>
 
 namespace sf
 {
@@ -24,6 +26,7 @@ class BeginState : public State
 public:
     BeginState(StateStack &stack, Context context);
 
+    int randomInt(int l, int r);
     virtual void createObstacle();
     virtual void recordScore();
     virtual bool handleEvent(User user);
