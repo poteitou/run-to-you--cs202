@@ -28,7 +28,7 @@ public:
     };
 
 public:
-    Player(State::Context context);
+    Player(State::Context context, bool isPlayer = true);
 
     void centerBottom(sf::Sprite& sprite);
     sf::FloatRect getGlobalBounds();

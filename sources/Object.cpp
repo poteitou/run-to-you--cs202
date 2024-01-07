@@ -35,7 +35,7 @@ Object::Object(State::Context context, std::string type, float x, float y)
         mWidth = mAnimation.getTexture()->getSize().x / 8;
         mHeight = mAnimation.getTexture()->getSize().y;
         mAnimation.setNumFrames(8);
-        y -= 75.f;
+        y -= 65.f;
     }
     else if (type == "Bird2")
     {

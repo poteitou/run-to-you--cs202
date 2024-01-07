@@ -8,6 +8,7 @@ StateStack::StateStack(State::Context context)
 , mContext(context)
 , mFactories()
 , mPlayMusic(true)
+, mCount(1)
 {
 }
 

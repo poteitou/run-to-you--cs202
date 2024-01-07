@@ -59,21 +59,11 @@ BTMState::BTMState(StateStack &stack, Context context)
     mText[0].setString("Click anywhere to continue");
     mText[0].setCharacterSize(60);
     mText[1].setCharacterSize(50);
-    mText[0].setColor(sf::Color::White);
-    mText[0].setPosition(0.5f * 1600.f - 0.5f * mText[0].getLocalBounds().width, 0.4f * 900.f - 0.5f * mText[0].getLocalBounds().height);
+    mText[0].setColor(sf::Color::Black);
+    mText[0].setPosition(0.5f * 1600.f - 0.5f * mText[0].getLocalBounds().width, 0.25f * 900.f - 0.5f * mText[0].getLocalBounds().height);
 
     mButton = std::make_shared<Button>(context, Textures::ButtonSkip);
     mButton->setPosition(1600.f - 0.5f * mButton->getLocalBounds().width - 50.f, 900.f - 0.5f * mButton->getLocalBounds().height - 50.f);
-    // if (!mMusic.openFromFile("resources/sounds/FastMusic.ogg"))
-	// 	throw std::runtime_error("Music FastMusic could not be loaded.");
-    
-    // if (playMusic())
-    //     mMusic.setVolume(70);
-    // else
-    //     mMusic.setVolume(0);
-        
-    // mMusic.setLoop(true);
-    // mMusic.play();
 }
 
 bool BTMState::handleEvent(User user)
@@ -327,7 +317,7 @@ bool BTMState::update(sf::Time dt)
         {
             requestStackPop();
             requestStackPop();
-            requestStackPush(States::Begin);
+            requestStackPush(States::Middle);
         }
     }
 

@@ -31,6 +31,7 @@ void Button::reset()
     mIsPressed = false;
     mIsHovered = false;
     mPlayedPressedSound = false;
+    changeTexture(Normal);
 }
 
 void Button::centerOrigin(sf::Sprite &sprite)

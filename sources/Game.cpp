@@ -17,6 +17,7 @@ Game::Game()
 	auto desktop = sf::VideoMode::getDesktopMode();
 	mWindow.setPosition(sf::Vector2i(desktop.width/2 - mWindow.getSize().x / 2, desktop.height / 2 - mWindow.getSize().y / 2 - 100));
 
+	mTextures.load(Textures::GroundMenu, "resources/textures/GroundMenu.png");
 	mTextures.load(Textures::OrangeBG, "resources/textures/OrangeBG.png");
 	mTextures.load(Textures::MenuBG, "resources/textures/MenuBG.png");
 	mTextures.load(Textures::PinkBG, "resources/textures/PinkBG.png");
@@ -24,8 +25,10 @@ Game::Game()
 	mTextures.load(Textures::Ground, "resources/textures/Ground.png");
 	mTextures.load(Textures::ToYou, "resources/textures/ToYou.png");
 	mTextures.load(Textures::PinkToOrange, "resources/textures/PinkToOrange.png");
+	mTextures.load(Textures::OrangeToBlue, "resources/textures/OrangeToBlue.png");
 	mTextures.load(Textures::PinkMouse, "resources/textures/PinkMouse.png");
 	mTextures.load(Textures::CrushRight, "resources/textures/CrushRight.png");
+	mTextures.load(Textures::CrushLeft, "resources/textures/CrushLeft.png");
 	mTextures.load(Textures::BlueSkirt, "resources/textures/BlueSkirt.png");
 	mTextures.load(Textures::BirdGreen, "resources/textures/BirdGreen.png");
 	mTextures.load(Textures::RockHeap, "resources/textures/RockHeap.png");
@@ -207,9 +210,11 @@ void Game::registerStates()
     mStateStack.registerState<Instruction>(States::Instruct);
     mStateStack.registerState<Countdown>(States::Countdown);
     mStateStack.registerState<PausedState>(States::Paused);
+    mStateStack.registerState<MiddleState>(States::Middle);
     mStateStack.registerState<BeginState>(States::Begin);
 	mStateStack.registerState<IntroState>(States::Intro);
     mStateStack.registerState<MenuState>(States::Menu);
 	mStateStack.registerState<BTMState>(States::BTM);
-    // mStateStack.registerState<EndLevelState>(States::EndLevel);
+	mStateStack.registerState<MTEState>(States::MTE);
+    mStateStack.registerState<EndState>(States::End);
 }

@@ -25,9 +25,10 @@ public:
 
 private:
     sf::RectangleShape mBackgroundRect;
-    Animation mEsc, mUp;
+    std::array<Animation, 4> mButtonAnimation;
     std::vector<sf::Text> mText;
     Button::Ptr mButton;
+    float mTime;
 };
 
 #endif // MINE_INSTRUCTION_HPP

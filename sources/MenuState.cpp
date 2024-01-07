@@ -31,7 +31,7 @@ MenuState::MenuState(StateStack &stack, Context context)
     mBackgroundSprite.setTexture(context.mTextures->get(Textures::MenuBG));
     mBackgroundSprite.setPosition(0.f, 0.f);
 
-    mGroundSprite.setTexture(context.mTextures->get(Textures::Ground));
+    mGroundSprite.setTexture(context.mTextures->get(Textures::GroundMenu));
     mGroundSprite.setPosition(0.f, 0.f);
 
     mBackgroundRect.setPosition(0.f, 0.f);
@@ -89,6 +89,23 @@ MenuState::MenuState(StateStack &stack, Context context)
     }
     mMusic.setLoop(true);
     mMusic.play();
+
+    mBirdGreen.setTexture(context.mTextures->get(Textures::BirdGreen));
+    mWidth = mBirdGreen.getTexture()->getSize().x / 8;
+    mHeight = mBirdGreen.getTexture()->getSize().y;
+    mBirdGreen.setNumFrames(8);
+    mBirdGreen.setFrameSize(sf::Vector2i(mWidth, mHeight));
+    mBirdGreen.setDuration(sf::seconds(0.7f));
+    mBirdGreen.centerBottom();
+    mBirdGreen.setRepeating(true);
+    mBirdGreen.setPosition(400.f, 900.f - 80.f - 75.f);
+    mBird.setTexture(context.mTextures->get(Textures::Bird));
+    mBird.setNumFrames(8);
+    mBird.setFrameSize(sf::Vector2i(mWidth, mHeight));
+    mBird.setDuration(sf::seconds(0.7f));
+    mBird.centerBottom();
+    mBird.setRepeating(true);
+    mBird.setPosition(330.f, 900.f - 80.f - 250.f);
 }
 
 bool MenuState::handleEvent(User user)
@@ -125,6 +142,8 @@ bool MenuState::handleEvent(User user)
 bool MenuState::update(sf::Time dt)
 {
     mGirl.update(dt);
+    mBird.update(dt);
+    mBirdGreen.update(dt);
     if (mDrawPopup == 3)
     {
         mButtons[4]->update(dt);
@@ -146,7 +165,7 @@ bool MenuState::update(sf::Time dt)
         {
             mMusic.stop();
             requestStateClear();
-            requestStackPush(States::Begin);
+            requestStackPush(States::MTE);
             requestStackPush(States::Instruct);
         }
     }
@@ -176,7 +195,8 @@ bool MenuState::update(sf::Time dt)
             {
                 mMusic.stop();
                 requestStackPop();
-                requestStackPush(States::Begin);
+                requestStackPush(States::MTE);
+                requestStackPush(States::Instruct);
             }
         }
 
@@ -302,6 +322,8 @@ void MenuState::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(mTitle, states);
     target.draw(mTitleSprite, states);
     target.draw(mGirl, states);
+    target.draw(mBird, states);
+    target.draw(mBirdGreen, states);
 
     for (int i = 0; i < 4; i++)
         target.draw(*mButtons[i], states);

@@ -1,6 +1,6 @@
 #include <MINE/Player.hpp>
 
-Player::Player(State::Context context)
+Player::Player(State::Context context, bool isPlayer)
     : mAnimation(),
       mVelocity(0.f, 0.f),
       mIsRunning(true),
@@ -9,9 +9,18 @@ Player::Player(State::Context context)
       mGravity(1875.f)
 {
     // top, left, width, height
-    mAnimation.setTexture(context.mTextures->get(Textures::BlueSkirt));
-    mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 4;
-    mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 3;
+    if (isPlayer)
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::BlueSkirt));
+        mWidth = context.mTextures->get(Textures::BlueSkirt).getSize().x / 4;
+        mHeight = context.mTextures->get(Textures::BlueSkirt).getSize().y / 3;
+    }
+    else
+    {
+        mAnimation.setTexture(context.mTextures->get(Textures::CrushLeft));
+        mWidth = context.mTextures->get(Textures::CrushLeft).getSize().x / 8;
+        mHeight = context.mTextures->get(Textures::CrushLeft).getSize().y;
+    }
 
     mAnimation.setFrameSize(sf::Vector2i(mWidth, mHeight));
     mAnimation.setNumFrames(8);
@@ -104,6 +113,11 @@ void Player::handleEvent(User user)
 
 void Player::update(sf::Time dt, float groundHeight)
 {
+    if (groundHeight == -1.f)
+    {
+        mAnimation.setFrame(0);
+        return;
+    }
     if (groundHeight == 0.f)
     {
         mAnimation.setFrame(8);

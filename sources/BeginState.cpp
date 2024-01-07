@@ -62,7 +62,6 @@ BeginState::BeginState(StateStack &stack, Context context)
     mDistanceText.setColor(sf::Color::Black);
 
     mTypeObject = {"Tree", "Rock", "RockHeap", "Bird1", "Bird2", "Heart1", "Heart2", "Heart3"};
-    // mTypeObject[1] = {"Milktea", "Dog", "Tree", "Rock", "Bird", "Heart"};
 
     int obstacleType = randomInt(1, mTypeObject.size() - 3) - 1;
 
@@ -86,11 +85,8 @@ int BeginState::randomInt(int l, int r)
 
 void BeginState::createObstacle()
 {
-    // srand(time(NULL));
     if (((int)mDistance / 100) > 250.f)
         return;
-    // if (((int)mDistance / 100) > 910.f)
-    //     return;
     if (!mObstacleQueue.empty() && mObstacleQueue.back().getPosition().x < 1600.f)
     {
         bool hasHeart = false;
@@ -196,14 +192,8 @@ bool BeginState::update(sf::Time dt)
     {
         mDistance = 32000.f;
         setCount(mCntLives);
-        // requestStackPop();
         requestStackPush(States::BTM);
     }
-    // if (((int)mDistance / 100) > 1000.f)
-    // {
-    //     mDistance = 100000.f;
-    //     mStartLevelUp = mLevelingUp = true;
-    // }
     mDistanceText.setString("Distance: " + std::to_string((int)mDistance / 100) + "m");
     if (!mObstacleQueue.empty() && mObstacleQueue.front().isOutOfScreen())
         mObstacleQueue.pop_front();

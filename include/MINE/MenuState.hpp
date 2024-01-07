@@ -29,6 +29,7 @@ public:
 private:
     sf::Sprite mBackgroundSprite;
     sf::Sprite mGroundSprite, mPopupRect, mPopup, mRank;
+    Animation mBird, mBirdGreen;
     sf::RectangleShape mBackgroundRect;
     sf::RectangleShape mScrollRect;
     sf::View mView;
