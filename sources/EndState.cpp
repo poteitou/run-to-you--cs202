@@ -63,7 +63,7 @@ EndState::EndState(StateStack &stack, Context context)
     if (!mMusic.openFromFile("resources/sounds/MediumMusic.ogg"))
         throw std::runtime_error("Music MediumMusic could not be loaded.");
     if (playMusic())
-        mMusic.setVolume(40);
+        mMusic.setVolume(20);
     else
         mMusic.setVolume(0);
         

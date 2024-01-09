@@ -42,8 +42,8 @@ BTMState::BTMState(StateStack &stack, Context context)
 
     mChange.setTexture(context.mTextures->get(Textures::PinkToOrange));
     mChange.setFrameSize(sf::Vector2i(1600, 900));
-    mChange.setNumFrames(14);
-    mChange.setDuration(sf::seconds(2.f));
+    mChange.setNumFrames(12);
+    mChange.setDuration(sf::seconds(3.f));
     mChange.setRepeating(false);
     mChange.setPosition(0.f, 0.f);
 

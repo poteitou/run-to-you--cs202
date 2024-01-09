@@ -67,10 +67,10 @@ MiddleState::MiddleState(StateStack &stack, Context context)
 
     mObstacleQueue.push_back(Object(context, "Heart1", 2400.f, mGroundHeight));
 
-    if (!mMusic.openFromFile("resources/sounds/MediumMusic.ogg"))
+    if (!mMusic.openFromFile("resources/sounds/Forest.ogg"))
         throw std::runtime_error("Music MediumMusic could not be loaded.");
     if (playMusic())
-        mMusic.setVolume(40);
+        mMusic.setVolume(30);
     else
         mMusic.setVolume(0);
         

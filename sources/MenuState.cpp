@@ -165,7 +165,7 @@ bool MenuState::update(sf::Time dt)
         {
             mMusic.stop();
             requestStateClear();
-            requestStackPush(States::MTE);
+            requestStackPush(States::Begin);
             requestStackPush(States::Instruct);
         }
     }
@@ -195,7 +195,7 @@ bool MenuState::update(sf::Time dt)
             {
                 mMusic.stop();
                 requestStackPop();
-                requestStackPush(States::MTE);
+                requestStackPush(States::Begin);
                 requestStackPush(States::Instruct);
             }
         }

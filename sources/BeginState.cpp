@@ -67,10 +67,10 @@ BeginState::BeginState(StateStack &stack, Context context)
 
     mObstacleQueue.push_back(Object(context, "Heart1", 2400.f, mGroundHeight));
 
-    if (!mMusic.openFromFile("resources/sounds/Forest.ogg"))
+    if (!mMusic.openFromFile("resources/sounds/SlowMusic.ogg"))
         throw std::runtime_error("Music Forest could not be loaded.");
     if (playMusic())
-        mMusic.setVolume(40);
+        mMusic.setVolume(30);
     else
         mMusic.setVolume(0);
         
