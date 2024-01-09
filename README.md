@@ -1,30 +1,17 @@
-# Endless Runner Game: Run to you
-# Project_CS162_APCS22: Data Structure Visulization
+# Endless Runner Game: Run To You
 
 ## Introduction
 
-In this project, Object-Oriented Programming concepts are applied to build an endless runner
-game called Run to you. This game is inspired by the famous game - Google’s Dinosaur Game,
-and some other endless runner games such as: Temple Run, Subway Surfers, ... To complete this
-project, fundamental knowledge in areas such as file handling, processes, basic data structures, and object-oriented programming, ... are needed.
+In this project, Object-Oriented Programming concepts are applied to build an application. To complete this project, fundamental knowledge in areas such as file handling, processes, basic data structures, and object-oriented programming, ... are needed.
 
-## Demo Video
+## Demo video
 
-[This is the Youtube link](https://youtu.be/zW_lRESILyQ)
+[Here is the Youtube link](https://youtu.be/zW_lRESILyQ)
 
-### Running
+### Download and Run
 
-1. Download or clone the repository to your local machine.
-2. Navigate to the directory of the project.
-3. Run the executable file through terminal:
-
-```console
-./bin/main.exe
-```
-
-## Game play
-
-The mission of this game is to help the main character to meet her crush. At first, when entering the game, the player will automatically run forward. There are obstacles and rewards on the road. The player uses up arrow key to jump, tries to avoid obstacles and get rewards. When the player collides with an obstacle, he/she will lose a life. Losing all lives makes the game over. The program will prompt the player to choose to continue (the program will reset the game data to its initial state) or to exit the game. When the player successfully crosses all the obstacles, they will advance to the next level. There are 3 levels. The last one is an endless level so that player can play until he/she died. The game’s difficulty is determined by the speed of the player.
+1. Download ``release.zip`` in [Releases/v1.0.0](https://github.com/poteitou/run-to-you--cs202/releases/tag/v1.0.0)
+2. Run the executable file ``main.exe`` in release folder
 
 ## Features
 
@@ -75,4 +62,4 @@ The mission of this game is to help the main character to meet her crush. At fir
 
 ## Credits
 
-This program was created by Vi Nguyen-Thao Trinh (poteitou) as a project for CS202 - Programming Systems course at VNUHCM-University of Science.
+This program was created by Vi Nguyen-Thao Trinh ([poteitou](https://github.com/poteitou)) as a project for CS202 - Programming Systems course at VNUHCM-University of Science.
